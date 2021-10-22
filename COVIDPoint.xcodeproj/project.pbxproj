@@ -14,11 +14,13 @@
 		18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A78271FFBB10058BAC5 /* NetworkManager.swift */; };
 		18761A7E271FFC110058BAC5 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A7D271FFC110058BAC5 /* Countries.swift */; };
 		18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761AA3272038D00058BAC5 /* MapViewController.swift */; };
+		954EC0FB2721314A1226BDB7 /* Pods_COVIDPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */; };
 		CE54FB902722F1A500755A50 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54FB8F2722F1A500755A50 /* Constants.swift */; };
 		CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15C19A1C0FC5AD8A47749400 /* Pods-COVIDPoint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.debug.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.debug.xcconfig"; sourceTree = "<group>"; };
 		18478470271D8CF200930B89 /* COVIDPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COVIDPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18478473271D8CF200930B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1847847C271D8CF400930B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -28,8 +30,10 @@
 		18761A78271FFBB10058BAC5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18761A7D271FFC110058BAC5 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		18761AA3272038D00058BAC5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.release.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.release.xcconfig"; sourceTree = "<group>"; };
 		CE54FB8F2722F1A500755A50 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutUtils.swift; sourceTree = "<group>"; };
+		F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COVIDPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				954EC0FB2721314A1226BDB7 /* Pods_COVIDPoint.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +54,7 @@
 				18478472271D8CF200930B89 /* COVIDPoint */,
 				18478471271D8CF200930B89 /* Products */,
 				5A997C92FE2E082221543765 /* Pods */,
+				3A1A4435E3BF68BB8A798FA1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,9 +99,19 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		3A1A4435E3BF68BB8A798FA1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5A997C92FE2E082221543765 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				15C19A1C0FC5AD8A47749400 /* Pods-COVIDPoint.debug.xcconfig */,
+				8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -163,9 +179,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 18478484271D8CF400930B89 /* Build configuration list for PBXNativeTarget "COVIDPoint" */;
 			buildPhases = (
+				9C96441276500D891BFD35E7 /* [CP] Check Pods Manifest.lock */,
 				1847846C271D8CF200930B89 /* Sources */,
 				1847846D271D8CF200930B89 /* Frameworks */,
 				1847846E271D8CF200930B89 /* Resources */,
+				85692B6956929D8727AD402F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -219,6 +237,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		85692B6956929D8727AD402F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C96441276500D891BFD35E7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-COVIDPoint-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1847846C271D8CF200930B89 /* Sources */ = {
@@ -367,6 +427,7 @@
 		};
 		18478485271D8CF400930B89 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15C19A1C0FC5AD8A47749400 /* Pods-COVIDPoint.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -387,6 +448,7 @@
 		};
 		18478486271D8CF400930B89 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
