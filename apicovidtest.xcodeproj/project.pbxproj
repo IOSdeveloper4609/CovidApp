@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18478474271D8CF200930B89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18478473271D8CF200930B89 /* AppDelegate.swift */; };
-		18478476271D8CF200930B89 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18478475271D8CF200930B89 /* SceneDelegate.swift */; };
 		18478478271D8CF200930B89 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18478477271D8CF200930B89 /* ViewController.swift */; };
-		1847847B271D8CF200930B89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18478479271D8CF200930B89 /* Main.storyboard */; };
 		1847847D271D8CF400930B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1847847C271D8CF400930B89 /* Assets.xcassets */; };
 		18478480271D8CF400930B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1847847E271D8CF400930B89 /* LaunchScreen.storyboard */; };
 		18761A6F271FFA650058BAC5 /* ProjectSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A6A271FFA650058BAC5 /* ProjectSetting.swift */; };
@@ -18,6 +16,7 @@
 		18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A78271FFBB10058BAC5 /* NetworkManager.swift */; };
 		18761A7E271FFC110058BAC5 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A7D271FFC110058BAC5 /* Countries.swift */; };
 		18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761AA3272038D00058BAC5 /* MapViewController.swift */; };
+		CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */; };
 		FD2383F310ABD69DB3EE53A3 /* Pods_apicovidtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12B0A0E78EC6CA838FD5C8CE /* Pods_apicovidtest.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,9 +26,7 @@
 		1493E241CBECB71AF617E6FF /* Pods-apicovidtest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-apicovidtest.release.xcconfig"; path = "Target Support Files/Pods-apicovidtest/Pods-apicovidtest.release.xcconfig"; sourceTree = "<group>"; };
 		18478470271D8CF200930B89 /* apicovidtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = apicovidtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18478473271D8CF200930B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		18478475271D8CF200930B89 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		18478477271D8CF200930B89 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		1847847A271D8CF200930B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1847847C271D8CF400930B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1847847F271D8CF400930B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18478481271D8CF400930B89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -38,6 +35,7 @@
 		18761A78271FFBB10058BAC5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18761A7D271FFC110058BAC5 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		18761AA3272038D00058BAC5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,13 +71,12 @@
 		18478472271D8CF200930B89 /* apicovidtest */ = {
 			isa = PBXGroup;
 			children = (
+				CEC6FA9F2722EB5F00865346 /* UIComponents */,
 				18761A7B271FFBE60058BAC5 /* Network */,
 				18761A6B271FFA650058BAC5 /* MapScreen */,
 				18761A6A271FFA650058BAC5 /* ProjectSetting.swift */,
 				18478473271D8CF200930B89 /* AppDelegate.swift */,
-				18478475271D8CF200930B89 /* SceneDelegate.swift */,
 				18478477271D8CF200930B89 /* ViewController.swift */,
-				18478479271D8CF200930B89 /* Main.storyboard */,
 				1847847C271D8CF400930B89 /* Assets.xcassets */,
 				1847847E271D8CF400930B89 /* LaunchScreen.storyboard */,
 				18478481271D8CF400930B89 /* Info.plist */,
@@ -120,6 +117,14 @@
 				12B0A0E78EC6CA838FD5C8CE /* Pods_apicovidtest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEC6FA9F2722EB5F00865346 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */,
+			);
+			path = UIComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,7 +188,6 @@
 			files = (
 				18478480271D8CF400930B89 /* LaunchScreen.storyboard in Resources */,
 				1847847D271D8CF400930B89 /* Assets.xcassets in Resources */,
-				1847847B271D8CF200930B89 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
 				18761A6F271FFA650058BAC5 /* ProjectSetting.swift in Sources */,
 				18761A72271FFA650058BAC5 /* MapViewModel.swift in Sources */,
 				18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */,
@@ -243,21 +248,12 @@
 				18478478271D8CF200930B89 /* ViewController.swift in Sources */,
 				18478474271D8CF200930B89 /* AppDelegate.swift in Sources */,
 				18761A7E271FFC110058BAC5 /* Countries.swift in Sources */,
-				18478476271D8CF200930B89 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		18478479271D8CF200930B89 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1847847A271D8CF200930B89 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1847847E271D8CF400930B89 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -394,6 +390,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N29SZ25DF4;
 				INFOPLIST_FILE = apicovidtest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -414,6 +411,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N29SZ25DF4;
 				INFOPLIST_FILE = apicovidtest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
