@@ -23,7 +23,7 @@
 		12B0A0E78EC6CA838FD5C8CE /* Pods_apicovidtest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_apicovidtest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12EB79F3E24557682EE98297 /* Pods-apicovidtest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-apicovidtest.debug.xcconfig"; path = "Target Support Files/Pods-apicovidtest/Pods-apicovidtest.debug.xcconfig"; sourceTree = "<group>"; };
 		1493E241CBECB71AF617E6FF /* Pods-apicovidtest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-apicovidtest.release.xcconfig"; path = "Target Support Files/Pods-apicovidtest/Pods-apicovidtest.release.xcconfig"; sourceTree = "<group>"; };
-		18478470271D8CF200930B89 /* apicovidtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = apicovidtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18478470271D8CF200930B89 /* COVIDPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COVIDPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18478473271D8CF200930B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1847847C271D8CF400930B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1847847F271D8CF400930B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		18478467271D8CF200930B89 = {
 			isa = PBXGroup;
 			children = (
-				18478472271D8CF200930B89 /* apicovidtest */,
+				18478472271D8CF200930B89 /* COVIDPoint */,
 				18478471271D8CF200930B89 /* Products */,
 				5A997C92FE2E082221543765 /* Pods */,
 				A1ADD1DD60CDFE03CEA62717 /* Frameworks */,
@@ -61,12 +61,12 @@
 		18478471271D8CF200930B89 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				18478470271D8CF200930B89 /* apicovidtest.app */,
+				18478470271D8CF200930B89 /* COVIDPoint.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		18478472271D8CF200930B89 /* apicovidtest */ = {
+		18478472271D8CF200930B89 /* COVIDPoint */ = {
 			isa = PBXGroup;
 			children = (
 				CE54FB8D2722F18200755A50 /* Utils */,
@@ -79,7 +79,7 @@
 				1847847E271D8CF400930B89 /* LaunchScreen.storyboard */,
 				18478481271D8CF400930B89 /* Info.plist */,
 			);
-			path = apicovidtest;
+			path = COVIDPoint;
 			sourceTree = "<group>";
 		};
 		18761A6B271FFA650058BAC5 /* MapScreen */ = {
@@ -175,9 +175,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1847846F271D8CF200930B89 /* apicovidtest */ = {
+		1847846F271D8CF200930B89 /* COVIDPoint */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 18478484271D8CF400930B89 /* Build configuration list for PBXNativeTarget "apicovidtest" */;
+			buildConfigurationList = 18478484271D8CF400930B89 /* Build configuration list for PBXNativeTarget "COVIDPoint" */;
 			buildPhases = (
 				84367BAD3970F76D6BA69E0F /* [CP] Check Pods Manifest.lock */,
 				1847846C271D8CF200930B89 /* Sources */,
@@ -189,9 +189,9 @@
 			);
 			dependencies = (
 			);
-			name = apicovidtest;
+			name = COVIDPoint;
 			productName = apicovidtest;
-			productReference = 18478470271D8CF200930B89 /* apicovidtest.app */;
+			productReference = 18478470271D8CF200930B89 /* COVIDPoint.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -208,7 +208,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1847846B271D8CF200930B89 /* Build configuration list for PBXProject "apicovidtest" */;
+			buildConfigurationList = 1847846B271D8CF200930B89 /* Build configuration list for PBXProject "COVIDPoint" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -221,7 +221,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1847846F271D8CF200930B89 /* apicovidtest */,
+				1847846F271D8CF200930B89 /* COVIDPoint */,
 			);
 		};
 /* End PBXProject section */
@@ -433,13 +433,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N29SZ25DF4;
-				INFOPLIST_FILE = apicovidtest/Info.plist;
+				INFOPLIST_FILE = COVIDPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = IW.apicovidtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iwgroup.covid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -454,13 +454,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N29SZ25DF4;
-				INFOPLIST_FILE = apicovidtest/Info.plist;
+				INFOPLIST_FILE = COVIDPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = IW.apicovidtest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iwgroup.covid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -470,7 +470,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1847846B271D8CF200930B89 /* Build configuration list for PBXProject "apicovidtest" */ = {
+		1847846B271D8CF200930B89 /* Build configuration list for PBXProject "COVIDPoint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18478482271D8CF400930B89 /* Debug */,
@@ -479,7 +479,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		18478484271D8CF400930B89 /* Build configuration list for PBXNativeTarget "apicovidtest" */ = {
+		18478484271D8CF400930B89 /* Build configuration list for PBXNativeTarget "COVIDPoint" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				18478485271D8CF400930B89 /* Debug */,
