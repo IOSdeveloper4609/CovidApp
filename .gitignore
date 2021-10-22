@@ -8,6 +8,7 @@ build/
 DerivedData/
 .DS_Store
 
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
@@ -42,7 +43,8 @@ playground.xcworkspace
 .build/
 
 # CocoaPods - Refactored to standalone file
-
+/Pods
+Podfile.lock
 # Carthage - Refactored to standalone file
 
 # fastlane
