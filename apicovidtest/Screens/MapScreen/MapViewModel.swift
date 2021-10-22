@@ -40,10 +40,10 @@ class MapViewModel {
     }
     
     func getCounryState() {
-        countries?.data.enumerated().forEach { (index, data) in
+        countries?.data?.enumerated().forEach { (index, data) in
             var country = CountryState(id: index)
-            country.lat = data.coordinates.latitude
-            country.lon = data.coordinates.longitude
+            country.lat = data.coordinates?.latitude
+            country.lon = data.coordinates?.longitude
             country.pointColor = nil
             self.countryState.append(country)
 //            guard let deaths = data.today.deaths else {return}

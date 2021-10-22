@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		18478474271D8CF200930B89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18478473271D8CF200930B89 /* AppDelegate.swift */; };
-		18478478271D8CF200930B89 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18478477271D8CF200930B89 /* ViewController.swift */; };
 		1847847D271D8CF400930B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1847847C271D8CF400930B89 /* Assets.xcassets */; };
 		18478480271D8CF400930B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1847847E271D8CF400930B89 /* LaunchScreen.storyboard */; };
-		18761A6F271FFA650058BAC5 /* ProjectSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A6A271FFA650058BAC5 /* ProjectSetting.swift */; };
 		18761A72271FFA650058BAC5 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A6E271FFA650058BAC5 /* MapViewModel.swift */; };
 		18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A78271FFBB10058BAC5 /* NetworkManager.swift */; };
 		18761A7E271FFC110058BAC5 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A7D271FFC110058BAC5 /* Countries.swift */; };
 		18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761AA3272038D00058BAC5 /* MapViewController.swift */; };
+		CE54FB902722F1A500755A50 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54FB8F2722F1A500755A50 /* Constants.swift */; };
 		CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */; };
 		FD2383F310ABD69DB3EE53A3 /* Pods_apicovidtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12B0A0E78EC6CA838FD5C8CE /* Pods_apicovidtest.framework */; };
 /* End PBXBuildFile section */
@@ -26,15 +25,14 @@
 		1493E241CBECB71AF617E6FF /* Pods-apicovidtest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-apicovidtest.release.xcconfig"; path = "Target Support Files/Pods-apicovidtest/Pods-apicovidtest.release.xcconfig"; sourceTree = "<group>"; };
 		18478470271D8CF200930B89 /* apicovidtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = apicovidtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18478473271D8CF200930B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		18478477271D8CF200930B89 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1847847C271D8CF400930B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1847847F271D8CF400930B89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18478481271D8CF400930B89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		18761A6A271FFA650058BAC5 /* ProjectSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSetting.swift; sourceTree = "<group>"; };
 		18761A6E271FFA650058BAC5 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		18761A78271FFBB10058BAC5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18761A7D271FFC110058BAC5 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		18761AA3272038D00058BAC5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		CE54FB8F2722F1A500755A50 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,12 +69,12 @@
 		18478472271D8CF200930B89 /* apicovidtest */ = {
 			isa = PBXGroup;
 			children = (
+				CE54FB8D2722F18200755A50 /* Utils */,
 				CEC6FA9F2722EB5F00865346 /* UIComponents */,
-				18761A7B271FFBE60058BAC5 /* Network */,
-				18761A6B271FFA650058BAC5 /* MapScreen */,
-				18761A6A271FFA650058BAC5 /* ProjectSetting.swift */,
-				18478473271D8CF200930B89 /* AppDelegate.swift */,
-				18478477271D8CF200930B89 /* ViewController.swift */,
+				CE54FB8C2722F15600755A50 /* Models */,
+				CE54FB962722F23F00755A50 /* Controllers */,
+				CE54FB972722F25900755A50 /* Screens */,
+				CE54FB942722F22100755A50 /* AppDelegate */,
 				1847847C271D8CF400930B89 /* Assets.xcassets */,
 				1847847E271D8CF400930B89 /* LaunchScreen.storyboard */,
 				18478481271D8CF400930B89 /* Info.plist */,
@@ -97,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				18761A78271FFBB10058BAC5 /* NetworkManager.swift */,
-				18761A7D271FFC110058BAC5 /* Countries.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -117,6 +114,54 @@
 				12B0A0E78EC6CA838FD5C8CE /* Pods_apicovidtest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE54FB8C2722F15600755A50 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				18761A7D271FFC110058BAC5 /* Countries.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CE54FB8D2722F18200755A50 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CE54FB8E2722F18A00755A50 /* Constants */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		CE54FB8E2722F18A00755A50 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				CE54FB8F2722F1A500755A50 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		CE54FB942722F22100755A50 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				18478473271D8CF200930B89 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		CE54FB962722F23F00755A50 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				18761A7B271FFBE60058BAC5 /* Network */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE54FB972722F25900755A50 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				18761A6B271FFA650058BAC5 /* MapScreen */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		CEC6FA9F2722EB5F00865346 /* UIComponents */ = {
@@ -241,13 +286,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
-				18761A6F271FFA650058BAC5 /* ProjectSetting.swift in Sources */,
 				18761A72271FFA650058BAC5 /* MapViewModel.swift in Sources */,
 				18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */,
 				18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */,
-				18478478271D8CF200930B89 /* ViewController.swift in Sources */,
 				18478474271D8CF200930B89 /* AppDelegate.swift in Sources */,
 				18761A7E271FFC110058BAC5 /* Countries.swift in Sources */,
+				CE54FB902722F1A500755A50 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

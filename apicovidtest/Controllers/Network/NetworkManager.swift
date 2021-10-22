@@ -11,7 +11,7 @@ import Alamofire
 final class NetworkManager {
     
     func getCountryInfo(completion: @escaping (Countries) -> Void) {
-        let urlString = ProjectSetting.baseUrl.rawValue
+        let urlString = Constants.kBaseUrl + Constants.kCountries
         
         AF.request(urlString, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { results in
             
