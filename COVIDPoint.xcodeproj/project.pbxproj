@@ -17,6 +17,15 @@
 		954EC0FB2721314A1226BDB7 /* Pods_COVIDPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */; };
 		CE54FB902722F1A500755A50 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54FB8F2722F1A500755A50 /* Constants.swift */; };
 		CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */; };
+		CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */; };
+		CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */; };
+		CEC6FAD32723095F00865346 /* AppearanceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAD22723095F00865346 /* AppearanceProtocol.swift */; };
+		CEC6FAD627268C7800865346 /* ThemeProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAD527268C7800865346 /* ThemeProtocol.swift */; };
+		CEC6FAD927268EBA00865346 /* ThemesApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAD827268EBA00865346 /* ThemesApplication.swift */; };
+		CEC6FADC27268F0600865346 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FADB27268F0600865346 /* DefaultTheme.swift */; };
+		CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FADE27268FAC00865346 /* DarkTheme.swift */; };
+		CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAE32726930200865346 /* LocalDataSavingProtocol.swift */; };
+		CEC6FAE7272696BF00865346 /* ThemeAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +42,15 @@
 		8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.release.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.release.xcconfig"; sourceTree = "<group>"; };
 		CE54FB8F2722F1A500755A50 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutUtils.swift; sourceTree = "<group>"; };
+		CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAppProtocol.swift; sourceTree = "<group>"; };
+		CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateWindowProtocol.swift; sourceTree = "<group>"; };
+		CEC6FAD22723095F00865346 /* AppearanceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceProtocol.swift; sourceTree = "<group>"; };
+		CEC6FAD527268C7800865346 /* ThemeProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProtocol.swift; sourceTree = "<group>"; };
+		CEC6FAD827268EBA00865346 /* ThemesApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesApplication.swift; sourceTree = "<group>"; };
+		CEC6FADB27268F0600865346 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
+		CEC6FADE27268FAC00865346 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
+		CEC6FAE32726930200865346 /* LocalDataSavingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataSavingProtocol.swift; sourceTree = "<group>"; };
+		CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeAppearance.swift; sourceTree = "<group>"; };
 		F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COVIDPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -69,6 +87,7 @@
 		18478472271D8CF200930B89 /* COVIDPoint */ = {
 			isa = PBXGroup;
 			children = (
+				CEC6FACE2723091900865346 /* Appearance */,
 				CE54FB8D2722F18200755A50 /* Utils */,
 				CEC6FA9F2722EB5F00865346 /* UIComponents */,
 				CE54FB8C2722F15600755A50 /* Models */,
@@ -127,6 +146,7 @@
 		CE54FB8D2722F18200755A50 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				CEC6FAE2272692E700865346 /* StoreUtils */,
 				CE54FB8E2722F18A00755A50 /* Constants */,
 			);
 			path = Utils;
@@ -143,6 +163,8 @@
 		CE54FB942722F22100755A50 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				CEC6FAC9272308C900865346 /* AppDelegateWindowProtocol */,
+				CEC6FAC42723086300865346 /* LaunchAppProtocol */,
 				18478473271D8CF200930B89 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
@@ -170,6 +192,59 @@
 				CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */,
 			);
 			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		CEC6FAC42723086300865346 /* LaunchAppProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */,
+			);
+			path = LaunchAppProtocol;
+			sourceTree = "<group>";
+		};
+		CEC6FAC9272308C900865346 /* AppDelegateWindowProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */,
+			);
+			path = AppDelegateWindowProtocol;
+			sourceTree = "<group>";
+		};
+		CEC6FACE2723091900865346 /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FACF2723092F00865346 /* Theme */,
+				CEC6FAD12723094200865346 /* AppearanceProtocol */,
+			);
+			path = Appearance;
+			sourceTree = "<group>";
+		};
+		CEC6FACF2723092F00865346 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FAD827268EBA00865346 /* ThemesApplication.swift */,
+				CEC6FAD527268C7800865346 /* ThemeProtocol.swift */,
+				CEC6FADB27268F0600865346 /* DefaultTheme.swift */,
+				CEC6FADE27268FAC00865346 /* DarkTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CEC6FAD12723094200865346 /* AppearanceProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FAD22723095F00865346 /* AppearanceProtocol.swift */,
+				CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */,
+			);
+			path = AppearanceProtocol;
+			sourceTree = "<group>";
+		};
+		CEC6FAE2272692E700865346 /* StoreUtils */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FAE32726930200865346 /* LocalDataSavingProtocol.swift */,
+			);
+			path = StoreUtils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -285,9 +360,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */,
+				CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */,
 				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
+				CEC6FAE7272696BF00865346 /* ThemeAppearance.swift in Sources */,
 				18761A72271FFA650058BAC5 /* MapViewModel.swift in Sources */,
+				CEC6FAD927268EBA00865346 /* ThemesApplication.swift in Sources */,
+				CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */,
+				CEC6FAD627268C7800865346 /* ThemeProtocol.swift in Sources */,
 				18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */,
+				CEC6FAD32723095F00865346 /* AppearanceProtocol.swift in Sources */,
+				CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */,
+				CEC6FADC27268F0600865346 /* DefaultTheme.swift in Sources */,
 				18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */,
 				18478474271D8CF200930B89 /* AppDelegate.swift in Sources */,
 				18761A7E271FFC110058BAC5 /* Countries.swift in Sources */,
