@@ -6,4 +6,5 @@ target 'COVIDPoint' do
   use_frameworks!
 
   pod 'Alamofire', '5.4.4'
+  pod 'ReactiveKit'
 end

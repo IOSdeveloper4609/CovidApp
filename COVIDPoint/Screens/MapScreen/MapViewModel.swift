@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import ReactiveKit
+
+protocol MapViewModelProtocol {
+    var result: PassthroughSubject<[MapViewModel.CountryState?], Never> { get }
+}
 
 extension MapViewModel {
     struct CountryState {
@@ -16,12 +21,16 @@ extension MapViewModel {
     }
 }
 
-class MapViewModel {
-    
+class MapViewModel:  MapViewModelProtocol {
+    var result = PassthroughSubject<[CountryState?], Never>()
     let networkManager = NetworkManager()
     
     var countries: Countries?
-    var countryState: [CountryState] = []
+    var countryState = [CountryState]() {
+        didSet {
+            self.result.send(self.countryState)
+        }
+    }
     var maxData: Int = 0
     var minData: Int = 0
     
@@ -29,7 +38,6 @@ class MapViewModel {
     
     func prepareData() {
         getCountries()
-        
     }
     
     func getCountries() {
