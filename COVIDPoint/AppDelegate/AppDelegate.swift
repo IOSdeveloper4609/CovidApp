@@ -44,10 +44,19 @@ extension AppDelegate: AppDelegateWindowProtocol {
     func startWindowSetup(appearance: AppearanceProtocol) {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = .white
-        /// UINavigationController
-        let navigationController = UINavigationController(rootViewController: MapViewController())
-        navigationController.setNavigationBarHidden(true, animated: true)
-        self.window?.rootViewController = navigationController
+        /// UITabBarController
+        let tabBarController = UITabBarController()
+        /// Статистика представленная на карте
+        let mapScreen = MapViewController()
+        /// Статистика представленная в виде списка
+        let listScreen = ListScreenViewController(layout: .init(), appearance: .init())
+        /// Формирование массива рутовых экранов
+        let viewControllers = [mapScreen, listScreen]
+        /// Установка контроллеров
+        tabBarController.setViewControllers(viewControllers, animated: true)
+        /// Скрытие TabBar на экране
+        tabBarController.tabBar.isHidden = true
+        self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
     }
 }

@@ -9,4 +9,4 @@ import UIKit
 
 /// MARK: Appearance
 /// Базовый Внешний стиль
-protocol AppearanceProtocol {}
+protocol AppearanceProtocol: AppearanceViewProtocol {}

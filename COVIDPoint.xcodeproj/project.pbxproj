@@ -16,6 +16,8 @@
 		18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761AA3272038D00058BAC5 /* MapViewController.swift */; };
 		954EC0FB2721314A1226BDB7 /* Pods_COVIDPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */; };
 		CE54FB902722F1A500755A50 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54FB8F2722F1A500755A50 /* Constants.swift */; };
+		CE77AFD9272AC4FA00A72FC5 /* AppearanceViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFD8272AC4FA00A72FC5 /* AppearanceViewProtocol.swift */; };
+		CE77AFDD272AC55400A72FC5 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFDC272AC55400A72FC5 /* UIView.swift */; };
 		CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */; };
 		CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */; };
 		CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */; };
@@ -26,6 +28,8 @@
 		CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FADE27268FAC00865346 /* DarkTheme.swift */; };
 		CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAE32726930200865346 /* LocalDataSavingProtocol.swift */; };
 		CEC6FAE7272696BF00865346 /* ThemeAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */; };
+		CEC6FB042726F6B500865346 /* ListScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FB032726F6B500865346 /* ListScreenViewController.swift */; };
+		CEC6FB092726FDBB00865346 /* ListScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FB082726FDBB00865346 /* ListScreenViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +45,8 @@
 		18761AA3272038D00058BAC5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.release.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.release.xcconfig"; sourceTree = "<group>"; };
 		CE54FB8F2722F1A500755A50 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CE77AFD8272AC4FA00A72FC5 /* AppearanceViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewProtocol.swift; sourceTree = "<group>"; };
+		CE77AFDC272AC55400A72FC5 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutUtils.swift; sourceTree = "<group>"; };
 		CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAppProtocol.swift; sourceTree = "<group>"; };
 		CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateWindowProtocol.swift; sourceTree = "<group>"; };
@@ -51,6 +57,8 @@
 		CEC6FADE27268FAC00865346 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		CEC6FAE32726930200865346 /* LocalDataSavingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataSavingProtocol.swift; sourceTree = "<group>"; };
 		CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeAppearance.swift; sourceTree = "<group>"; };
+		CEC6FB032726F6B500865346 /* ListScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreenViewController.swift; sourceTree = "<group>"; };
+		CEC6FB082726FDBB00865346 /* ListScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreenViewModel.swift; sourceTree = "<group>"; };
 		F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COVIDPoint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -88,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				CEC6FACE2723091900865346 /* Appearance */,
+				CE77AFDB272AC53F00A72FC5 /* Extensions */,
 				CE54FB8D2722F18200755A50 /* Utils */,
 				CEC6FA9F2722EB5F00865346 /* UIComponents */,
 				CE54FB8C2722F15600755A50 /* Models */,
@@ -181,9 +190,18 @@
 		CE54FB972722F25900755A50 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				CEC6FB022726F68A00865346 /* ListScreen */,
 				18761A6B271FFA650058BAC5 /* MapScreen */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		CE77AFDB272AC53F00A72FC5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE77AFDC272AC55400A72FC5 /* UIView.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		CEC6FA9F2722EB5F00865346 /* UIComponents */ = {
@@ -235,6 +253,7 @@
 			children = (
 				CEC6FAD22723095F00865346 /* AppearanceProtocol.swift */,
 				CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */,
+				CE77AFD8272AC4FA00A72FC5 /* AppearanceViewProtocol.swift */,
 			);
 			path = AppearanceProtocol;
 			sourceTree = "<group>";
@@ -245,6 +264,15 @@
 				CEC6FAE32726930200865346 /* LocalDataSavingProtocol.swift */,
 			);
 			path = StoreUtils;
+			sourceTree = "<group>";
+		};
+		CEC6FB022726F68A00865346 /* ListScreen */ = {
+			isa = PBXGroup;
+			children = (
+				CEC6FB032726F6B500865346 /* ListScreenViewController.swift */,
+				CEC6FB082726FDBB00865346 /* ListScreenViewModel.swift */,
+			);
+			path = ListScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +388,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE77AFDD272AC55400A72FC5 /* UIView.swift in Sources */,
+				CEC6FB042726F6B500865346 /* ListScreenViewController.swift in Sources */,
 				CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */,
 				CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */,
 				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
@@ -371,8 +401,10 @@
 				18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */,
 				CEC6FAD32723095F00865346 /* AppearanceProtocol.swift in Sources */,
 				CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */,
+				CE77AFD9272AC4FA00A72FC5 /* AppearanceViewProtocol.swift in Sources */,
 				CEC6FADC27268F0600865346 /* DefaultTheme.swift in Sources */,
 				18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */,
+				CEC6FB092726FDBB00865346 /* ListScreenViewModel.swift in Sources */,
 				18478474271D8CF200930B89 /* AppDelegate.swift in Sources */,
 				18761A7E271FFC110058BAC5 /* Countries.swift in Sources */,
 				CE54FB902722F1A500755A50 /* Constants.swift in Sources */,
