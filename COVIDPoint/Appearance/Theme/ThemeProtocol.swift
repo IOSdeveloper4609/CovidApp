@@ -15,7 +15,9 @@ protocol ThemeProtocol {
 
 /// Цвета
 protocol ColorAssetsProtocol {
-    
+    var translucentBackground: UIColor { get }
+    var segmentControlBackground: UIColor { get }
+    var selectedSegmentControlBackground: UIColor { get }
 }
 
 /// Шрифты

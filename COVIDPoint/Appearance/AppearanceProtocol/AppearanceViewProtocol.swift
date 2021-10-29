@@ -10,5 +10,9 @@ import UIKit
 protocol AppearanceViewProtocol: ThemeAppearance {}
 
 extension AppearanceViewProtocol {
-    
+    /// Стиль с полупрозрачным фоном
+    var translucentBackgroundStyle: UIView.Style {
+        return UIView.Style(backgroundColor: theme.colorAssets.translucentBackground,
+                            backgroundGradient: nil)
+    }
 }

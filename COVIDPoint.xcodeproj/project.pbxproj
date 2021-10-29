@@ -21,6 +21,9 @@
 		CE577EB9272C0F0400B02F07 /* SplashRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE577EB8272C0F0400B02F07 /* SplashRequestManager.swift */; };
 		CE77AFD9272AC4FA00A72FC5 /* AppearanceViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFD8272AC4FA00A72FC5 /* AppearanceViewProtocol.swift */; };
 		CE77AFDD272AC55400A72FC5 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFDC272AC55400A72FC5 /* UIView.swift */; };
+		CE77AFE2272C308300A72FC5 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFE1272C308300A72FC5 /* UIColor.swift */; };
+		CE77AFE5272C389E00A72FC5 /* AppearanceSegmentControlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFE4272C389E00A72FC5 /* AppearanceSegmentControlProtocol.swift */; };
+		CE77AFE8272C391E00A72FC5 /* UISegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77AFE7272C391E00A72FC5 /* UISegmentControl.swift */; };
 		CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */; };
 		CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */; };
 		CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */; };
@@ -53,6 +56,9 @@
 		CE577EB8272C0F0400B02F07 /* SplashRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRequestManager.swift; sourceTree = "<group>"; };
 		CE77AFD8272AC4FA00A72FC5 /* AppearanceViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewProtocol.swift; sourceTree = "<group>"; };
 		CE77AFDC272AC55400A72FC5 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		CE77AFE1272C308300A72FC5 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		CE77AFE4272C389E00A72FC5 /* AppearanceSegmentControlProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSegmentControlProtocol.swift; sourceTree = "<group>"; };
+		CE77AFE7272C391E00A72FC5 /* UISegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControl.swift; sourceTree = "<group>"; };
 		CEC6FAA52722EC0C00865346 /* AutolayoutUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutolayoutUtils.swift; sourceTree = "<group>"; };
 		CEC6FAC52723087200865346 /* LaunchAppProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAppProtocol.swift; sourceTree = "<group>"; };
 		CEC6FACA272308D800865346 /* AppDelegateWindowProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateWindowProtocol.swift; sourceTree = "<group>"; };
@@ -216,7 +222,9 @@
 		CE77AFDB272AC53F00A72FC5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE77AFE1272C308300A72FC5 /* UIColor.swift */,
 				CE77AFDC272AC55400A72FC5 /* UIView.swift */,
+				CE77AFE7272C391E00A72FC5 /* UISegmentControl.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -271,6 +279,7 @@
 				CEC6FAD22723095F00865346 /* AppearanceProtocol.swift */,
 				CEC6FAE6272696BF00865346 /* ThemeAppearance.swift */,
 				CE77AFD8272AC4FA00A72FC5 /* AppearanceViewProtocol.swift */,
+				CE77AFE4272C389E00A72FC5 /* AppearanceSegmentControlProtocol.swift */,
 			);
 			path = AppearanceProtocol;
 			sourceTree = "<group>";
@@ -408,16 +417,19 @@
 				CE77AFDD272AC55400A72FC5 /* UIView.swift in Sources */,
 				CEC6FB042726F6B500865346 /* ListScreenViewController.swift in Sources */,
 				CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */,
+				CE77AFE8272C391E00A72FC5 /* UISegmentControl.swift in Sources */,
 				CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */,
 				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
 				CEC6FAE7272696BF00865346 /* ThemeAppearance.swift in Sources */,
 				18761A72271FFA650058BAC5 /* MapViewModel.swift in Sources */,
 				CEC6FAD927268EBA00865346 /* ThemesApplication.swift in Sources */,
+				CE77AFE5272C389E00A72FC5 /* AppearanceSegmentControlProtocol.swift in Sources */,
 				CE577EB9272C0F0400B02F07 /* SplashRequestManager.swift in Sources */,
 				CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */,
 				CEC6FAD627268C7800865346 /* ThemeProtocol.swift in Sources */,
 				18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */,
 				CEC6FAD32723095F00865346 /* AppearanceProtocol.swift in Sources */,
+				CE77AFE2272C308300A72FC5 /* UIColor.swift in Sources */,
 				CE577EB2272C0E4B00B02F07 /* SplashViewController.swift in Sources */,
 				CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */,
 				CE77AFD9272AC4FA00A72FC5 /* AppearanceViewProtocol.swift in Sources */,

@@ -12,9 +12,18 @@ extension ListScreenViewController {
     /// Layout
     struct Layout {
         let segmentControlContainerInsets: UIEdgeInsets
+        let segmentControlContainerSize: CGSize
+        let segmentControlInsets: UIEdgeInsets
+        let segmentControlSize: CGSize
         
-        init(segmentControlContainerInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)) {
+        init(segmentControlContainerInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
+             segmentControlContainerSize: CGSize = .init(width: 0, height: 124),
+             segmentControlInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 20, right: 0),
+             segmentControlSize: CGSize = .init(width: 200, height: 38)) {
             self.segmentControlContainerInsets = segmentControlContainerInsets
+            self.segmentControlContainerSize = segmentControlContainerSize
+            self.segmentControlInsets = segmentControlInsets
+            self.segmentControlSize = segmentControlSize
         }
     }
     
@@ -68,10 +77,12 @@ class ListScreenViewController: UIViewController {
         super.loadView()
         
         self.addAndSetupSubviews(layout: self.layout)
+        self.apply(self.appearance)
     }
     
     /// Инициализация и настройка отступов UI элементов
     private func addAndSetupSubviews(layout: ListScreenViewController.Layout) {
+        /// Настройка SegmentControlContainer
         self.segmentControlContainer = UIView()
         self.segmentControlContainer.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.segmentControlContainer)
@@ -79,10 +90,21 @@ class ListScreenViewController: UIViewController {
                                                     insets: layout.segmentControlContainerInsets,
                                                     safeArea: false,
                                                     priority: .required)
+        self.segmentControlContainer.pin(height: layout.segmentControlContainerSize.height)
+        /// Настройка SegmentControl
+        self.segmentControl = UISegmentedControl()
+        self.segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        self.segmentControlContainer.addSubview(self.segmentControl)
+        self.segmentControl.pinToSuperview(edges: [.bottom],
+                                           insets: layout.segmentControlInsets,
+                                           safeArea: false,
+                                           priority: .required)
+        self.segmentControl.pin(size: layout.segmentControlSize)
     }
     
     /// Применение стилей
     private func apply(_ appearance: ListScreenViewController.Appearance) {
-        
+        self.segmentControlContainer.apply(style: appearance.translucentBackgroundStyle)
+        self.segmentControl.apply(style: appearance.screenChangeControlStyle)
     }
 }

@@ -15,7 +15,17 @@ class DefaultTheme: ThemeProtocol {
 
 /// Цвета дефолтной темы
 class DefaultColorAssets: ColorAssetsProtocol {
+    var translucentBackground: UIColor
+    var segmentControlBackground: UIColor
+    var selectedSegmentControlBackground: UIColor
     
+    init(translucentBackground: UIColor = .white97,
+         segmentControlBackground: UIColor = .segmentGray,
+         selectedSegmentControlBackground: UIColor = .white) {
+        self.translucentBackground = translucentBackground
+        self.segmentControlBackground = segmentControlBackground
+        self.selectedSegmentControlBackground = selectedSegmentControlBackground
+    }
 }
 
 /// Шрифты дефолтной темы
