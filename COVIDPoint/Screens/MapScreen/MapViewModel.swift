@@ -51,21 +51,16 @@ class MapViewModel:  MapViewModelProtocol {
     }
     
     func getCounryState() {
+        var tmpCountryState = [CountryState]()
         countries?.data?.enumerated().forEach { (index, data) in
             var country = CountryState(id: index)
             country.lat = data.coordinates?.latitude
             country.lon = data.coordinates?.longitude
             country.confirmed = data.latestData.deaths
             country.pointColor = nil
-            self.countryState.append(country)
-//            guard let deaths = data.today.deaths else {return}
-//            if maxData < deaths {
-//                self.maxData = deaths
-//            }
-//            if minData > deaths {
-//                self.minData = deaths
-//            }
+            tmpCountryState.append(country)
         }
+        self.countryState = tmpCountryState
     }
     
     func getColor(_ colors: [UIColor], gradient: CGFloat) -> UIColor {

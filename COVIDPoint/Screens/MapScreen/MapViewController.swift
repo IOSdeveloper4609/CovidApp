@@ -107,7 +107,7 @@ private extension MapViewController {
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(data?.lat ?? 0.0),
                                                                longitude: CLLocationDegrees(data?.lon ?? 0.0))
-                
+                annotation.subtitle = String(data?.confirmed ?? 0)
                 _self.showCircle(coordinate: CLLocationCoordinate2D(
                                     latitude: CLLocationDegrees(data?.lat ?? 0.0),
                                     longitude: CLLocationDegrees(data?.lon ?? 0.0)), radius: 80000 as CLLocationDistance)
@@ -170,7 +170,7 @@ extension MapViewController: MKMapViewDelegate {
                 container.addSubview(confirmedLabel)
                 confirmedLabel.pin(size: CGSize(width: 100, height: 30))
                 confirmedLabel.pinToSuperview(edges: [.all], insets: UIEdgeInsets(top: 3, left: 7, bottom: 5, right: -3))
-                confirmedLabel.text = "2324345" //String((viewModel.countryState.first?.confirmed) ?? 0)
+                confirmedLabel.text = annotation.subtitle ?? "" //String((viewModel.countryState.first?.confirmed) ?? 0)
                 confirmedLabel.font = .boldSystemFont(ofSize: 11)
                 confirmedLabel.textColor = .black
                 annotationView?.image = UIImage(named: appearance.annotationImage)
@@ -185,8 +185,8 @@ extension MapViewController: MKMapViewDelegate {
         var circleRenderer = MKCircleRenderer()
         if let overlay = overlay as? MKCircle {
             circleRenderer = MKCircleRenderer(circle: overlay)
-            circleRenderer.fillColor = #colorLiteral(red: 0.02352941176, green: 0.2823529412, blue: 0.6745098039, alpha: 0.7233487565)
-            circleRenderer.alpha = 0.2
+            circleRenderer.fillColor = #colorLiteral(red: 0.02352941176, green: 0.2823529412, blue: 0.6745098039, alpha: 1)
+            circleRenderer.alpha = 0.5
         }
         return circleRenderer
     }
