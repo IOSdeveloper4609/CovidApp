@@ -45,7 +45,7 @@ extension AppDelegate: AppDelegateWindowProtocol {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = .white
         /// UINavigationController
-        let navigationController = UINavigationController(rootViewController: MapViewController())
+        let navigationController = UINavigationController(rootViewController: MapViewController(nibName: nil, bundle: nil))
         navigationController.setNavigationBarHidden(true, animated: true)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()

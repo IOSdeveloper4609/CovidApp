@@ -7,6 +7,8 @@
 
 import UIKit
 import ReactiveKit
+import CoreLocation
+import MapKit
 
 protocol MapViewModelProtocol {
     var result: PassthroughSubject<[MapViewModel.CountryState?], Never> { get }
@@ -17,14 +19,15 @@ extension MapViewModel {
         let id: Int
         var lat: Float?
         var lon: Float?
+        var confirmed: Int?
         var pointColor: UIColor?
     }
 }
 
+
 class MapViewModel:  MapViewModelProtocol {
     var result = PassthroughSubject<[CountryState?], Never>()
     let networkManager = NetworkManager()
-    
     var countries: Countries?
     var countryState = [CountryState]() {
         didSet {
@@ -52,6 +55,7 @@ class MapViewModel:  MapViewModelProtocol {
             var country = CountryState(id: index)
             country.lat = data.coordinates?.latitude
             country.lon = data.coordinates?.longitude
+            country.confirmed = data.latestData.deaths
             country.pointColor = nil
             self.countryState.append(country)
 //            guard let deaths = data.today.deaths else {return}
