@@ -15,7 +15,17 @@ class DarkTheme: ThemeProtocol {
 
 /// Цвета темной темы
 class DarkColorAssets: ColorAssetsProtocol {
+    var translucentBackground: UIColor
+    var segmentControlBackground: UIColor
+    var selectedSegmentControlBackground: UIColor
     
+    init(translucentBackground: UIColor = .black97,
+         segmentControlBackground: UIColor = .segmentGray,
+         selectedSegmentControlBackground: UIColor = .white) {
+        self.translucentBackground = translucentBackground
+        self.segmentControlBackground = segmentControlBackground
+        self.selectedSegmentControlBackground = selectedSegmentControlBackground
+    }
 }
 
 /// Шрифты темной темы
