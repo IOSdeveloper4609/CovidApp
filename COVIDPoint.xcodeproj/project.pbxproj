@@ -14,6 +14,19 @@
 		18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A78271FFBB10058BAC5 /* NetworkManager.swift */; };
 		18761A7E271FFC110058BAC5 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761A7D271FFC110058BAC5 /* Countries.swift */; };
 		18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18761AA3272038D00058BAC5 /* MapViewController.swift */; };
+		1897789A2731216600F7A863 /* ViewInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778912731216600F7A863 /* ViewInitialization.swift */; };
+		1897789B2731216600F7A863 /* CountryNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778932731216600F7A863 /* CountryNameView.swift */; };
+		1897789C2731216600F7A863 /* CountryNameViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778942731216600F7A863 /* CountryNameViewProtocol.swift */; };
+		1897789D2731216600F7A863 /* CountryNameViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778952731216600F7A863 /* CountryNameViewBuilder.swift */; };
+		1897789E2731216600F7A863 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778972731216600F7A863 /* ProgressView.swift */; };
+		1897789F2731216600F7A863 /* ProgressViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778982731216600F7A863 /* ProgressViewProtocol.swift */; };
+		189778A02731216600F7A863 /* ProgressViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778992731216600F7A863 /* ProgressViewBuilder.swift */; };
+		189778A62731218000F7A863 /* DetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A32731218000F7A863 /* DetailBuilder.swift */; };
+		189778A72731218000F7A863 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A42731218000F7A863 /* DetailViewController.swift */; };
+		189778A82731218000F7A863 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A52731218000F7A863 /* DetailViewModel.swift */; };
+		189778AB2731308100F7A863 /* HistogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AA2731308100F7A863 /* HistogramView.swift */; };
+		189778AD273130C600F7A863 /* HistogramViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AC273130C600F7A863 /* HistogramViewProtocol.swift */; };
+		189778AF273130E600F7A863 /* HistogramViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AE273130E600F7A863 /* HistogramViewBuilder.swift */; };
 		954EC0FB2721314A1226BDB7 /* Pods_COVIDPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */; };
 		CE54FB902722F1A500755A50 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE54FB8F2722F1A500755A50 /* Constants.swift */; };
 		CE577EB2272C0E4B00B02F07 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE577EB1272C0E4B00B02F07 /* SplashViewController.swift */; };
@@ -49,6 +62,19 @@
 		18761A78271FFBB10058BAC5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18761A7D271FFC110058BAC5 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		18761AA3272038D00058BAC5 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		189778912731216600F7A863 /* ViewInitialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewInitialization.swift; sourceTree = "<group>"; };
+		189778932731216600F7A863 /* CountryNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryNameView.swift; sourceTree = "<group>"; };
+		189778942731216600F7A863 /* CountryNameViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryNameViewProtocol.swift; sourceTree = "<group>"; };
+		189778952731216600F7A863 /* CountryNameViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryNameViewBuilder.swift; sourceTree = "<group>"; };
+		189778972731216600F7A863 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		189778982731216600F7A863 /* ProgressViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewProtocol.swift; sourceTree = "<group>"; };
+		189778992731216600F7A863 /* ProgressViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewBuilder.swift; sourceTree = "<group>"; };
+		189778A32731218000F7A863 /* DetailBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBuilder.swift; sourceTree = "<group>"; };
+		189778A42731218000F7A863 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		189778A52731218000F7A863 /* DetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		189778AA2731308100F7A863 /* HistogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramView.swift; sourceTree = "<group>"; };
+		189778AC273130C600F7A863 /* HistogramViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewProtocol.swift; sourceTree = "<group>"; };
+		189778AE273130E600F7A863 /* HistogramViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewBuilder.swift; sourceTree = "<group>"; };
 		8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.release.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.release.xcconfig"; sourceTree = "<group>"; };
 		CE54FB8F2722F1A500755A50 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE577EB1272C0E4B00B02F07 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +136,7 @@
 				CEC6FACE2723091900865346 /* Appearance */,
 				CE77AFDB272AC53F00A72FC5 /* Extensions */,
 				CE54FB8D2722F18200755A50 /* Utils */,
+				189778902731216600F7A863 /* CustomViews */,
 				CEC6FA9F2722EB5F00865346 /* UIComponents */,
 				CE54FB8C2722F15600755A50 /* Models */,
 				CE54FB962722F23F00755A50 /* Controllers */,
@@ -137,6 +164,57 @@
 				18761A78271FFBB10058BAC5 /* NetworkManager.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		189778902731216600F7A863 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				189778912731216600F7A863 /* ViewInitialization.swift */,
+				189778922731216600F7A863 /* CountryNameView */,
+				189778962731216600F7A863 /* ProgressView */,
+				189778A92731303600F7A863 /* HistogramView */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		189778922731216600F7A863 /* CountryNameView */ = {
+			isa = PBXGroup;
+			children = (
+				189778932731216600F7A863 /* CountryNameView.swift */,
+				189778952731216600F7A863 /* CountryNameViewBuilder.swift */,
+				189778942731216600F7A863 /* CountryNameViewProtocol.swift */,
+			);
+			path = CountryNameView;
+			sourceTree = "<group>";
+		};
+		189778962731216600F7A863 /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				189778972731216600F7A863 /* ProgressView.swift */,
+				189778992731216600F7A863 /* ProgressViewBuilder.swift */,
+				189778982731216600F7A863 /* ProgressViewProtocol.swift */,
+			);
+			path = ProgressView;
+			sourceTree = "<group>";
+		};
+		189778A12731218000F7A863 /* DetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				189778A42731218000F7A863 /* DetailViewController.swift */,
+				189778A32731218000F7A863 /* DetailBuilder.swift */,
+				189778A52731218000F7A863 /* DetailViewModel.swift */,
+			);
+			path = DetailScreen;
+			sourceTree = "<group>";
+		};
+		189778A92731303600F7A863 /* HistogramView */ = {
+			isa = PBXGroup;
+			children = (
+				189778AA2731308100F7A863 /* HistogramView.swift */,
+				189778AE273130E600F7A863 /* HistogramViewBuilder.swift */,
+				189778AC273130C600F7A863 /* HistogramViewProtocol.swift */,
+			);
+			path = HistogramView;
 			sourceTree = "<group>";
 		};
 		3A1A4435E3BF68BB8A798FA1 /* Frameworks */ = {
@@ -202,6 +280,7 @@
 		CE54FB972722F25900755A50 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				189778A12731218000F7A863 /* DetailScreen */,
 				CE577EB0272C0E2100B02F07 /* SplashScreen */,
 				CEC6FB022726F68A00865346 /* ListScreen */,
 				18761A6B271FFA650058BAC5 /* MapScreen */,
@@ -416,15 +495,20 @@
 			files = (
 				CE77AFDD272AC55400A72FC5 /* UIView.swift in Sources */,
 				CEC6FB042726F6B500865346 /* ListScreenViewController.swift in Sources */,
+				1897789C2731216600F7A863 /* CountryNameViewProtocol.swift in Sources */,
 				CEC6FAC62723087200865346 /* LaunchAppProtocol.swift in Sources */,
+				189778AB2731308100F7A863 /* HistogramView.swift in Sources */,
 				CE77AFE8272C391E00A72FC5 /* UISegmentControl.swift in Sources */,
 				CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */,
 				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
+				189778A02731216600F7A863 /* ProgressViewBuilder.swift in Sources */,
+				1897789E2731216600F7A863 /* ProgressView.swift in Sources */,
 				CEC6FAE7272696BF00865346 /* ThemeAppearance.swift in Sources */,
 				18761A72271FFA650058BAC5 /* MapViewModel.swift in Sources */,
 				CEC6FAD927268EBA00865346 /* ThemesApplication.swift in Sources */,
 				CE77AFE5272C389E00A72FC5 /* AppearanceSegmentControlProtocol.swift in Sources */,
 				CE577EB9272C0F0400B02F07 /* SplashRequestManager.swift in Sources */,
+				189778A62731218000F7A863 /* DetailBuilder.swift in Sources */,
 				CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */,
 				CEC6FAD627268C7800865346 /* ThemeProtocol.swift in Sources */,
 				18761A79271FFBB10058BAC5 /* NetworkManager.swift in Sources */,
@@ -434,10 +518,18 @@
 				CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */,
 				CE77AFD9272AC4FA00A72FC5 /* AppearanceViewProtocol.swift in Sources */,
 				CE577EB6272C0E5A00B02F07 /* SplashViewModel.swift in Sources */,
+				189778AF273130E600F7A863 /* HistogramViewBuilder.swift in Sources */,
 				CEC6FADC27268F0600865346 /* DefaultTheme.swift in Sources */,
+				1897789F2731216600F7A863 /* ProgressViewProtocol.swift in Sources */,
+				189778AD273130C600F7A863 /* HistogramViewProtocol.swift in Sources */,
+				1897789D2731216600F7A863 /* CountryNameViewBuilder.swift in Sources */,
+				189778A72731218000F7A863 /* DetailViewController.swift in Sources */,
 				18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */,
 				CEC6FB092726FDBB00865346 /* ListScreenViewModel.swift in Sources */,
 				18478474271D8CF200930B89 /* AppDelegate.swift in Sources */,
+				189778A82731218000F7A863 /* DetailViewModel.swift in Sources */,
+				1897789B2731216600F7A863 /* CountryNameView.swift in Sources */,
+				1897789A2731216600F7A863 /* ViewInitialization.swift in Sources */,
 				18761A7E271FFC110058BAC5 /* Countries.swift in Sources */,
 				CE54FB902722F1A500755A50 /* Constants.swift in Sources */,
 			);
