@@ -93,7 +93,7 @@ final class MapViewController: UIViewController {
     private let makeMapSmallerButton = UIButton()
     private let delimiterImage = UIImageView()
     private let circleDistance: CLLocationDistance = 100000
-    private let latitudeDelta: CLLocationDegrees = 1
+    private let latitudeDelta: CLLocationDegrees = 20
     private let containerForLabelPointCornerRadius: CGFloat = 8
     private let confirmedLabelSize: CGFloat = 11
     private let circleRendererAlpha: CGFloat = 0.6
@@ -103,6 +103,7 @@ final class MapViewController: UIViewController {
     private let valueCameraMap = 1.5
     private let minCamera: Double = 1500000
     private let maxCamera: Double = 10000000
+    private let formatter = NumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -319,13 +320,12 @@ extension MapViewController: MKMapViewDelegate {
                 confirmedLabel.pinCenterToSuperview(of: .vertical)
                 confirmedLabel.pinToSuperview(edges: [.all], insets: layout.confirmedLabelInsets)
                 
-                if annotation.title != nil {
-                    confirmedLabel.text = annotation.title ?? String()
-                } else {
-                    container.isHidden = true
-                }
+                formatter.groupingSeparator = " "
+                formatter.numberStyle = .decimal
+                formatter.maximumFractionDigits = 2
                 
-                confirmedLabel.text = annotation.title ?? String()
+                let result = Int((annotationView?.annotation?.title)! ?? "")
+                confirmedLabel.text = formatter.string(from: result as NSNumber? ?? 0)
                 confirmedLabel.font = .boldSystemFont(ofSize: self.confirmedLabelSize)
                 confirmedLabel.textColor = .black
                 annotationView?.image = UIImage(named: appearance.annotationImage)
@@ -345,5 +345,4 @@ extension MapViewController: MKMapViewDelegate {
         return circleRenderer
     }
 }
-
 
