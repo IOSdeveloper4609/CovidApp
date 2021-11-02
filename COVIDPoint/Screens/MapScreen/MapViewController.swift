@@ -324,7 +324,7 @@ extension MapViewController: MKMapViewDelegate {
                 formatter.numberStyle = .decimal
                 formatter.maximumFractionDigits = 2
                 
-                let result = Int((annotationView?.annotation?.title)! ?? "")
+                let result = Int((annotationView?.annotation?.title ?? "") ?? "")
                 confirmedLabel.text = formatter.string(from: result as NSNumber? ?? 0)
                 confirmedLabel.font = .boldSystemFont(ofSize: self.confirmedLabelSize)
                 confirmedLabel.textColor = .black
