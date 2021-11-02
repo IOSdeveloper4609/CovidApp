@@ -101,6 +101,8 @@ final class MapViewController: UIViewController {
     private let containerForButtons = UIView()
     private let containerForButtonsCornerRadius: CGFloat = 10
     private let valueCameraMap = 1.5
+    private let minCamera: Double = 1500000
+    private let maxCamera: Double = 10000000
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,11 +115,11 @@ final class MapViewController: UIViewController {
         setupMakeMapSmallerButton()
         setupDelimiterImage()
         addObserves()
+        setupCameraZoomRange()
     }
 }
 
 // MARK: - Private
-
 private extension MapViewController {
     /// настройка locationManager
     func setupLocationManager() {
@@ -131,7 +133,6 @@ private extension MapViewController {
     func setupMapView() {
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.delegate = self
-        mapView.isZoomEnabled = true
         view.addSubview(mapView)
         self.mapView.pinToSuperview(edges: [.all],
                                     insets: layout.mapInsets,
@@ -183,6 +184,15 @@ private extension MapViewController {
                                             insets: layout.delimiterImageInsets)
     }
     
+    /// настройка  масштабирования карты
+    func setupCameraZoomRange() {
+        if #available(iOS 13.0, *) {
+            mapView.cameraZoomRange = MKMapView.CameraZoomRange(
+                minCenterCoordinateDistance: minCamera,
+                maxCenterCoordinateDistance: maxCamera)
+        }
+    }
+    
     /// Добавление обсерверов
     func addObserves() {
         makeMapBiggerButton.reactive.tap.observeNext {
@@ -226,7 +236,7 @@ private extension MapViewController {
         }.store(in: reactive.bag)
     }
     
-    /// раскидал точки по карте и нарисовал радиус
+    /// раскидал точки по карте и нарисовал радиус по заданной дистанции
     func setupBinding() {
         self.viewModel.result.observeNext { [weak self] result in
             guard let _self = self else { return }
@@ -272,7 +282,6 @@ private extension MapViewController {
 
 
 // MARK: - CLLocationManagerDelegate
-
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
@@ -284,7 +293,6 @@ extension MapViewController: CLLocationManagerDelegate {
 }
  
 // MARK: - MKMapViewDelegate
-
 extension MapViewController: MKMapViewDelegate {
         /// добавили кастомную картинку на точки в карте
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -310,6 +318,13 @@ extension MapViewController: MKMapViewDelegate {
                 confirmedLabel.pin(size: layout.confirmedLabelSize)
                 confirmedLabel.pinCenterToSuperview(of: .vertical)
                 confirmedLabel.pinToSuperview(edges: [.all], insets: layout.confirmedLabelInsets)
+                
+                if annotation.title != nil {
+                    confirmedLabel.text = annotation.title ?? String()
+                } else {
+                    container.isHidden = true
+                }
+                
                 confirmedLabel.text = annotation.title ?? String()
                 confirmedLabel.font = .boldSystemFont(ofSize: self.confirmedLabelSize)
                 confirmedLabel.textColor = .black
