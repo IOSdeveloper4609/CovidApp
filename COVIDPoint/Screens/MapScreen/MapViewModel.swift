@@ -25,7 +25,7 @@ extension MapViewModel {
 }
 
 
-class MapViewModel:  MapViewModelProtocol {
+final class MapViewModel:  MapViewModelProtocol {
     var result = PassthroughSubject<[CountryState?], Never>()
     let networkManager = NetworkManager()
     var countries: Countries?
@@ -34,11 +34,7 @@ class MapViewModel:  MapViewModelProtocol {
             self.result.send(self.countryState)
         }
     }
-    var maxData: Int = 0
-    var minData: Int = 0
-    
-    let colors: [UIColor] = [.red, .yellow]
-    
+
     func prepareData() {
         getCountries()
     }
@@ -62,44 +58,4 @@ class MapViewModel:  MapViewModelProtocol {
         }
         self.countryState = tmpCountryState
     }
-    
-    func getColor(_ colors: [UIColor], gradient: CGFloat) -> UIColor {
-        
-        let gradientPart = CGFloat(colors.count - 1) * gradient
-        let gradIndex = Int(gradientPart)
-        
-        var firstColor: UIColor?
-        var secondColor: UIColor?
-        guard gradIndex < colors.count - 1 else { return colors.last ?? UIColor.white }
-        firstColor = colors[gradIndex]
-        secondColor = colors[gradIndex + 1]
-        
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        
-        var redRes: CGFloat = 0
-        var greenRes: CGFloat = 0
-        var blueRes: CGFloat = 0
-        var alphaRes: CGFloat = 0
-        
-        firstColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        redRes = red * (1.0 - gradientPart)
-        greenRes = green * (1.0 - gradientPart)
-        blueRes = blue * (1.0 - gradientPart)
-        alphaRes = alpha * (1.0 - gradientPart)
-        
-        secondColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        redRes += (red * gradientPart)
-        greenRes += (green * gradientPart)
-        blueRes += (blue * gradientPart)
-        alphaRes += (alpha * gradientPart)
-        
-        let colorRes = UIColor(red: redRes, green: greenRes, blue: blueRes, alpha: alphaRes)
-        return colorRes
-    }
-    
 }
