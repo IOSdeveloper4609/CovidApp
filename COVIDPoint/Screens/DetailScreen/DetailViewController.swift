@@ -25,9 +25,10 @@ extension DetailViewController {
         
         let sheetController = SheetViewController(
             controller: vc,
-//            sizes: [.intrinsic,.fixed(200), .fixed(400)],
-            sizes: [.fixed(800)],
+            sizes: [],
             options: options)
+        
+        vc.sheetControll = sheetController
         
         sheetController.gripSize = CGSize(width: 50, height: 4)
         sheetController.gripColor = UIColor(hex: "#E6E6E6")
@@ -49,10 +50,9 @@ class DetailViewController: UIViewController {
     let layout = Layout()
     let appearances = Appearance()
     
-    var stackView: UIStackView?
+    var stackView: UIStackView? = UIStackView()
     
-    var countryNameView: CountryNameView?
-    var progressView: ProgressView?
+    weak var sheetControll: SheetViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +62,13 @@ class DetailViewController: UIViewController {
         setupAppearances()
         configure()
         viewModel.handleViewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        sheetControll?.setSizes([.fixed(550)], animated: true)
+
     }
     
     func setupSubviews() {
@@ -88,16 +94,17 @@ class DetailViewController: UIViewController {
         viewModel.countryNameView = countryName
         stackView?.addArrangedSubview(countryName)
         
-        viewModel.progressTypes.forEach { type in
-            let progressView = ProgressView()
-            stackView?.addArrangedSubview(progressView)
-            let progress = progressView as ProgressViewProtocol
-            progress.setName(type.getName())
-            progress.setCount(type.getCount())
-            progress.setPlusCount(type.getPlusCount())
-            progress.setProgress(type.getProgress())
-            progress.setProgressColor(type.getProgressColor())
-        }
+        let progressConfirmed = ProgressView()
+        viewModel.progressConfirmed = progressConfirmed
+        stackView?.addArrangedSubview(progressConfirmed)
+        
+        let progressDeaths = ProgressView()
+        viewModel.progressDeaths = progressDeaths
+        stackView?.addArrangedSubview(progressDeaths)
+        
+        let progressRecovered = ProgressView()
+        viewModel.progressRecovered = progressRecovered
+        stackView?.addArrangedSubview(progressRecovered)
         
         let histogramView = HistogramView()
         viewModel.histogramView = histogramView

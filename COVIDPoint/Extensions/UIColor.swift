@@ -95,4 +95,47 @@ public extension UIColor {
             alpha: CGFloat(1.0)
         )
     }
+    
+    static func getGradientPoint(_ colors: [UIColor], gradient: CGFloat) -> UIColor {
+        
+        let leng: CGFloat = CGFloat(colors.count - 1)
+        
+        if Int(leng * gradient) + 1 >= colors.count {
+            return colors.last ?? UIColor.white
+        }
+        
+        let index = Int(leng * gradient)
+        
+        let firstColor: UIColor? = colors[index]
+        let secondColor: UIColor? = colors[index + 1]
+        
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        var redRes: CGFloat = 0
+        var greenRes: CGFloat = 0
+        var blueRes: CGFloat = 0
+        var alphaRes: CGFloat = 0
+        
+        firstColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        let value = CGFloat(leng * gradient).truncatingRemainder(dividingBy: 1)
+        
+        redRes = red * (1 - value)
+        greenRes = green * (1 - value)
+        blueRes = blue * (1 - value)
+        alphaRes = alpha * (1 - value)
+
+        secondColor?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        redRes += (red * value)
+        greenRes += (green * value)
+        blueRes += (blue * value)
+        alphaRes += (alpha * value)
+        
+        let colorRes = UIColor(red: redRes, green: greenRes, blue: blueRes, alpha: alphaRes)
+        return colorRes
+    }
 }

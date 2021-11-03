@@ -5,7 +5,6 @@
 //  Created by Ahtem Sitjalilov on 02.11.2021.
 //
 
-import Foundation
 import UIKit
 
 class HistogramView: InstancedFromBuilder, HistogramViewProtocol {
@@ -17,8 +16,6 @@ class HistogramView: InstancedFromBuilder, HistogramViewProtocol {
     var stackView: UIStackView?
     var startData: UILabel?
     var endData: UILabel?
-    
-    var columnCount: Int?
     
     override func setupSubviews() {
         title = UILabel()
@@ -57,7 +54,14 @@ class HistogramView: InstancedFromBuilder, HistogramViewProtocol {
     }
     
     override func setupAppearances() {
+        title?.font = appearance.titleFont
+        title?.textColor = appearance.titleColor
         
+        startData?.font = appearance.startDataFont
+        startData?.textColor = appearance.startDataColor
+        
+        endData?.font = appearance.endDataFont
+        endData?.textColor = appearance.endDataColor
     }
     
     func setTitle(_ text: String) {
@@ -69,12 +73,12 @@ class HistogramView: InstancedFromBuilder, HistogramViewProtocol {
             stackView?.removeArrangedSubview(view)
         }
         
-        countHeight.forEach { height in
+        countHeight.forEach { heightColumn in
             let column = UIView()
             column.translatesAutoresizingMaskIntoConstraints = false
             stackView?.addArrangedSubview(column)
-            column.pin(size: CGSize(width: 10, height: height * 2))
-            column.backgroundColor = appearance.histogramColumnColor
+            column.pin(size: CGSize(width: layout.stackViewColumnSize.width, height: layout.stackViewSize.height * heightColumn))
+            column.backgroundColor = UIColor.getGradientPoint([.green,.yellow,.orange,.red], gradient: heightColumn)
         }
     }
     
