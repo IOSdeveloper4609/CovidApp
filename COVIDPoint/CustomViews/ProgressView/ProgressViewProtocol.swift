@@ -19,8 +19,8 @@ protocol ProgressViewProtocol: AnyObject {
     func setPlusCount(_ text: String?)
     
     /// Установить значение прогресса
-    func setProgress(_ value: Float)
+    func setProgress(_ value: CGFloat)
     
     /// Установить цвет прогресса
-    func setProgressColor(_ color: UIColor)
+    func setProgressGradientColor(_ color: [UIColor])
 }

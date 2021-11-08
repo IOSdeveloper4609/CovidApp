@@ -25,7 +25,7 @@ extension HistogramView {
         var titleFont: UIFont = UIFont.systemFont(ofSize: 14, weight: .medium)
         var titleColor: UIColor = UIColor.black
         
-        var histogramColumnColor: UIColor = UIColor.gray
+        var histogramColumnGradient: [UIColor] = [.green,.yellow,.orange,.red]
         
         var startDataFont: UIFont = UIFont.systemFont(ofSize: 11, weight: .medium)
         var startDataColor: UIColor = UIColor.black

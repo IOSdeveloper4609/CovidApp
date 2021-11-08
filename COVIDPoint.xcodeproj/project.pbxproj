@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18411E2D2739A7850071E075 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18411E2C2739A7850071E075 /* CustomProgressView.swift */; };
 		18478474271D8CF200930B89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18478473271D8CF200930B89 /* AppDelegate.swift */; };
 		1847847D271D8CF400930B89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1847847C271D8CF400930B89 /* Assets.xcassets */; };
 		18478480271D8CF400930B89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1847847E271D8CF400930B89 /* LaunchScreen.storyboard */; };
@@ -53,6 +54,7 @@
 
 /* Begin PBXFileReference section */
 		15C19A1C0FC5AD8A47749400 /* Pods-COVIDPoint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.debug.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.debug.xcconfig"; sourceTree = "<group>"; };
+		18411E2C2739A7850071E075 /* CustomProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 		18478470271D8CF200930B89 /* COVIDPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = COVIDPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18478473271D8CF200930B89 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1847847C271D8CF400930B89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18411E2B2739A7740071E075 /* CustomProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				18411E2C2739A7850071E075 /* CustomProgressView.swift */,
+			);
+			path = CustomProgressView;
+			sourceTree = "<group>";
+		};
 		18478467271D8CF200930B89 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 		189778902731216600F7A863 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				18411E2B2739A7740071E075 /* CustomProgressView */,
 				189778912731216600F7A863 /* ViewInitialization.swift */,
 				189778922731216600F7A863 /* CountryNameView */,
 				189778962731216600F7A863 /* ProgressView */,
@@ -531,6 +542,7 @@
 				1897789B2731216600F7A863 /* CountryNameView.swift in Sources */,
 				1897789A2731216600F7A863 /* ViewInitialization.swift in Sources */,
 				18761A7E271FFC110058BAC5 /* Countries.swift in Sources */,
+				18411E2D2739A7850071E075 /* CustomProgressView.swift in Sources */,
 				CE54FB902722F1A500755A50 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

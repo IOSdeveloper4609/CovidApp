@@ -78,7 +78,7 @@ class HistogramView: InstancedFromBuilder, HistogramViewProtocol {
             column.translatesAutoresizingMaskIntoConstraints = false
             stackView?.addArrangedSubview(column)
             column.pin(size: CGSize(width: layout.stackViewColumnSize.width, height: layout.stackViewSize.height * heightColumn))
-            column.backgroundColor = UIColor.getGradientPoint([.green,.yellow,.orange,.red], gradient: heightColumn)
+            column.backgroundColor = UIColor.getGradientPoint(appearance.histogramColumnGradient, gradient: heightColumn)
         }
     }
     

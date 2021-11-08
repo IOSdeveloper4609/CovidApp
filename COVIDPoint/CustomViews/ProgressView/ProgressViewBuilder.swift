@@ -33,8 +33,6 @@ extension ProgressView {
         let plusCountLabelFont: UIFont = UIFont.systemFont(ofSize: 16, weight: .bold)
         let plusCountLabelColor: UIColor = UIColor.gray
         
-        let progressViewColorStart: UIColor = UIColor.gray
-        let progressViewColorEnd: UIColor = UIColor.darkGray
-        let progressViewColorEmpty: UIColor = UIColor.scaleLightGray
+        let progressViewBackgroundColor: UIColor = UIColor.scaleLightGray
     }
 }

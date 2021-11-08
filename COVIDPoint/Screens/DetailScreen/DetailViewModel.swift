@@ -17,9 +17,18 @@ class DetailViewModel {
     
     /// Функция запускается в результате конфигурации DetailViewController
     func handleViewDidLoad() {
-        setContentCountryBlock()
-        setContentProgressBlock()
-        setContentHistogramBlock()
+        self.setContentCountryBlock()
+        self.setContentProgressBlock()
+        self.setContentHistogramBlock()
+    }
+    
+    // Функция запускается только после отображения экрана
+    func handleViewDidAppear() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            self.progressConfirmed?.setProgress(0.7)
+            self.progressDeaths?.setProgress(0.7)
+            self.progressRecovered?.setProgress(0.7)
+        }
     }
     
     /// Установить название и иконку страны
@@ -32,20 +41,14 @@ class DetailViewModel {
         progressConfirmed?.setName("Подтверждено")
         progressConfirmed?.setCount("1 486 254")
         progressConfirmed?.setPlusCount("1 486 254")
-        progressConfirmed?.setProgress(0.7)
-        progressConfirmed?.setProgressColor(UIColor.black)
         
         progressDeaths?.setName("Смертельные случаи")
         progressDeaths?.setCount("43 039")
         progressDeaths?.setPlusCount(nil)
-        progressDeaths?.setProgress(0.7)
-        progressDeaths?.setProgressColor(UIColor.red)
         
         progressRecovered?.setName("Выздоро­вевшие")
         progressRecovered?.setCount("1 275 351")
         progressRecovered?.setPlusCount(nil)
-        progressRecovered?.setProgress(0.7)
-        progressRecovered?.setProgressColor(UIColor.green)
     }
     
     /// Установить контент блока гистограммы

@@ -14,6 +14,10 @@ public extension UIColor {
     static let black = UIColor(red: 0, green: 0, blue: 0)
     static let gray = UIColor(red: 134, green: 134, blue: 134)
     static let darkGray = UIColor(red: 71, green: 75, blue: 77)
+    static let darkRed = UIColor(red: 152, green: 38, blue: 60)
+    static let lightRed = UIColor(red: 244, green: 1, blue: 47)
+    static let darkGreen = UIColor(red: 87, green: 138, blue: 81)
+    static let lightGreen = UIColor(red: 124, green: 199, blue: 116)
     static let scaleLightGray = UIColor(hex: "#F0F0F0")
 }
 

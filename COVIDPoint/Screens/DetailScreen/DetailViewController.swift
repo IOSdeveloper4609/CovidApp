@@ -52,6 +52,12 @@ class DetailViewController: UIViewController {
     
     var stackView: UIStackView? = UIStackView()
     
+    let countryName = CountryNameView()
+    let progressConfirmed = ProgressView()
+    let progressDeaths = ProgressView()
+    let progressRecovered = ProgressView()
+    let histogramView = HistogramView()
+    
     weak var sheetControll: SheetViewController?
     
     override func viewDidLoad() {
@@ -68,7 +74,7 @@ class DetailViewController: UIViewController {
         super.viewDidAppear(animated)
         
         sheetControll?.setSizes([.fixed(550)], animated: true)
-
+        viewModel.handleViewDidAppear()
     }
     
     func setupSubviews() {
@@ -86,27 +92,36 @@ class DetailViewController: UIViewController {
     }
     
     func setupAppearances() {
+        progressConfirmed.setProgressGradientColor([
+            appearances.progressConfirmedStartColor,
+            appearances.progressConfirmedEndColor
+        ])
         
+        progressDeaths.setProgressGradientColor([
+            appearances.progressDeathsStartColor,
+            appearances.progressDeathsEndColor
+        ])
+        
+        progressRecovered.setProgressGradientColor([
+            appearances.progressRecoveredStartColor,
+            appearances.progressRecoveredEndColor
+        ])
     }
     
     func configure() {
-        let countryName = CountryNameView()
+        
         viewModel.countryNameView = countryName
         stackView?.addArrangedSubview(countryName)
         
-        let progressConfirmed = ProgressView()
         viewModel.progressConfirmed = progressConfirmed
         stackView?.addArrangedSubview(progressConfirmed)
         
-        let progressDeaths = ProgressView()
         viewModel.progressDeaths = progressDeaths
         stackView?.addArrangedSubview(progressDeaths)
         
-        let progressRecovered = ProgressView()
         viewModel.progressRecovered = progressRecovered
         stackView?.addArrangedSubview(progressRecovered)
         
-        let histogramView = HistogramView()
         viewModel.histogramView = histogramView
         stackView?.addArrangedSubview(histogramView)
     }

@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum ProgressViewType {
+    case confirmed
+    case deaths
+    case recovered
+}
+
 class ProgressView: InstancedFromBuilder, ProgressViewProtocol {
     
     let layout = Layout()
@@ -15,7 +21,7 @@ class ProgressView: InstancedFromBuilder, ProgressViewProtocol {
     private var typeLabel: UILabel?
     private var countLabel: UILabel?
     private var plusCountLabel: UILabel?
-    private var progressView: UIProgressView?
+    private var progressView: CustomProgressView?
     
     override func setupSubviews() {
         
@@ -28,7 +34,7 @@ class ProgressView: InstancedFromBuilder, ProgressViewProtocol {
         plusCountLabel = UILabel()
         plusCountLabel?.translatesAutoresizingMaskIntoConstraints = false
         
-        progressView = UIProgressView()
+        progressView = CustomProgressView()
         progressView?.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -64,7 +70,7 @@ class ProgressView: InstancedFromBuilder, ProgressViewProtocol {
         plusCountLabel?.font = appearance.plusCountLabelFont
         plusCountLabel?.textColor = appearance.plusCountLabelColor
         
-        progressView?.backgroundColor = appearance.progressViewColorEmpty
+        progressView?.backgroundColor = appearance.progressViewBackgroundColor
     }
     
     func setName(_ text: String) {
@@ -79,11 +85,11 @@ class ProgressView: InstancedFromBuilder, ProgressViewProtocol {
         plusCountLabel?.text = text
     }
     
-    func setProgress(_ value: Float) {
+    func setProgress(_ value: CGFloat) {
         progressView?.setProgress(value, animated: true)
     }
     
-    func setProgressColor(_ color: UIColor) {
-        progressView?.tintColor = color
+    func setProgressGradientColor(_ colors: [UIColor]) {
+        progressView?.gradientColors = colors
     }
 }

@@ -14,6 +14,13 @@ extension DetailViewController {
     }
     
     struct Appearance: AppearanceProtocol {
+        let progressConfirmedStartColor: UIColor = UIColor.gray
+        let progressConfirmedEndColor: UIColor = UIColor.darkGray
         
+        let progressDeathsStartColor: UIColor = UIColor.darkRed
+        let progressDeathsEndColor: UIColor = UIColor.lightRed
+        
+        let progressRecoveredStartColor: UIColor = UIColor.darkGreen
+        let progressRecoveredEndColor: UIColor = UIColor.lightGreen
     }
 }
