@@ -13,8 +13,6 @@ import Bond
 private extension MapViewController {
     /// Отступы
     struct Layout {
-        
-        /// Отступы 
         let mapInsets: UIEdgeInsets
         let containerSize: CGSize
         let containerInsets: UIEdgeInsets
@@ -31,7 +29,7 @@ private extension MapViewController {
         
         /// Инициализатор
         init(mapInsets: UIEdgeInsets = UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
-             containerSize: CGSize = CGSize(width: 70, height: 25),
+             containerSize: CGSize = CGSize(width: 60, height: 25),
              containerInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: -28, bottom: 20, right: 0),
              confirmedLabelSize: CGSize = CGSize(width: 100, height: 0),
              confirmedLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5),
@@ -59,7 +57,6 @@ private extension MapViewController {
         }
     }
     
-    
     // Внешний вид
     struct Appearance: AppearanceProtocol {
         let annotationImage: String
@@ -83,45 +80,50 @@ private extension MapViewController {
 }
 
 final class MapViewController: UIViewController {
-    private var layout = Layout()
-    private var appearance = Appearance()
+    private var layout: Layout = Layout()
+    private var appearance: Appearance = Appearance()
+    private let viewModel: MapViewModelProtocol!
     private let mapView = MKMapView()
     private let locationManager = CLLocationManager()
-    private let viewModel = MapViewModel()
     private var circle = MKCircle()
     private let makeMapBiggerButton = UIButton()
     private let makeMapSmallerButton = UIButton()
     private let delimiterImage = UIImageView()
-    private let circleDistance: CLLocationDistance = 100000
-    private let latitudeDelta: CLLocationDegrees = 20
-    private let containerForLabelPointCornerRadius: CGFloat = 8
-    private let confirmedLabelSize: CGFloat = 11
-    private let circleRendererAlpha: CGFloat = 0.6
-    private let defaultValue: Float = 0.0
     private let containerForButtons = UIView()
-    private let containerForButtonsCornerRadius: CGFloat = 10
-    private let valueCameraMap = 1.5
-    private let minCamera: Double = 1500000
-    private let maxCamera: Double = 10000000
-    private let formatter = NumberFormatter()
+    private let numberFormatter = NumberFormatter()
+    
+    /// Инициализатор
+    /// - Parameter viewModel: MapViewModelProtocol
+    init(viewModel: MapViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMapView()
-        setupLocationManager()
-        viewModel.prepareData()
         setupBinding()
-        setupContainerForButtons()
-        setupMakeMapBiggerButton()
-        setupMakeMapSmallerButton()
-        setupDelimiterImage()
-        addObserves()
-        setupCameraZoomRange()
+        viewModel.getCountries()
+        addAndSetupSubviews(layout: layout)
     }
 }
 
 // MARK: - Private
 private extension MapViewController {
+    
+    func addAndSetupSubviews(layout: Layout) {
+        setupLocationManager()
+        setupMapView()
+        setupContainerForButtons()
+        setupMakeMapBiggerButton()
+        setupMakeMapSmallerButton()
+        setupDelimiterImage()
+        setupCameraZoomRange()
+    }
+    
     /// настройка locationManager
     func setupLocationManager() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -144,9 +146,9 @@ private extension MapViewController {
     /// настройка контейнера для кнопок
     func setupContainerForButtons() {
         containerForButtons.translatesAutoresizingMaskIntoConstraints = false
-        containerForButtons.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        containerForButtons.backgroundColor = UIColor.backgroundContainerForButtons
         mapView.addSubview(containerForButtons)
-        containerForButtons.layer.cornerRadius = containerForButtonsCornerRadius
+        containerForButtons.layer.cornerRadius = viewModel.containerForButtonsCornerRadius
         containerForButtons.pin(size: layout.containerForButtonsSize)
         containerForButtons.pinToSuperview(edges: [.right],
                                            insets: layout.containerForButtonsInsets)
@@ -189,26 +191,45 @@ private extension MapViewController {
     func setupCameraZoomRange() {
         if #available(iOS 13.0, *) {
             mapView.cameraZoomRange = MKMapView.CameraZoomRange(
-                minCenterCoordinateDistance: minCamera,
-                maxCenterCoordinateDistance: maxCamera)
+                minCenterCoordinateDistance: viewModel.minCamera,
+                maxCenterCoordinateDistance: viewModel.maxCamera)
         }
     }
-    
-    /// Добавление обсерверов
-    func addObserves() {
+        
+    /// раскидал точки по карте и нарисовал радиус по заданной дистанции
+    func setupBinding() {
+        self.viewModel.result.observeNext { [weak self] result in
+            guard let _self = self else { return }
+            var annotations: [MKAnnotation] = []
+            result.forEach { data in
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
+                                                               longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue))
+                annotation.title = String(data?.confirmed ?? 0)
+                _self.showCircle(coordinate: CLLocationCoordinate2D(
+                                    latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
+                                    longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue)), radius: _self.viewModel.circleDistance)
+                
+                annotations.append(annotation)
+            }
+            _self.mapView.addAnnotations(annotations)
+            
+        }.store(in: reactive.bag)
+        
+        /// повесил нажатие на кнопку
         makeMapBiggerButton.reactive.tap.observeNext {
             let currentCamera = self.mapView.camera
             let newCamera: MKMapCamera
             if #available(iOS 9.0, *) {
                 newCamera = MKMapCamera(lookingAtCenter: currentCamera.centerCoordinate,
-                                        fromDistance: currentCamera.altitude / self.valueCameraMap,
+                                        fromDistance: currentCamera.altitude / self.viewModel.valueCameraMap,
                                         pitch: currentCamera.pitch,
                                         heading: currentCamera.heading)
             } else {
                 newCamera = MKMapCamera()
                 newCamera.centerCoordinate = currentCamera.centerCoordinate
                 newCamera.heading = currentCamera.heading
-                newCamera.altitude = currentCamera.altitude / self.valueCameraMap
+                newCamera.altitude = currentCamera.altitude / self.viewModel.valueCameraMap
                 newCamera.pitch = currentCamera.pitch
             }
             
@@ -216,45 +237,24 @@ private extension MapViewController {
             
         }.store(in: reactive.bag)
         
+        /// повесил нажатие на кнопку
         makeMapSmallerButton.reactive.tap.observeNext {
             let currentCamera = self.mapView.camera
             let newCamera: MKMapCamera
             if #available(iOS 9.0, *) {
                 newCamera = MKMapCamera(lookingAtCenter: currentCamera.centerCoordinate
-                                        , fromDistance: currentCamera.altitude * self.valueCameraMap,
+                                        , fromDistance: currentCamera.altitude * self.viewModel.valueCameraMap,
                                         pitch: currentCamera.pitch,
                                         heading: currentCamera.heading)
             } else {
                 newCamera = MKMapCamera()
                 newCamera.centerCoordinate = currentCamera.centerCoordinate
                 newCamera.heading = currentCamera.heading
-                newCamera.altitude = currentCamera.altitude * self.valueCameraMap
+                newCamera.altitude = currentCamera.altitude * self.viewModel.valueCameraMap
                 newCamera.pitch = currentCamera.pitch
             }
             
             self.mapView.setCamera(newCamera, animated: true)
-            
-        }.store(in: reactive.bag)
-    }
-    
-    /// раскидал точки по карте и нарисовал радиус по заданной дистанции
-    func setupBinding() {
-        self.viewModel.result.observeNext { [weak self] result in
-            guard let _self = self else { return }
-            
-            var annotations: [MKAnnotation] = []
-            result.forEach { data in
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(data?.lat ?? _self.defaultValue),
-                                                               longitude: CLLocationDegrees(data?.lon ?? _self.defaultValue))
-                annotation.title = String(data?.confirmed ?? 0)
-                _self.showCircle(coordinate: CLLocationCoordinate2D(
-                                    latitude: CLLocationDegrees(data?.lat ?? _self.defaultValue),
-                                    longitude: CLLocationDegrees(data?.lon ?? _self.defaultValue)), radius: _self.circleDistance)
-                
-                annotations.append(annotation)
-            }
-            _self.mapView.addAnnotations(annotations)
             
         }.store(in: reactive.bag)
     }
@@ -264,7 +264,7 @@ private extension MapViewController {
         let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                                 longitude: location.coordinate.longitude)
                 
-        let span = MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: latitudeDelta)
+        let span = MKCoordinateSpan(latitudeDelta: viewModel.latitudeDelta, longitudeDelta: viewModel.latitudeDelta)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
         let pin = MKPointAnnotation()
@@ -310,7 +310,7 @@ extension MapViewController: MKMapViewDelegate {
                 container.pin(size: layout.containerSize)
                 container.pinToSuperview(edges: [.left,.bottom], insets: layout.containerInsets)
                 container.layer.masksToBounds = false
-                container.layer.cornerRadius = containerForLabelPointCornerRadius
+                container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
 
                 let confirmedLabel = UILabel()
                 confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -320,13 +320,13 @@ extension MapViewController: MKMapViewDelegate {
                 confirmedLabel.pinCenterToSuperview(of: .vertical)
                 confirmedLabel.pinToSuperview(edges: [.all], insets: layout.confirmedLabelInsets)
                 
-                formatter.groupingSeparator = " "
-                formatter.numberStyle = .decimal
-                formatter.maximumFractionDigits = 2
+                numberFormatter.groupingSeparator = " "
+                numberFormatter.numberStyle = .decimal
+                numberFormatter.maximumFractionDigits = 2
                 
                 let result = Int((annotationView?.annotation?.title ?? "") ?? "")
-                confirmedLabel.text = formatter.string(from: result as NSNumber? ?? 0)
-                confirmedLabel.font = .boldSystemFont(ofSize: self.confirmedLabelSize)
+                confirmedLabel.text = numberFormatter.string(from: result as NSNumber? ?? 0)
+                confirmedLabel.font = .boldSystemFont(ofSize: viewModel.confirmedLabelSize)
                 confirmedLabel.textColor = .black
                 annotationView?.image = UIImage(named: appearance.annotationImage)
             } else {
@@ -339,8 +339,8 @@ extension MapViewController: MKMapViewDelegate {
         var circleRenderer = MKCircleRenderer()
         if let overlay = overlay as? MKCircle {
             circleRenderer = MKCircleRenderer(circle: overlay)
-            circleRenderer.fillColor = #colorLiteral(red: 0.02352941176, green: 0.2823529412, blue: 0.6745098039, alpha: 1)
-            circleRenderer.alpha = circleRendererAlpha
+            circleRenderer.fillColor = UIColor.backgroundCircleRadius
+            circleRenderer.alpha = viewModel.circleRendererAlpha
         }
         return circleRenderer
     }
