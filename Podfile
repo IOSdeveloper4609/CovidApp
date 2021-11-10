@@ -7,4 +7,5 @@ target 'COVIDPoint' do
 
   pod 'Alamofire', '5.4.4'
   pod 'ReactiveKit'
+  pod 'Bond'
 end
