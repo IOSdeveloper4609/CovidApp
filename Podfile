@@ -6,7 +6,8 @@ target 'COVIDPoint' do
   use_frameworks!
 
   pod 'Alamofire', '5.4.4'
-  pod 'ReactiveKit', '3.17.4'
+  pod 'ReactiveKit'
+  pod 'Bond'
   pod 'FittedSheets', '2.4.2'
   pod 'SDWebImage', '5.12.0'
 end

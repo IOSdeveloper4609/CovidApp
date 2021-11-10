@@ -19,6 +19,8 @@ public extension UIColor {
     static let darkGreen = UIColor(red: 87, green: 138, blue: 81)
     static let lightGreen = UIColor(red: 124, green: 199, blue: 116)
     static let scaleLightGray = UIColor(hex: "#F0F0F0")
+    static let backgroundCircleRadius = UIColor(red: 0.02352941176, green: 0.2823529412, blue: 0.6745098039, alpha: 1)
+    static let backgroundContainerForButtons = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
 }
 
 public extension UIColor {

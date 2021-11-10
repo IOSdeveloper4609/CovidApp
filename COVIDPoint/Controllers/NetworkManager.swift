@@ -1,16 +1,19 @@
 //
-//  NetLayer.swift
-//  apicovidtest
+//  Network.swift
+//  COVIDPoint
 //
-//  Created by Ahtem Sitjalilov on 19.10.2021.
+//  Created by usermac on 08.11.2021.
 //
 
 import Foundation
 import Alamofire
 
-final class NetworkManager {
-    
-    func getCountryInfo(completion: @escaping (Countries) -> Void) {
+protocol NetworkManagerProtocol {
+    func getCountryInfo(completion: @escaping (Countries?, NSError?) -> Void)
+}
+
+final class NetworkManager: NetworkManagerProtocol {
+    func getCountryInfo(completion: @escaping (Countries?, NSError?) -> Void) {
         let urlString = Constants.kBaseUrl + Constants.kCountries
         
         AF.request(urlString, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { results in
@@ -21,7 +24,7 @@ final class NetworkManager {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let object = try decoder.decode(Countries.self, from: results.data ?? Data())
-                    completion(object)
+                    completion(object, nil)
                     
                 } catch let error as NSError {
                     print("Failed to load: \(error.localizedDescription)")
@@ -32,5 +35,5 @@ final class NetworkManager {
             }
         })
     }
-    
 }
+
