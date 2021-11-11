@@ -10,7 +10,7 @@ import FittedSheets
 
 extension DetailViewController {
     
-    static func getSheetViewController() -> UIViewController {
+    static func getSheetViewController(_ countryIndex: Int) -> UIViewController {
         let vc = DetailViewController()
         let options = SheetOptions(
             pullBarHeight: 24,
@@ -22,6 +22,8 @@ extension DetailViewController {
             useInlineMode: false,
             horizontalPadding: 0,
             maxWidth: nil)
+        
+        vc.viewModel.countryIndex = countryIndex
         
         let sheetController = SheetViewController(
             controller: vc,

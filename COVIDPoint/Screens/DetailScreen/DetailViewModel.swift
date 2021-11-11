@@ -15,15 +15,19 @@ class DetailViewModel {
     weak var progressRecovered: ProgressViewProtocol?
     weak var histogramView: HistogramViewProtocol?
     
+    var countryIndex: Int?
+    var data: CountriesData?
+    
     /// Функция запускается в результате конфигурации DetailViewController
     func handleViewDidLoad() {
-        self.setContentCountryBlock()
-        self.setContentProgressBlock()
-        self.setContentHistogramBlock()
+        guard let id = countryIndex else { return }
+        data = LocalSessionManager.shared.covidData?.data?[id]
+        
     }
     
     // Функция запускается только после отображения экрана
     func handleViewDidAppear() {
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             self.progressConfirmed?.setProgress(0.7)
             self.progressDeaths?.setProgress(0.7)
@@ -31,28 +35,23 @@ class DetailViewModel {
         }
     }
     
-    /// Установить название и иконку страны
-    func setContentCountryBlock() {
-        countryNameView?.setName("Румыния")
-        countryNameView?.setIcon("za")
-    }
-    
-    func setContentProgressBlock() {
+    func setData() {
+        
+        countryNameView?.setName(data?.name ?? "Error")
+        countryNameView?.setIcon(data?.code  ?? "Error")
+        
         progressConfirmed?.setName("Подтверждено")
-        progressConfirmed?.setCount("1 486 254")
-        progressConfirmed?.setPlusCount("1 486 254")
+        progressConfirmed?.setCount("\(data?.latestData.confirmed ?? 0)")
+        progressConfirmed?.setPlusCount("\(data?.today?.confirmed ?? 0)")
         
         progressDeaths?.setName("Смертельные случаи")
-        progressDeaths?.setCount("43 039")
+        progressDeaths?.setCount("\(data?.latestData.deaths ?? 0)")
         progressDeaths?.setPlusCount(nil)
         
         progressRecovered?.setName("Выздоро­вевшие")
-        progressRecovered?.setCount("1 275 351")
+        progressRecovered?.setCount("\(data?.latestData.recovered ?? 0)")
         progressRecovered?.setPlusCount(nil)
-    }
-    
-    /// Установить контент блока гистограммы
-    func setContentHistogramBlock() {
+        
         histogramView?.setTitle("Динамика заражения")
         let columns: [CGFloat] = (1...31).map { 1/31 * CGFloat($0) }
         histogramView?.setColumn(columns)
