@@ -13,6 +13,8 @@ import Bond
 private extension MapViewController {
     /// Отступы
     struct Layout {
+        let segmentControlInsets: UIEdgeInsets
+        let segmentControlSize: CGSize
         let mapInsets: UIEdgeInsets
         let containerSize: CGSize
         let containerInsets: UIEdgeInsets
@@ -28,10 +30,12 @@ private extension MapViewController {
         let delimiterImageInsets: UIEdgeInsets
         
         /// Инициализатор
-        init(mapInsets: UIEdgeInsets = UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
-             containerSize: CGSize = CGSize(width: 60, height: 25),
-             containerInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: -28, bottom: 20, right: 0),
-             confirmedLabelSize: CGSize = CGSize(width: 100, height: 0),
+        init(segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
+             segmentControlSize: CGSize = .init(width: 200, height: 38),
+             mapInsets: UIEdgeInsets = UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
+             containerSize: CGSize = CGSize(width: 80, height: 25),
+             containerInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: -33, bottom: 20, right: 0),
+             confirmedLabelSize: CGSize = CGSize(width: 120, height: 0),
              confirmedLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5),
              makeMapBiggerButtonSize: CGSize = CGSize(width: 35, height: 10),
              makeMapBiggerButtonInsets: UIEdgeInsets = UIEdgeInsets(top: 13, left: 10, bottom: 52, right: 10),
@@ -54,6 +58,8 @@ private extension MapViewController {
             self.containerForButtonsInsets = containerForButtonsInsets
             self.delimiterImageSize = delimiterImageSize
             self.delimiterImageInsets = delimiterImageInsets
+            self.segmentControlInsets = segmentControlInsets
+            self.segmentControlSize = segmentControlSize
         }
     }
     
@@ -64,26 +70,33 @@ private extension MapViewController {
         let smallerImage: String
         let biggerImage: String
         let delimiterImage: String
+        let mapImage: String
+        let listImage: String
         
         init(annotationImage: String = "pin",
              reuseId: String = "pin",
              smallerImage: String = "smaller",
              biggerImage: String = "bigger",
-             delimiterImage: String = "delimiter") {
+             delimiterImage: String = "delimiter",
+             mapImage: String = "map",
+             listImage: String = "list") {
             self.reuseId = reuseId
             self.annotationImage = annotationImage
             self.smallerImage = smallerImage
             self.biggerImage = biggerImage
             self.delimiterImage = delimiterImage
+            self.mapImage = mapImage
+            self.listImage = listImage
         }
     }
 }
 
 final class MapViewController: UIViewController {
+    private let mapView = MKMapView()
+    private var segmentControl = UISegmentedControl()
     private var layout: Layout = Layout()
     private var appearance: Appearance = Appearance()
     private let viewModel: MapViewModelProtocol!
-    private let mapView = MKMapView()
     private let locationManager = CLLocationManager()
     private var circle = MKCircle()
     private let makeMapBiggerButton = UIButton()
@@ -105,23 +118,93 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addAndSetupSubviews(layout: self.layout)
+        apply(appearance: self.appearance)
+        setupLocationManager()
         setupBinding()
         viewModel.getCountries()
-        addAndSetupSubviews(layout: layout)
+        setupCameraZoomRange()
     }
 }
 
 // MARK: - Private
 private extension MapViewController {
-    
     func addAndSetupSubviews(layout: Layout) {
-        setupLocationManager()
-        setupMapView()
-        setupContainerForButtons()
-        setupMakeMapBiggerButton()
-        setupMakeMapSmallerButton()
-        setupDelimiterImage()
-        setupCameraZoomRange()
+        let segmentImage: [UIImage?] = [UIImage(named: appearance.mapImage),
+                                        UIImage(named: appearance.listImage)]
+        
+        
+        /// настройка карты
+        self.mapView.translatesAutoresizingMaskIntoConstraints = false
+        self.mapView.delegate = self
+        self.view.addSubview(mapView)
+        self.mapView.pinToSuperview(edges: [.all],
+                                    insets: layout.mapInsets,
+                                    safeArea: false,
+                                    priority: .required)
+        
+        /// Настройка SegmentControl
+        segmentControl = UISegmentedControl(items: segmentImage as [Any])
+        segmentControl.selectedSegmentIndex = 0
+        self.segmentControl.translatesAutoresizingMaskIntoConstraints = false
+        self.mapView.addSubview(self.segmentControl)
+        self.segmentControl.pinToSuperview(edges: [.top, .left, .right],
+                                           insets: layout.segmentControlInsets,
+                                           safeArea: false,
+                                           priority: .required)
+        self.segmentControl.pin(size: layout.segmentControlSize)
+        self.segmentControl.addTarget(self, action: #selector(openListScreenViewController), for: .valueChanged)
+        
+        /// настройка контейнера для кнопок
+        self.containerForButtons.translatesAutoresizingMaskIntoConstraints = false
+        self.containerForButtons.backgroundColor = UIColor.backgroundContainerForButtons
+        self.mapView.addSubview(containerForButtons)
+        self.containerForButtons.layer.cornerRadius = viewModel.containerForButtonsCornerRadius
+        self.containerForButtons.pin(size: layout.containerForButtonsSize)
+        self.containerForButtons.pinToSuperview(edges: [.right],
+                                           insets: layout.containerForButtonsInsets)
+        self.containerForButtons.pinCenterToSuperview(of: .vertical)
+        
+        /// настройка кнопки приближения карты
+        self.makeMapBiggerButton.translatesAutoresizingMaskIntoConstraints = false
+        self.makeMapBiggerButton.setImage(UIImage(named: appearance.biggerImage), for: .normal)
+        self.containerForButtons.addSubview(makeMapBiggerButton)
+        self.makeMapBiggerButton.contentMode = .scaleAspectFit
+        self.makeMapBiggerButton.pin(size: layout.makeMapBiggerButtonSize)
+        self.makeMapBiggerButton.pinToSuperview(edges: [.all],
+                                           insets: layout.makeMapBiggerButtonInsets)
+        /// настройка кнопки отдаления карты
+        self.makeMapSmallerButton.translatesAutoresizingMaskIntoConstraints = false
+        self.makeMapSmallerButton.setImage(UIImage(named: appearance.smallerImage), for: .normal)
+        self.containerForButtons.addSubview(makeMapSmallerButton)
+        self.makeMapSmallerButton.contentMode = .scaleAspectFit
+        self.makeMapSmallerButton.pin(size: layout.makeMapSmallerButtonSize)
+        self.makeMapSmallerButton.pinToSuperview(edges: [.all],
+                                            insets: layout.makeMapSmallerButtonInsets)
+        
+        /// настройка картинки разделения кнопок
+        self.delimiterImage.translatesAutoresizingMaskIntoConstraints = false
+        self.delimiterImage.image = UIImage(named: appearance.delimiterImage)
+        self.containerForButtons.addSubview(delimiterImage)
+        self.delimiterImage.pin(size: layout.delimiterImageSize)
+        self.delimiterImage.pinToSuperview(edges: [.all],
+                                            insets: layout.delimiterImageInsets)
+    }
+    
+    @objc func openListScreenViewController() {
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
+            print("selectedSegmentIndex")
+        default:
+            let listScreen = ListScreenViewController(layout: .init(), appearance: .init())
+            listScreen.modalPresentationStyle = .fullScreen
+            self.present(listScreen, animated: true, completion: nil)
+        }
+    }
+    
+    /// Применение стилей
+    private func apply(appearance: MapViewController.Appearance) {
+        self.segmentControl.apply(style: appearance.screenChangeControlStyle)
     }
     
     /// настройка locationManager
@@ -131,62 +214,7 @@ private extension MapViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
-    
-    /// настройка карты
-    func setupMapView() {
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        mapView.delegate = self
-        view.addSubview(mapView)
-        self.mapView.pinToSuperview(edges: [.all],
-                                    insets: layout.mapInsets,
-                                    safeArea: false,
-                                    priority: .required)
-    }
-    
-    /// настройка контейнера для кнопок
-    func setupContainerForButtons() {
-        containerForButtons.translatesAutoresizingMaskIntoConstraints = false
-        containerForButtons.backgroundColor = UIColor.backgroundContainerForButtons
-        mapView.addSubview(containerForButtons)
-        containerForButtons.layer.cornerRadius = viewModel.containerForButtonsCornerRadius
-        containerForButtons.pin(size: layout.containerForButtonsSize)
-        containerForButtons.pinToSuperview(edges: [.right],
-                                           insets: layout.containerForButtonsInsets)
-        containerForButtons.pinCenterToSuperview(of: .vertical)
-    }
-    
-    /// настройка кнопки приближения карты
-    func setupMakeMapBiggerButton() {
-        makeMapBiggerButton.translatesAutoresizingMaskIntoConstraints = false
-        makeMapBiggerButton.setImage(UIImage(named: appearance.biggerImage), for: .normal)
-        containerForButtons.addSubview(makeMapBiggerButton)
-        makeMapBiggerButton.contentMode = .scaleAspectFit
-        makeMapBiggerButton.pin(size: layout.makeMapBiggerButtonSize)
-        makeMapBiggerButton.pinToSuperview(edges: [.all],
-                                           insets: layout.makeMapBiggerButtonInsets)
-    }
-    
-    /// настройка кнопки отдаления карты
-    func setupMakeMapSmallerButton() {
-        makeMapSmallerButton.translatesAutoresizingMaskIntoConstraints = false
-        makeMapSmallerButton.setImage(UIImage(named: appearance.smallerImage), for: .normal)
-        containerForButtons.addSubview(makeMapSmallerButton)
-        makeMapSmallerButton.contentMode = .scaleAspectFit
-        makeMapSmallerButton.pin(size: layout.makeMapSmallerButtonSize)
-        makeMapSmallerButton.pinToSuperview(edges: [.all],
-                                            insets: layout.makeMapSmallerButtonInsets)
-    }
-    
-    /// настройка картинки разделения кнопок
-    func setupDelimiterImage() {
-        delimiterImage.translatesAutoresizingMaskIntoConstraints = false
-        delimiterImage.image = UIImage(named: appearance.delimiterImage)
-        containerForButtons.addSubview(delimiterImage)
-        delimiterImage.pin(size: layout.delimiterImageSize)
-        delimiterImage.pinToSuperview(edges: [.all],
-                                            insets: layout.delimiterImageInsets)
-    }
-    
+        
     /// настройка  масштабирования карты
     func setupCameraZoomRange() {
         if #available(iOS 13.0, *) {
@@ -206,6 +234,7 @@ private extension MapViewController {
                 annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
                                                                longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue))
                 annotation.title = String(data?.confirmed ?? 0)
+                annotation.subtitle = "\(data?.id ?? 0)"
                 _self.showCircle(coordinate: CLLocationCoordinate2D(
                                     latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
                                     longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue)), radius: _self.viewModel.circleDistance)
@@ -308,7 +337,8 @@ extension MapViewController: MKMapViewDelegate {
                 annotationView?.addSubview(container)
                 container.translatesAutoresizingMaskIntoConstraints = false
                 container.pin(size: layout.containerSize)
-                container.pinToSuperview(edges: [.left,.bottom], insets: layout.containerInsets)
+                container.pinToSuperview(edges: [.left,.bottom],
+                                         insets: layout.containerInsets)
                 container.layer.masksToBounds = false
                 container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
 
@@ -318,7 +348,8 @@ extension MapViewController: MKMapViewDelegate {
                 container.addSubview(confirmedLabel)
                 confirmedLabel.pin(size: layout.confirmedLabelSize)
                 confirmedLabel.pinCenterToSuperview(of: .vertical)
-                confirmedLabel.pinToSuperview(edges: [.all], insets: layout.confirmedLabelInsets)
+                confirmedLabel.pinToSuperview(edges: [.all],
+                                              insets: layout.confirmedLabelInsets)
                 
                 numberFormatter.groupingSeparator = " "
                 numberFormatter.numberStyle = .decimal
@@ -343,6 +374,12 @@ extension MapViewController: MKMapViewDelegate {
             circleRenderer.alpha = viewModel.circleRendererAlpha
         }
         return circleRenderer
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        let id = Int((view.annotation?.subtitle ?? "") ?? "")
+        let detailVC  = DetailViewController.getSheetViewController(id ?? 0)
+        self.present(detailVC, animated: true, completion: nil)
     }
 }
 

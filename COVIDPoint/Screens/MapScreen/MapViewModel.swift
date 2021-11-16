@@ -32,6 +32,7 @@ extension MapViewModel {
         var lat: Float?
         var lon: Float?
         var confirmed: Int?
+        var population: Int?
     }
 }
 
@@ -72,7 +73,8 @@ final class MapViewModel: MapViewModelProtocol {
             var country = CountryState(id: index)
             country.lat = data.coordinates?.latitude
             country.lon = data.coordinates?.longitude
-            country.confirmed = data.latestData.deaths
+            country.confirmed = data.latestData.confirmed
+            country.population = data.population
             tmpCountryState.append(country)
         }
         self.countryState = tmpCountryState

@@ -11,7 +11,7 @@ extension CountryNameView {
     struct Layout {
         var size: CGSize = CGSize(width: 0, height: 58)
         
-        var countryLabelInsets: UIEdgeInsets = UIEdgeInsets(all: 0)
+        var countryLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 65)
         var countryLabelCenterY: Bool = true
         var countryIconCorner: Bool = true
         

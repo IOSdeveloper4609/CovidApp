@@ -10,7 +10,7 @@ extension SplashViewController {
         
         init(imageInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
              companyLogoImageSize: CGSize = .init(width: 55, height: 56),
-             companyLogoImageInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 100, right: 0) ) {
+             companyLogoImageInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 150, right: 0) ) {
             self.imageInsets = imageInsets
             self.companyLogoImageSize = companyLogoImageSize
             self.companyLogoImageInsets = companyLogoImageInsets
@@ -74,7 +74,7 @@ final class SplashViewController: UIViewController {
         /// Установка контроллеров
         tabBarController.setViewControllers(viewControllers, animated: true)
         /// Скрытие TabBar на экране
-        tabBarController.tabBar.isHidden = false
+        tabBarController.tabBar.isHidden = true
         self.window?.rootViewController = tabBarController
     }
     

@@ -18,6 +18,7 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
     
     override func setupSubviews() {
         countryLabel = UILabel()
+        countryLabel?.numberOfLines = 0
         countryLabel?.translatesAutoresizingMaskIntoConstraints = false
 
         countryIcon = UIImageView()
@@ -28,7 +29,7 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
         pin(height: layout.size.height)
 
         addSubview(countryLabel!)
-        countryLabel?.pinToSuperview(edges: [.left], insets: layout.countryLabelInsets)
+        countryLabel?.pinToSuperview(edges: [.left, .right], insets: layout.countryLabelInsets)
         if layout.countryLabelCenterY {
             countryLabel?.pinCenterToSuperview(of: .vertical)
         }
@@ -58,7 +59,7 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
     func setIcon(_ countryCode: String) {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        let urlStr = String(format: Constants.flags, countryCode)
+        let urlStr = String(format: Constants.flags, countryCode.lowercased())
         let url = URL(string: urlStr)
         image.sd_setImage(with: url)
         countryIcon?.addSubview(image)

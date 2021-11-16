@@ -10,7 +10,7 @@ import FittedSheets
 
 extension DetailViewController {
     
-    static func getSheetViewController(_ countryIndex: Int) -> UIViewController {
+    static func getSheetViewController(_ countryId: Int) -> UIViewController {
         let vc = DetailViewController()
         let options = SheetOptions(
             pullBarHeight: 24,
@@ -23,14 +23,14 @@ extension DetailViewController {
             horizontalPadding: 0,
             maxWidth: nil)
         
-        vc.viewModel.countryIndex = countryIndex
+        vc.viewModel.countryId = countryId
         
         let sheetController = SheetViewController(
             controller: vc,
             sizes: [],
             options: options)
         
-        vc.sheetControll = sheetController
+        vc.sheetControl = sheetController
         
         sheetController.gripSize = CGSize(width: 50, height: 4)
         sheetController.gripColor = UIColor(hex: "#E6E6E6")
@@ -60,7 +60,7 @@ class DetailViewController: UIViewController {
     let progressRecovered = ProgressView()
     let histogramView = HistogramView()
     
-    weak var sheetControll: SheetViewController?
+    weak var sheetControl: SheetViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ class DetailViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        sheetControll?.setSizes([.fixed(550)], animated: true)
+        sheetControl?.setSizes([.fixed(550)], animated: true)
         viewModel.handleViewDidAppear()
     }
     
