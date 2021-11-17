@@ -51,23 +51,16 @@ extension ListScreenViewController {
 // MARK: ListScreenViewController
 /// Статистика по странам в виде списка
 class ListScreenViewController: UIViewController {
+    
     private var segmentControlContainer: UIView!
-    private var segmentControl = UISegmentedControl()
-    private var mainCollectionView: UICollectionView?
- 
-    let data = LocalSessionManager.shared.covidData?.data
+    private var segmentControl: UISegmentedControl!
+    private var mainCollectionView: UICollectionView!
+    private var viewModel = ListScreenViewModel()
     
     /// Layout
     private var layout: ListScreenViewController.Layout!
     /// Appearance
     private var appearance: ListScreenViewController.Appearance!
-    
-//    var viewModel: ListCellViewModelProtocol? {
-//        didSet {
-//            guard let _viewModel = self.viewModel else { return }
-//            self.collectionView.reloadData()
-//        }
-//    }
     
     
     /// Инициализатор
@@ -171,35 +164,65 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return data?.count ?? 0
+        return viewModel.data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell else {
             return UICollectionViewCell()
         }
-         
-        if let result = data?[safe: indexPath.row] {
-            cell.setupWithModel(data: result)
+        
+        if let data = viewModel.data[safe: indexPath.row] {
+            cell.viewModel = ListCellViewModel(data: data)
         }
-    
+        
+        cell.delegate = self
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         collectionView.performBatchUpdates(nil, completion: nil)
+        
+        collectionView.performBatchUpdates(nil, completion: nil)
+        
+        //        guard let cell = collectionView.cellForItem(at: indexPath) as? ListCell else {
+        //            assertionFailure("this cell is missing")
+        //            return
+        //        }
+        //
+        //        cell.flag = true
+        //
+        //        if cell.flag {
+        //            cell.progressDeaths.isHidden = false
+        //            cell.progressRecovered.isHidden = false
+        //            cell.histogramView.isHidden = false
+        //            collectionView.performBatchUpdates(nil, completion: nil)
+        //        }
+        
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         switch collectionView.indexPathsForSelectedItems?.first {
         case .some(indexPath):
             let height = (view.frame.width) * 2 / 20
-            return CGSize(width: view.frame.width - 20, height: height + 300)
+            return CGSize(width: view.frame.width - 20, height: height + 450)
         default:
             let height = (view.frame.width) * 2 / 20
-            return CGSize(width: view.frame.width - 50, height: height + 450)
+            return CGSize(width: view.frame.width - 50, height: height + 170)
         }
     }
+}
+
+
+extension ListScreenViewController: DetailedInfoProtocol {
     
+    func openDetailedInfo(cell: ListCell) {
+        
+        let indexPath = self.mainCollectionView.indexPath(for: cell)
+        
+        
+        print(indexPath)
+        
+    }
 }

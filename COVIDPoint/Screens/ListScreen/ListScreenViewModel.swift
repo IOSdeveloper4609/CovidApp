@@ -9,10 +9,10 @@ import Foundation
 
 // MARK: ListScreenViewModelProtocol
 protocol ListScreenViewModelProtocol {
-    
+    var data: [CountriesData] { get set }
 }
 
 // MARK: ListScreenViewModel
 final class ListScreenViewModel: ListScreenViewModelProtocol {
-    
+    var data: [CountriesData] = LocalSessionManager.shared.covidData?.data ?? []
 }

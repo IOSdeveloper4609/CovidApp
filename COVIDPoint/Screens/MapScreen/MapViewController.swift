@@ -32,19 +32,19 @@ private extension MapViewController {
         /// Инициализатор
         init(segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
-             mapInsets: UIEdgeInsets = UIEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0),
-             containerSize: CGSize = CGSize(width: 80, height: 25),
-             containerInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: -33, bottom: 20, right: 0),
-             confirmedLabelSize: CGSize = CGSize(width: 120, height: 0),
-             confirmedLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5),
-             makeMapBiggerButtonSize: CGSize = CGSize(width: 35, height: 10),
-             makeMapBiggerButtonInsets: UIEdgeInsets = UIEdgeInsets(top: 13, left: 10, bottom: 52, right: 10),
-             makeMapSmallerButtonSize: CGSize = CGSize(width: 35, height: 10),
-             makeMapSmallerButtonInsets: UIEdgeInsets = UIEdgeInsets(top: 55, left: 10, bottom: 10, right: 10),
-             containerForButtonsSize: CGSize = CGSize(width: 41, height: 80),
-             containerForButtonsInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0 , right: 10),
-             delimiterImageSize: CGSize = CGSize(width: 35, height: 1),
-             delimiterImageInsets: UIEdgeInsets = UIEdgeInsets(top: 42, left: 5, bottom: 35, right: 5)  ) {
+             mapInsets: UIEdgeInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0),
+             containerSize: CGSize = .init(width: 80, height: 25),
+             containerInsets: UIEdgeInsets = .init(top: 0, left: -33, bottom: 20, right: 0),
+             confirmedLabelSize: CGSize = .init(width: 120, height: 0),
+             confirmedLabelInsets: UIEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5),
+             makeMapBiggerButtonSize: CGSize = .init(width: 35, height: 10),
+             makeMapBiggerButtonInsets: UIEdgeInsets = .init(top: 13, left: 10, bottom: 52, right: 10),
+             makeMapSmallerButtonSize: CGSize = .init(width: 35, height: 10),
+             makeMapSmallerButtonInsets: UIEdgeInsets = .init(top: 55, left: 10, bottom: 10, right: 10),
+             containerForButtonsSize: CGSize = .init(width: 41, height: 80),
+             containerForButtonsInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0 , right: 10),
+             delimiterImageSize: CGSize = .init(width: 35, height: 1),
+             delimiterImageInsets: UIEdgeInsets = .init(top: 42, left: 5, bottom: 35, right: 5)  ) {
             self.mapInsets = mapInsets
             self.containerSize = containerSize
             self.containerInsets = containerInsets
@@ -118,6 +118,14 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("first screen loaded")
+       
+    }
+    
+    override func loadView() {
+        super.loadView()
+        
         addAndSetupSubviews(layout: self.layout)
         apply(appearance: self.appearance)
         setupLocationManager()
