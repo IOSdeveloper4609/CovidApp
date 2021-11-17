@@ -53,15 +53,15 @@ class DetailViewModel {
         countryNameView?.setIcon(data?.code  ?? "Error")
         
         progressConfirmed?.setName("Подтверждено")
-        progressConfirmed?.setCount(numberFormatter.string(from: Int(data?.latestData.confirmed ?? 0) as NSNumber? ?? 0) ?? "")
-        progressConfirmed?.setPlusCount(numberFormatter.string(from: Int(data?.today?.confirmed ?? 0) as NSNumber? ?? 0))
+        progressConfirmed?.setCount(numberFormatter.string(from: data?.latestData.confirmed as NSNumber? ?? 0) ?? "")
+        progressConfirmed?.setPlusCount(numberFormatter.string(from: data?.today?.confirmed  as NSNumber? ?? 0))
         
         progressDeaths?.setName("Смертельные случаи")
-        progressDeaths?.setCount(numberFormatter.string(from: Int(data?.latestData.deaths ?? 0) as NSNumber? ?? 0) ?? "")
+        progressDeaths?.setCount(numberFormatter.string(from: data?.latestData.deaths as NSNumber? ?? 0) ?? "")
         progressDeaths?.setPlusCount(nil)
         
         progressRecovered?.setName("Выздоро­вевшие")
-        progressRecovered?.setCount(numberFormatter.string(from: Int(data?.latestData.recovered ?? 0) as NSNumber? ?? 0) ?? "")
+        progressRecovered?.setCount(numberFormatter.string(from: data?.latestData.recovered as NSNumber? ?? 0) ?? "")
         progressRecovered?.setPlusCount(nil)
         
         histogramView?.setTitle("Динамика заражения")

@@ -52,8 +52,8 @@ final class ListCell: BaseCell {
             _viewModel.progressDeaths = progressDeaths
             _viewModel.progressRecovered = progressRecovered
             _viewModel.histogramView = histogramView
-            _viewModel.setData()
             _viewModel.setProgressData()
+            _viewModel.setData()
         }
     }
     

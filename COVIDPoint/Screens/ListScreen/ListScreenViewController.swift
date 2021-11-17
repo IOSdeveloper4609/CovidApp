@@ -55,13 +55,20 @@ class ListScreenViewController: UIViewController {
     private var segmentControlContainer: UIView!
     private var segmentControl: UISegmentedControl!
     private var mainCollectionView: UICollectionView!
-    private var viewModel = ListScreenViewModel()
     
     /// Layout
     private var layout: ListScreenViewController.Layout!
     /// Appearance
     private var appearance: ListScreenViewController.Appearance!
     
+    var viewModel = ListScreenViewModel()
+    //var viewModel: ListScreenViewModelProtocol? {
+    //        didSet {
+    //            guard let _viewModel = self.viewModel else { return }
+    //            self.mainCollectionView.reloadData()
+    //        }
+      //  }
+
     
     /// Инициализатор
     /// - Parameters:
@@ -168,16 +175,11 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell else {
-            return UICollectionViewCell()
-        }
-        
-        if let data = viewModel.data[safe: indexPath.row] {
-            cell.viewModel = ListCellViewModel(data: data)
-        }
-        
-        cell.delegate = self
-        return cell
+         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell,
+         vm = self.viewModel
+        cell?.viewModel = vm.makeCellViewModel(indexPath.row)
+
+        return cell ?? UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

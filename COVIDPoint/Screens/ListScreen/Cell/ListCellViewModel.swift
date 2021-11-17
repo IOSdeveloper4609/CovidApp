@@ -35,7 +35,6 @@ class ListCellViewModel: ListCellViewModelProtocol {
         self.data = data
     }
     
-    
     func setData() {
         numberFormatter.groupingSeparator = " "
         numberFormatter.numberStyle = .decimal
