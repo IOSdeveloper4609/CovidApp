@@ -8,42 +8,97 @@
 import UIKit
 
 protocol DetailedInfoProtocol {
-    func openDetailedInfo(cell: ListCell)
+    func openDetailedInfo(indexPath: IndexPath)
 }
 
+protocol RemoveInfoProtocol {
+    func removeDetailedInfo(indexPath: IndexPath)
+}
 
 extension ListCell {
     struct Layout {
-        var stackViewInsets: UIEdgeInsets = UIEdgeInsets(top: 15, left: 20, bottom: 0, right: 20)
-        var stackViewSpacing: CGFloat = 14
-    }
-    
-    struct Appearance: AppearanceProtocol {
-        let progressConfirmedStartColor: UIColor = UIColor.gray
-        let progressConfirmedEndColor: UIColor = UIColor.darkGray
+        let stackViewInsets: UIEdgeInsets
+        let stackViewSpacing: CGFloat
+        let removeInfoButtonInsets: UIEdgeInsets
+        let removeInfoButtonSize: CGSize
+        let containerForButtonInsets: UIEdgeInsets
+        let containerForButtonSize: CGSize
+        let imageButtonInsets: UIEdgeInsets
+        let imageButtonSize: CGSize
+        let detailedInfoButtonInsets: UIEdgeInsets
+        let detailedInfoButtonSize: CGSize
         
-        let progressDeathsStartColor: UIColor = UIColor.darkRed
-        let progressDeathsEndColor: UIColor = UIColor.lightRed
-        
-        let progressRecoveredStartColor: UIColor = UIColor.darkGreen
-        let progressRecoveredEndColor: UIColor = UIColor.lightGreen
+        init(stackViewInsets: UIEdgeInsets = .init(top: 35, left: 20, bottom: 50, right: 20),
+             stackViewSpacing: CGFloat = 14,
+             removeInfoButtonInsets: UIEdgeInsets = .init(top: 10, left: 0, bottom: 0, right: 10),
+             removeInfoButtonSize: CGSize = .init(width: 20, height: 20),
+             containerForButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 12, right: 10),
+             containerForButtonSize: CGSize = .init(width: 175, height: 35),
+             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 3, right: 25),
+             imageButtonSize: CGSize = .init(width: 20, height: 30),
+             detailedInfoButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 45),
+             detailedInfoButtonSize: CGSize = .init(width: 100, height: 30)) {
+            self.stackViewInsets = stackViewInsets
+            self.stackViewSpacing = stackViewSpacing
+            self.removeInfoButtonInsets = removeInfoButtonInsets
+            self.removeInfoButtonSize = removeInfoButtonSize
+            self.containerForButtonInsets = containerForButtonInsets
+            self.containerForButtonSize = containerForButtonSize
+            self.imageButtonInsets = imageButtonInsets
+            self.imageButtonSize = imageButtonSize
+            self.detailedInfoButtonInsets = detailedInfoButtonInsets
+            self.detailedInfoButtonSize = detailedInfoButtonSize
+        }
     }
 }
+    
+    struct Appearance: AppearanceProtocol {
+        let detailedInfoButtonIcon: String
+        let removeInfoButtonIcon: String
+        let progressConfirmedStartColor: UIColor
+        let progressConfirmedEndColor: UIColor
+        let progressDeathsStartColor: UIColor
+        let progressDeathsEndColor: UIColor
+        let progressRecoveredStartColor: UIColor
+        let progressRecoveredEndColor: UIColor
+        
+        init(detailedInfoButtonIcon: String = "detailedButton",
+             removeInfoButtonIcon: String = "removeButton",
+             progressConfirmedStartColor: UIColor = .gray,
+             progressConfirmedEndColor: UIColor = .darkGray,
+             progressDeathsStartColor: UIColor = .darkRed,
+             progressDeathsEndColor: UIColor = .lightRed,
+             progressRecoveredStartColor: UIColor = .darkGreen,
+             progressRecoveredEndColor: UIColor = .lightGreen) {
+            self.detailedInfoButtonIcon = detailedInfoButtonIcon
+            self.removeInfoButtonIcon = removeInfoButtonIcon
+            self.progressConfirmedStartColor = progressConfirmedStartColor
+            self.progressConfirmedEndColor = progressConfirmedEndColor
+            self.progressDeathsStartColor = progressDeathsStartColor
+            self.progressDeathsEndColor = progressDeathsEndColor
+            self.progressRecoveredStartColor = progressRecoveredStartColor
+            self.progressRecoveredEndColor = progressRecoveredEndColor
+        }
+    }
+
 
 final class ListCell: BaseCell {
-    private let layout = Layout()
     private let appearances = Appearance()
+    private var stackView = UIStackView()
+    private let imageButton = UIImageView()
+    private let detailedInfoButton = UIButton()
+    private let removeInfoButton = UIButton()
     private let countryName = CountryNameView()
     private var progressConfirmed = ProgressView()
-    private var stackView = UIStackView()
-    private let detailedButton = UIButton()
-    private let imageButton = UIImageView()
-    var delegate: DetailedInfoProtocol?
-    let progressDeaths = ProgressView()
-    let progressRecovered = ProgressView()
-    let histogramView = HistogramView()
-  //  var flag: Bool = false
+    private let progressDeaths = ProgressView()
+    private let progressRecovered = ProgressView()
+    private let histogramView = HistogramView()
+    private let containerForButton = UIView()
     
+    var indexPath = IndexPath()
+    var openInfoDelegate: DetailedInfoProtocol?
+    var removeInfoDelegate: RemoveInfoProtocol?
+  
     var viewModel: ListCellViewModelProtocol? {
         didSet {
             guard var _viewModel = viewModel else { return }
@@ -52,24 +107,35 @@ final class ListCell: BaseCell {
             _viewModel.progressDeaths = progressDeaths
             _viewModel.progressRecovered = progressRecovered
             _viewModel.histogramView = histogramView
-            _viewModel.setProgressData()
             _viewModel.setData()
+            _viewModel.setProgressData()
+            
+            self.containerForButton.isHidden = _viewModel.isSelected ? true : false
+            self.removeInfoButton.isHidden = _viewModel.isSelected ? false : true
+            self.progressDeaths.isHidden = _viewModel.isSelected ? false : true
+            self.progressRecovered.isHidden = _viewModel.isSelected ? false : true
+            self.histogramView.isHidden = _viewModel.isSelected ? false : true
         }
     }
     
+    
+    /// Отступы и размеры
+    public var layout: Layout? {
+        didSet {
+            self.addAndSetupSubviews(layout: self.layout ?? Layout())
+        }
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-//        progressDeaths.isHidden = true
-//        progressRecovered.isHidden = true
-//        histogramView.isHidden = true
-        
+    
         setupCell()
-        addAndSetupSubviews(layout: layout)
         setupProgressViewColors()
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         viewModel?.countryNameView = nil
         viewModel?.progressConfirmed = nil
         viewModel?.progressDeaths = nil
@@ -99,6 +165,20 @@ final class ListCell: BaseCell {
     }
     
     func addAndSetupSubviews(layout: ListCell.Layout) {
+        /// настройка кнопки скрытия инфы
+        removeInfoButton.translatesAutoresizingMaskIntoConstraints = false
+        removeInfoButton.setTitleColor(.black, for: .normal)
+        removeInfoButton.setImage(UIImage(named: appearances.removeInfoButtonIcon), for: .normal)
+        removeInfoButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        removeInfoButton.alpha = 0.5
+        removeInfoButton.addTarget(self, action: #selector(removeDetailedInfo), for: .touchUpInside)
+        contentView.addSubview(removeInfoButton)
+        removeInfoButton.isHidden = true
+        removeInfoButton.pinToSuperview(edges: [.right, .top],
+                                        insets: layout.removeInfoButtonInsets,
+                                        safeArea: false, priority: .required)
+        removeInfoButton.pin(size: layout.removeInfoButtonSize)
+
         /// настройка stackView
         stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -106,52 +186,54 @@ final class ListCell: BaseCell {
         stackView.distribution = .fillProportionally
         stackView.addArrangedSubview(countryName)
         stackView.addArrangedSubview(progressConfirmed)
-//        stackView.addArrangedSubview(progressDeaths)
-//        stackView.addArrangedSubview(progressRecovered)
-//        stackView.addArrangedSubview(histogramView)
+        stackView.addArrangedSubview(progressDeaths)
+        stackView.addArrangedSubview(progressRecovered)
+        stackView.addArrangedSubview(histogramView)
         contentView.addSubview(stackView)
-        stackView.pinToSuperview(edges: [.top], insets: layout.stackViewInsets)
-        stackView.pinToSuperview(edges: [.left,.right], insets: layout.stackViewInsets)
+        stackView.pinToSuperview(edges: [.top, .left, .right], insets: layout.stackViewInsets)
         stackView.spacing = layout.stackViewSpacing
         
         /// настройка контейнера для кнопки и картинки
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(container)
-        NSLayoutConstraint.activate([
-            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            container.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
-            container.heightAnchor.constraint(equalToConstant: 35),
-            container.widthAnchor.constraint(equalToConstant: 175)
-        ])
-        
+        containerForButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(containerForButton)
+        containerForButton.pinToSuperview(edges: [.right, .bottom],
+                                          insets: layout.containerForButtonInsets,
+                                        safeArea: false, priority: .required)
+        containerForButton.pin(size: layout.containerForButtonSize)
+
         /// настройка картинки на кнопке
         imageButton.translatesAutoresizingMaskIntoConstraints = false
-        imageButton.image = UIImage(named: "detailedButton")
-        container.addSubview(imageButton)
-        NSLayoutConstraint.activate([
-            imageButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
-            imageButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -30),
-            imageButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
+        imageButton.image = UIImage(named: appearances.detailedInfoButtonIcon)
+        containerForButton.addSubview(imageButton)
+        imageButton.pinToSuperview(edges: [.right, .bottom],
+                                   insets: layout.imageButtonInsets,
+                                        safeArea: false, priority: .required)
+        imageButton.pin(size: layout.imageButtonSize)
         
         /// настройка кнопки подробнее
-        detailedButton.translatesAutoresizingMaskIntoConstraints = false
-        detailedButton.setTitleColor(.black, for: .normal)
-        detailedButton.setTitle("подробнее", for: .normal)
-        detailedButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        detailedButton.alpha = 0.5
-        detailedButton.addTarget(self, action: #selector(openDetailedInfo), for: .touchUpInside)
-        container.addSubview(detailedButton)
-        NSLayoutConstraint.activate([
-            detailedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
-            detailedButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -60),
-            detailedButton.heightAnchor.constraint(equalToConstant: 30)
-        ])
+        detailedInfoButton.translatesAutoresizingMaskIntoConstraints = false
+        detailedInfoButton.setTitleColor(.black, for: .normal)
+        detailedInfoButton.setTitle("подробнее", for: .normal)
+        detailedInfoButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        detailedInfoButton.alpha = 0.5
+        detailedInfoButton.addTarget(self, action: #selector(openDetailedInfo), for: .touchUpInside)
+        containerForButton.addSubview(detailedInfoButton)
+        detailedInfoButton.pinToSuperview(edges: [.right, .bottom],
+                                          insets: layout.detailedInfoButtonInsets,
+                                        safeArea: false, priority: .required)
+        detailedInfoButton.pin(size: layout.detailedInfoButtonSize)
     }
     
     @objc func openDetailedInfo() {
-        delegate?.openDetailedInfo(cell: self)
+        if let openInfoDelegate = self.openInfoDelegate {
+            openInfoDelegate.openDetailedInfo(indexPath: indexPath)
+        }
+    }
+
+    @objc func removeDetailedInfo() {
+        if let removeInfoDelegate = self.removeInfoDelegate {
+            removeInfoDelegate.removeDetailedInfo(indexPath: indexPath)
+        }
     }
 }
 

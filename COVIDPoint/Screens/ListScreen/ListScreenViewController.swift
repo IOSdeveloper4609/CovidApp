@@ -16,17 +16,20 @@ extension ListScreenViewController {
         let segmentControlInsets: UIEdgeInsets
         let segmentControlSize: CGSize
         let collectionViewInsets: UIEdgeInsets
+        let cellLayout: ListCell.Layout
         
         init(segmentControlContainerInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
              segmentControlContainerSize: CGSize = .init(width: 0, height: 124),
              segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
-             collectionViewInsets:  UIEdgeInsets = .init(top: 120, left: 0, bottom: 0, right: 0)) {
+             collectionViewInsets: UIEdgeInsets = .init(top: 120, left: 0, bottom: 0, right: 0),
+             cellLayout: ListCell.Layout = .init()) {
             self.segmentControlContainerInsets = segmentControlContainerInsets
             self.segmentControlContainerSize = segmentControlContainerSize
             self.segmentControlInsets = segmentControlInsets
             self.segmentControlSize = segmentControlSize
             self.collectionViewInsets = collectionViewInsets
+            self.cellLayout = cellLayout
         }
     }
     
@@ -51,23 +54,31 @@ extension ListScreenViewController {
 // MARK: ListScreenViewController
 /// Статистика по странам в виде списка
 class ListScreenViewController: UIViewController {
-    
     private var segmentControlContainer: UIView!
     private var segmentControl: UISegmentedControl!
     private var mainCollectionView: UICollectionView!
+    
+    
+    private var cellWidth: CGFloat {
+        return mainCollectionView.frame.size.width - 50
+    }
+    private var expandedHeight : CGFloat = 500
+    private var notExpandedHeight : CGFloat = 225
     
     /// Layout
     private var layout: ListScreenViewController.Layout!
     /// Appearance
     private var appearance: ListScreenViewController.Appearance!
+    /// вьюмодель
+    var viewModel = ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? [])
     
-    var viewModel = ListScreenViewModel()
-    //var viewModel: ListScreenViewModelProtocol? {
-    //        didSet {
-    //            guard let _viewModel = self.viewModel else { return }
-    //            self.mainCollectionView.reloadData()
-    //        }
-      //  }
+    
+//    var viewModel: ListScreenViewModelProtocol? {
+//        didSet {
+//            guard let _viewModel = self.viewModel else { return }
+//            self.mainCollectionView.reloadData()
+//        }
+//    }
 
     
     /// Инициализатор
@@ -154,7 +165,6 @@ class ListScreenViewController: UIViewController {
         }
     }
     
-    
     /// Применение стилей
     private func apply(_ appearance: ListScreenViewController.Appearance) {
         self.segmentControlContainer.apply(style: appearance.translucentBackgroundStyle)
@@ -165,53 +175,29 @@ class ListScreenViewController: UIViewController {
 extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
                                     UICollectionViewDataSource,
                                     UICollectionViewDelegate {
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell,
-         vm = self.viewModel
-        cell?.viewModel = vm.makeCellViewModel(indexPath.row)
+         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell
+        cell?.indexPath = indexPath
+        cell?.openInfoDelegate = self
+        cell?.removeInfoDelegate = self
+        cell?.layout = self.layout.cellLayout
+        cell?.viewModel = self.viewModel.makeCellViewModel(indexPath.row)
 
         return cell ?? UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        collectionView.performBatchUpdates(nil, completion: nil)
-        
-        //        guard let cell = collectionView.cellForItem(at: indexPath) as? ListCell else {
-        //            assertionFailure("this cell is missing")
-        //            return
-        //        }
-        //
-        //        cell.flag = true
-        //
-        //        if cell.flag {
-        //            cell.progressDeaths.isHidden = false
-        //            cell.progressRecovered.isHidden = false
-        //            cell.histogramView.isHidden = false
-        //            collectionView.performBatchUpdates(nil, completion: nil)
-        //        }
-        
-    }
-    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        switch collectionView.indexPathsForSelectedItems?.first {
-        case .some(indexPath):
-            let height = (view.frame.width) * 2 / 20
-            return CGSize(width: view.frame.width - 20, height: height + 450)
-        default:
-            let height = (view.frame.width) * 2 / 20
-            return CGSize(width: view.frame.width - 50, height: height + 170)
+
+        if viewModel.valueArray[indexPath.row] {
+            return CGSize(width: cellWidth, height: expandedHeight)
+        } else {
+            return CGSize(width: cellWidth, height: notExpandedHeight)
         }
     }
 }
@@ -219,12 +205,33 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
 
 extension ListScreenViewController: DetailedInfoProtocol {
     
-    func openDetailedInfo(cell: ListCell) {
-        
-        let indexPath = self.mainCollectionView.indexPath(for: cell)
-        
-        
-        print(indexPath)
-        
+    func openDetailedInfo(indexPath: IndexPath) {
+        viewModel.selectItem(atIndex: indexPath.row)
+
+        UIView.animate(withDuration: 0.7,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 0.7,
+                       options: .curveEaseInOut,
+                       animations: {
+            self.mainCollectionView.reloadItems(at: [indexPath])
+        })
     }
 }
+
+extension ListScreenViewController: RemoveInfoProtocol {
+    
+    func removeDetailedInfo(indexPath: IndexPath) {
+        viewModel.valueArray[indexPath.row] = !viewModel.valueArray[indexPath.row]
+
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.5,
+                       options: .curveEaseInOut,
+                       animations: {
+            self.mainCollectionView.reloadItems(at: [indexPath])
+        })
+    }
+}
+

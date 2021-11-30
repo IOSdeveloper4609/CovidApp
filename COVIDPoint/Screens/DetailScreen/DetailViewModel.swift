@@ -49,19 +49,21 @@ class DetailViewModel {
         numberFormatter.numberStyle = .decimal
         numberFormatter.maximumFractionDigits = 2
         
-        countryNameView?.setName(data?.name ?? "Error")
-        countryNameView?.setIcon(data?.code  ?? "Error")
+        guard let _data = data else { return }
+        
+        countryNameView?.setName(_data.name ?? "Error")
+        countryNameView?.setIcon(_data.code  ?? "Error")
         
         progressConfirmed?.setName("Подтверждено")
-        progressConfirmed?.setCount(numberFormatter.string(from: data?.latestData.confirmed as NSNumber? ?? 0) ?? "")
-        progressConfirmed?.setPlusCount(numberFormatter.string(from: data?.today?.confirmed  as NSNumber? ?? 0))
+        progressConfirmed?.setCount(numberFormatter.string(from: _data.latestData.confirmed as NSNumber? ?? 0) ?? "")
+        progressConfirmed?.setPlusCount("+"  + numberFormatter.string(from: _data.today?.confirmed  as NSNumber? ?? 0)!)
         
         progressDeaths?.setName("Смертельные случаи")
-        progressDeaths?.setCount(numberFormatter.string(from: data?.latestData.deaths as NSNumber? ?? 0) ?? "")
+        progressDeaths?.setCount(numberFormatter.string(from: _data.latestData.deaths as NSNumber? ?? 0) ?? "")
         progressDeaths?.setPlusCount(nil)
         
         progressRecovered?.setName("Выздоро­вевшие")
-        progressRecovered?.setCount(numberFormatter.string(from: data?.latestData.recovered as NSNumber? ?? 0) ?? "")
+        progressRecovered?.setCount(numberFormatter.string(from: _data.latestData.recovered as NSNumber? ?? 0) ?? "")
         progressRecovered?.setPlusCount(nil)
         
         histogramView?.setTitle("Динамика заражения")

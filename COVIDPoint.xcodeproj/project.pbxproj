@@ -21,7 +21,6 @@
 		1897789E2731216600F7A863 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778972731216600F7A863 /* ProgressView.swift */; };
 		1897789F2731216600F7A863 /* ProgressViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778982731216600F7A863 /* ProgressViewProtocol.swift */; };
 		189778A02731216600F7A863 /* ProgressViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778992731216600F7A863 /* ProgressViewBuilder.swift */; };
-		189778A62731218000F7A863 /* DetailBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A32731218000F7A863 /* DetailBuilder.swift */; };
 		189778A72731218000F7A863 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A42731218000F7A863 /* DetailViewController.swift */; };
 		189778A82731218000F7A863 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A52731218000F7A863 /* DetailViewModel.swift */; };
 		189778AB2731308100F7A863 /* HistogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AA2731308100F7A863 /* HistogramView.swift */; };
@@ -30,7 +29,6 @@
 		8E273E99273D313A00EDC4E7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E273E98273D313A00EDC4E7 /* ListCell.swift */; };
 		8E2CF6F9274253410002DEA5 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2CF6F8274253410002DEA5 /* BaseCell.swift */; };
 		8E2CF6FB2742568A0002DEA5 /* ListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2CF6FA2742568A0002DEA5 /* ListCellViewModel.swift */; };
-		8E2CF6FD2742A8100002DEA5 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2CF6FC2742A80F0002DEA5 /* Array.swift */; };
 		8EC366FB2732948300F7A3A6 /* LocalSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC366FA2732948300F7A3A6 /* LocalSessionManager.swift */; };
 		8EC367142739228B00F7A3A6 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC367132739228B00F7A3A6 /* NetworkManager.swift */; };
 		954EC0FB2721314A1226BDB7 /* Pods_COVIDPoint.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07CC0CC561D5240D77A0B1C /* Pods_COVIDPoint.framework */; };
@@ -75,7 +73,6 @@
 		189778972731216600F7A863 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		189778982731216600F7A863 /* ProgressViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewProtocol.swift; sourceTree = "<group>"; };
 		189778992731216600F7A863 /* ProgressViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewBuilder.swift; sourceTree = "<group>"; };
-		189778A32731218000F7A863 /* DetailBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBuilder.swift; sourceTree = "<group>"; };
 		189778A42731218000F7A863 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		189778A52731218000F7A863 /* DetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		189778AA2731308100F7A863 /* HistogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramView.swift; sourceTree = "<group>"; };
@@ -84,7 +81,6 @@
 		8E273E98273D313A00EDC4E7 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		8E2CF6F8274253410002DEA5 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		8E2CF6FA2742568A0002DEA5 /* ListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViewModel.swift; sourceTree = "<group>"; };
-		8E2CF6FC2742A80F0002DEA5 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8EC366FA2732948300F7A3A6 /* LocalSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSessionManager.swift; sourceTree = "<group>"; };
 		8EC367132739228B00F7A3A6 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVIDPoint.release.xcconfig"; path = "Target Support Files/Pods-COVIDPoint/Pods-COVIDPoint.release.xcconfig"; sourceTree = "<group>"; };
@@ -216,7 +212,6 @@
 			children = (
 				189778A42731218000F7A863 /* DetailViewController.swift */,
 				189778A52731218000F7A863 /* DetailViewModel.swift */,
-				189778A32731218000F7A863 /* DetailBuilder.swift */,
 			);
 			path = DetailScreen;
 			sourceTree = "<group>";
@@ -304,10 +299,10 @@
 		CE54FB972722F25900755A50 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				189778A12731218000F7A863 /* DetailScreen */,
 				CE577EB0272C0E2100B02F07 /* SplashScreen */,
-				CEC6FB022726F68A00865346 /* ListScreen */,
 				18761A6B271FFA650058BAC5 /* MapScreen */,
+				189778A12731218000F7A863 /* DetailScreen */,
+				CEC6FB022726F68A00865346 /* ListScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -328,7 +323,6 @@
 				CE77AFE1272C308300A72FC5 /* UIColor.swift */,
 				CE77AFDC272AC55400A72FC5 /* UIView.swift */,
 				CE77AFE7272C391E00A72FC5 /* UISegmentControl.swift */,
-				8E2CF6FC2742A80F0002DEA5 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -537,7 +531,6 @@
 				8EC366FB2732948300F7A3A6 /* LocalSessionManager.swift in Sources */,
 				CE577EB9272C0F0400B02F07 /* SplashRequestManager.swift in Sources */,
 				8E2CF6F9274253410002DEA5 /* BaseCell.swift in Sources */,
-				189778A62731218000F7A863 /* DetailBuilder.swift in Sources */,
 				CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */,
 				CEC6FAD627268C7800865346 /* ThemeProtocol.swift in Sources */,
 				CEC6FAD32723095F00865346 /* AppearanceProtocol.swift in Sources */,
@@ -555,7 +548,6 @@
 				18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */,
 				CEC6FB092726FDBB00865346 /* ListScreenViewModel.swift in Sources */,
 				18478474271D8CF200930B89 /* AppDelegate.swift in Sources */,
-				8E2CF6FD2742A8100002DEA5 /* Array.swift in Sources */,
 				189778A82731218000F7A863 /* DetailViewModel.swift in Sources */,
 				1897789B2731216600F7A863 /* CountryNameView.swift in Sources */,
 				1897789A2731216600F7A863 /* ViewInitialization.swift in Sources */,
@@ -585,6 +577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -632,7 +625,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -646,6 +639,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -687,7 +681,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

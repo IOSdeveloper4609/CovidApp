@@ -9,7 +9,25 @@ import UIKit
 import FittedSheets
 
 extension DetailViewController {
+    struct Layout {
+        var stackViewInsets: UIEdgeInsets = UIEdgeInsets(top: 50, left: 20, bottom: 0, right: 20)
+        var stackViewSpacing: CGFloat = 14
+    }
     
+    struct Appearance: AppearanceProtocol {
+        let progressConfirmedStartColor: UIColor = UIColor.gray
+        let progressConfirmedEndColor: UIColor = UIColor.darkGray
+        
+        let progressDeathsStartColor: UIColor = UIColor.darkRed
+        let progressDeathsEndColor: UIColor = UIColor.lightRed
+        
+        let progressRecoveredStartColor: UIColor = UIColor.darkGreen
+        let progressRecoveredEndColor: UIColor = UIColor.lightGreen
+    }
+}
+
+
+extension DetailViewController {
     static func getSheetViewController(_ countryId: Int) -> UIViewController {
         let vc = DetailViewController()
         let options = SheetOptions(
@@ -18,7 +36,7 @@ extension DetailViewController {
             shouldExtendBackground: true,
             setIntrinsicHeightOnNavigationControllers: true,
             useFullScreenMode: true,
-            shrinkPresentingViewController: true,
+            shrinkPresentingViewController: false,
             useInlineMode: false,
             horizontalPadding: 0,
             maxWidth: nil)
@@ -70,10 +88,11 @@ class DetailViewController: UIViewController {
         setupAppearances()
         configure()
         viewModel.handleViewDidLoad()
+        
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         sheetControl?.setSizes([.fixed(550)], animated: true)
         viewModel.handleViewDidAppear()
@@ -111,7 +130,6 @@ class DetailViewController: UIViewController {
     }
     
     func configure() {
-        
         viewModel.countryNameView = countryName
         stackView?.addArrangedSubview(countryName)
         

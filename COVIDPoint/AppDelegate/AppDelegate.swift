@@ -34,7 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, LaunchAppProtocol {
         self.setupLaunch()
         return true
     }
-
 }
 
 /// MARK: AppDelegateWindowProtocol, ModeApplicationProtocol
@@ -45,7 +44,7 @@ extension AppDelegate: AppDelegateWindowProtocol {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = .white
         let splashVM = SplashViewModel(requestManager: SplashRequestManager(),
-                                 localSessionManager: LocalSessionManager.shared)
+                                       localSessionManager: LocalSessionManager.shared)
         let splashVC = SplashViewController(viewModel: splashVM)
         self.window?.rootViewController = splashVC
         self.window?.makeKeyAndVisible()

@@ -17,6 +17,7 @@ protocol ListCellViewModelProtocol {
     var data: CountriesData? { get }
     func setData()
     func setProgressData()
+    var isSelected: Bool { get set }
 }
 
 class ListCellViewModel: ListCellViewModelProtocol {
@@ -29,11 +30,15 @@ class ListCellViewModel: ListCellViewModelProtocol {
     
     private let numberFormatter = NumberFormatter()
     
+    var isSelected: Bool
     var data: CountriesData?
     
-    init(data: CountriesData) {
+    init(data: CountriesData,
+         isSelected: Bool) {
         self.data = data
+        self.isSelected = isSelected
     }
+    
     
     func setData() {
         numberFormatter.groupingSeparator = " "
@@ -45,7 +50,7 @@ class ListCellViewModel: ListCellViewModelProtocol {
         
         progressConfirmed?.setName("Подтверждено")
         progressConfirmed?.setCount(numberFormatter.string(from: Int(data?.latestData.confirmed ?? 0) as NSNumber? ?? 0) ?? "")
-        progressConfirmed?.setPlusCount(numberFormatter.string(from: Int(data?.today?.confirmed ?? 0) as NSNumber? ?? 0))
+        progressConfirmed?.setPlusCount("+" + numberFormatter.string(from: Int(data?.today?.confirmed ?? 0) as NSNumber? ?? 0)!)
         
         progressDeaths?.setName("Смертельные случаи")
         progressDeaths?.setCount(numberFormatter.string(from: Int(data?.latestData.deaths ?? 0) as NSNumber? ?? 0) ?? "")

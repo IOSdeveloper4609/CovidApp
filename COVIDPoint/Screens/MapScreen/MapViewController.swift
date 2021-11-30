@@ -138,9 +138,10 @@ final class MapViewController: UIViewController {
 // MARK: - Private
 private extension MapViewController {
     func addAndSetupSubviews(layout: Layout) {
-        let segmentImage: [UIImage?] = [UIImage(named: appearance.mapImage),
-                                        UIImage(named: appearance.listImage)]
-        
+        /// настройка форматтера
+        numberFormatter.groupingSeparator = " "
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.maximumFractionDigits = 2
         
         /// настройка карты
         self.mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,8 +151,10 @@ private extension MapViewController {
                                     insets: layout.mapInsets,
                                     safeArea: false,
                                     priority: .required)
-        
+
         /// Настройка SegmentControl
+        let segmentImage: [UIImage?] = [UIImage(named: appearance.mapImage),
+                                       UIImage(named: appearance.listImage)]
         segmentControl = UISegmentedControl(items: segmentImage as [Any])
         segmentControl.selectedSegmentIndex = 0
         self.segmentControl.translatesAutoresizingMaskIntoConstraints = false
@@ -243,10 +246,6 @@ private extension MapViewController {
                                                                longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue))
                 annotation.title = String(data?.confirmed ?? 0)
                 annotation.subtitle = "\(data?.id ?? 0)"
-                _self.showCircle(coordinate: CLLocationCoordinate2D(
-                                    latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
-                                    longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue)), radius: _self.viewModel.circleDistance)
-                
                 annotations.append(annotation)
             }
             _self.mapView.addAnnotations(annotations)
@@ -310,14 +309,13 @@ private extension MapViewController {
     }
     
     /// метод отрисовки радиуса на карте
-    func showCircle(coordinate: CLLocationCoordinate2D,
-                    radius: CLLocationDistance) {
+    func showCircle(coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) {
         let circle = MKCircle(center: coordinate,
                               radius: radius)
+        
         mapView.addOverlay(circle)
     }
 }
-
 
 // MARK: - CLLocationManagerDelegate
 extension MapViewController: CLLocationManagerDelegate {
@@ -339,7 +337,9 @@ extension MapViewController: MKMapViewDelegate {
 
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
             if annotationView == nil {
+                
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                showCircle(coordinate: annotation.coordinate, radius: viewModel.circleDistance)
                 let container = UIView()
                 container.backgroundColor = .white
                 annotationView?.addSubview(container)
@@ -359,10 +359,6 @@ extension MapViewController: MKMapViewDelegate {
                 confirmedLabel.pinToSuperview(edges: [.all],
                                               insets: layout.confirmedLabelInsets)
                 
-                numberFormatter.groupingSeparator = " "
-                numberFormatter.numberStyle = .decimal
-                numberFormatter.maximumFractionDigits = 2
-                
                 let result = Int((annotationView?.annotation?.title ?? "") ?? "")
                 confirmedLabel.text = numberFormatter.string(from: result as NSNumber? ?? 0)
                 confirmedLabel.font = .boldSystemFont(ofSize: viewModel.confirmedLabelSize)
@@ -381,12 +377,15 @@ extension MapViewController: MKMapViewDelegate {
             circleRenderer.fillColor = UIColor.backgroundCircleRadius
             circleRenderer.alpha = viewModel.circleRendererAlpha
         }
+        print(circleRenderer)
+        
         return circleRenderer
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let id = Int((view.annotation?.subtitle ?? "") ?? "")
-        let detailVC  = DetailViewController.getSheetViewController(id ?? 0)
+        mapView.selectedAnnotations.removeAll()
+        guard let id = Int((view.annotation?.subtitle ?? "") ?? "") else { return }
+        let detailVC  = DetailViewController.getSheetViewController(id)
         self.present(detailVC, animated: true, completion: nil)
     }
 }

@@ -99,7 +99,7 @@ final class SplashViewController: UIViewController {
     }
     
     private func setupObserve() {
-        _ = self.viewModel.upload.observeNext(with: { value in
+       let _ = self.viewModel.upload.observeNext(with: { value in
             if value {
                 let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
                 let mapVC = MapViewController(viewModel: vm)
