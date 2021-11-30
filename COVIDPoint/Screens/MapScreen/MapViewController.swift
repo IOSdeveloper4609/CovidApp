@@ -33,10 +33,10 @@ private extension MapViewController {
         init(segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
              mapInsets: UIEdgeInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-             containerSize: CGSize = .init(width: 80, height: 25),
-             containerInsets: UIEdgeInsets = .init(top: 0, left: -33, bottom: 20, right: 0),
-             confirmedLabelSize: CGSize = .init(width: 120, height: 0),
-             confirmedLabelInsets: UIEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5),
+             containerSize: CGSize = .init(width: 55, height: 20),
+             containerInsets: UIEdgeInsets = .init(top: 0, left: -22, bottom: 20, right: 0),
+             confirmedLabelSize: CGSize = .init(width: 55, height: 0),
+             confirmedLabelInsets: UIEdgeInsets = .init(top: 5, left: 2, bottom: 5, right: 2),
              makeMapBiggerButtonSize: CGSize = .init(width: 35, height: 10),
              makeMapBiggerButtonInsets: UIEdgeInsets = .init(top: 13, left: 10, bottom: 52, right: 10),
              makeMapSmallerButtonSize: CGSize = .init(width: 35, height: 10),
@@ -207,7 +207,9 @@ private extension MapViewController {
         case 0:
             print("selectedSegmentIndex")
         default:
-            let listScreen = ListScreenViewController(layout: .init(), appearance: .init())
+            let listScreen = ListScreenViewController(layout: .init(),
+                                                      appearance: .init(),
+                                                      viewModel: ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? []))
             listScreen.modalPresentationStyle = .fullScreen
             self.present(listScreen, animated: true, completion: nil)
         }
@@ -244,6 +246,11 @@ private extension MapViewController {
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
                                                                longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue))
+                
+                _self.showCircle(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(data?.lat ?? _self.viewModel.defaultValue),
+                                                                    longitude: CLLocationDegrees(data?.lon ?? _self.viewModel.defaultValue)),
+                                 radius: _self.viewModel.circleDistance)
+                
                 annotation.title = String(data?.confirmed ?? 0)
                 annotation.subtitle = "\(data?.id ?? 0)"
                 annotations.append(annotation)
@@ -337,9 +344,7 @@ extension MapViewController: MKMapViewDelegate {
 
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
             if annotationView == nil {
-                
                 annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-                showCircle(coordinate: annotation.coordinate, radius: viewModel.circleDistance)
                 let container = UIView()
                 container.backgroundColor = .white
                 annotationView?.addSubview(container)

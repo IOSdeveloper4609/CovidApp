@@ -28,12 +28,12 @@ extension ListCell {
         let detailedInfoButtonInsets: UIEdgeInsets
         let detailedInfoButtonSize: CGSize
         
-        init(stackViewInsets: UIEdgeInsets = .init(top: 35, left: 20, bottom: 50, right: 20),
-             stackViewSpacing: CGFloat = 14,
+        init(stackViewInsets: UIEdgeInsets = .init(top: 35, left: 15, bottom: 50, right: 15),
+             stackViewSpacing: CGFloat = 20,
              removeInfoButtonInsets: UIEdgeInsets = .init(top: 10, left: 0, bottom: 0, right: 10),
              removeInfoButtonSize: CGSize = .init(width: 20, height: 20),
              containerForButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 12, right: 10),
-             containerForButtonSize: CGSize = .init(width: 175, height: 35),
+             containerForButtonSize: CGSize = .init(width: 175, height: 40),
              imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 3, right: 25),
              imageButtonSize: CGSize = .init(width: 20, height: 30),
              detailedInfoButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 45),
@@ -118,14 +118,12 @@ final class ListCell: BaseCell {
         }
     }
     
-    
     /// Отступы и размеры
     public var layout: Layout? {
         didSet {
             self.addAndSetupSubviews(layout: self.layout ?? Layout())
         }
     }
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -229,7 +227,7 @@ final class ListCell: BaseCell {
             openInfoDelegate.openDetailedInfo(indexPath: indexPath)
         }
     }
-
+    
     @objc func removeDetailedInfo() {
         if let removeInfoDelegate = self.removeInfoDelegate {
             removeInfoDelegate.removeDetailedInfo(indexPath: indexPath)

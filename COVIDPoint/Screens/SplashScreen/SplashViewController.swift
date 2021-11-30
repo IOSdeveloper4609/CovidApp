@@ -68,7 +68,7 @@ final class SplashViewController: UIViewController {
         /// Статистика представленная на карте
         let mapScreen = MapViewController(viewModel: MapViewModel(localSessionManager: LocalSessionManager.shared))
         /// Статистика представленная в виде списка
-        let listScreen = ListScreenViewController(layout: .init(), appearance: .init())
+        let listScreen = ListScreenViewController(layout: .init(), appearance: .init(), viewModel: ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? []))
         /// Формирование массива рутовых экранов
         let viewControllers = [mapScreen, listScreen]
         /// Установка контроллеров

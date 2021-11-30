@@ -20,25 +20,24 @@ protocol ListCellViewModelProtocol {
     var isSelected: Bool { get set }
 }
 
-class ListCellViewModel: ListCellViewModelProtocol {
+final class ListCellViewModel: ListCellViewModelProtocol {
     
     var countryNameView: CountryNameViewProtocol?
     var progressConfirmed: ProgressViewProtocol?
     var progressDeaths: ProgressViewProtocol?
     var progressRecovered: ProgressViewProtocol?
     var histogramView: HistogramViewProtocol?
-    
-    private let numberFormatter = NumberFormatter()
-    
+        
     var isSelected: Bool
     var data: CountriesData?
+    
+    private let numberFormatter = NumberFormatter()
     
     init(data: CountriesData,
          isSelected: Bool) {
         self.data = data
         self.isSelected = isSelected
     }
-    
     
     func setData() {
         numberFormatter.groupingSeparator = " "

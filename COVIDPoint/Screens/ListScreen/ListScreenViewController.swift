@@ -44,51 +44,40 @@ extension ListScreenViewController {
             self.listImage = listImage
         }
     }
-    
-    /// State
-    enum State {
-        
-    }
 }
 
 // MARK: ListScreenViewController
-/// Статистика по странам в виде списка
 class ListScreenViewController: UIViewController {
     private var segmentControlContainer: UIView!
     private var segmentControl: UISegmentedControl!
     private var mainCollectionView: UICollectionView!
     
-    
     private var cellWidth: CGFloat {
         return mainCollectionView.frame.size.width - 50
     }
-    private var expandedHeight : CGFloat = 500
-    private var notExpandedHeight : CGFloat = 225
+    private var expandedHeight : CGFloat = 520
+    private var notExpandedHeight : CGFloat = 235
     
     /// Layout
     private var layout: ListScreenViewController.Layout!
     /// Appearance
     private var appearance: ListScreenViewController.Appearance!
+    
     /// вьюмодель
-    var viewModel = ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? [])
-    
-    
-//    var viewModel: ListScreenViewModelProtocol? {
-//        didSet {
-//            guard let _viewModel = self.viewModel else { return }
-//            self.mainCollectionView.reloadData()
-//        }
-//    }
-
+    var viewModel: ListScreenViewModelProtocol!
+      
     
     /// Инициализатор
     /// - Parameters:
     ///   - layout: ListScreenViewController.Layout
     ///   - appearance: ListScreenViewController.Appearance
+    ///   - viewModel: ListScreenViewModelProtocol
     init(layout: ListScreenViewController.Layout,
-         appearance: ListScreenViewController.Appearance) {
+         appearance: ListScreenViewController.Appearance,
+         viewModel: ListScreenViewModelProtocol ) {
         self.layout = layout
         self.appearance = appearance
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -193,21 +182,22 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let cellState = viewModel.cellState(index: indexPath.row)
 
-        if viewModel.valueArray[indexPath.row] {
+        switch cellState {
+        case .expandedHeight:
             return CGSize(width: cellWidth, height: expandedHeight)
-        } else {
+        case .notExpandedHeight:
             return CGSize(width: cellWidth, height: notExpandedHeight)
         }
     }
 }
 
-
 extension ListScreenViewController: DetailedInfoProtocol {
-    
     func openDetailedInfo(indexPath: IndexPath) {
         viewModel.selectItem(atIndex: indexPath.row)
-
+        
         UIView.animate(withDuration: 0.7,
                        delay: 0.0,
                        usingSpringWithDamping: 0.7,
@@ -220,10 +210,9 @@ extension ListScreenViewController: DetailedInfoProtocol {
 }
 
 extension ListScreenViewController: RemoveInfoProtocol {
-    
     func removeDetailedInfo(indexPath: IndexPath) {
         viewModel.valueArray[indexPath.row] = !viewModel.valueArray[indexPath.row]
-
+        
         UIView.animate(withDuration: 0.5,
                        delay: 0.0,
                        usingSpringWithDamping: 0.5,

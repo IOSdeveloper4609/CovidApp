@@ -25,7 +25,7 @@
 		189778AB2731308100F7A863 /* HistogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AA2731308100F7A863 /* HistogramView.swift */; };
 		189778AD273130C600F7A863 /* HistogramViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AC273130C600F7A863 /* HistogramViewProtocol.swift */; };
 		189778AF273130E600F7A863 /* HistogramViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AE273130E600F7A863 /* HistogramViewBuilder.swift */; };
-		8E1811D927560DB000DE1342 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1811D827560DB000DE1342 /* MapViewModel.swift */; };
+		8E1811E9275646AC00DE1342 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1811E8275646AB00DE1342 /* MapViewModel.swift */; };
 		8E273E99273D313A00EDC4E7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E273E98273D313A00EDC4E7 /* ListCell.swift */; };
 		8E2CF6F9274253410002DEA5 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2CF6F8274253410002DEA5 /* BaseCell.swift */; };
 		8E2CF6FB2742568A0002DEA5 /* ListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2CF6FA2742568A0002DEA5 /* ListCellViewModel.swift */; };
@@ -77,7 +77,7 @@
 		189778AA2731308100F7A863 /* HistogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramView.swift; sourceTree = "<group>"; };
 		189778AC273130C600F7A863 /* HistogramViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewProtocol.swift; sourceTree = "<group>"; };
 		189778AE273130E600F7A863 /* HistogramViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewBuilder.swift; sourceTree = "<group>"; };
-		8E1811D827560DB000DE1342 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		8E1811E8275646AB00DE1342 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		8E273E98273D313A00EDC4E7 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		8E2CF6F8274253410002DEA5 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		8E2CF6FA2742568A0002DEA5 /* ListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellViewModel.swift; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				18761AA3272038D00058BAC5 /* MapViewController.swift */,
-				8E1811D827560DB000DE1342 /* MapViewModel.swift */,
+				8E1811E8275646AB00DE1342 /* MapViewModel.swift */,
 			);
 			path = MapScreen;
 			sourceTree = "<group>";
@@ -513,7 +513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E1811D927560DB000DE1342 /* MapViewModel.swift in Sources */,
+				8E1811E9275646AC00DE1342 /* MapViewModel.swift in Sources */,
 				CE77AFDD272AC55400A72FC5 /* UIView.swift in Sources */,
 				CEC6FB042726F6B500865346 /* ListScreenViewController.swift in Sources */,
 				1897789C2731216600F7A863 /* CountryNameViewProtocol.swift in Sources */,
