@@ -8,7 +8,7 @@
 import UIKit
 import FittedSheets
 
-extension DetailViewController {
+private extension DetailViewController {
     struct Layout {
         var stackViewInsets: UIEdgeInsets = UIEdgeInsets(top: 50, left: 20, bottom: 0, right: 20)
         var stackViewSpacing: CGFloat = 14
@@ -25,7 +25,6 @@ extension DetailViewController {
         let progressRecoveredEndColor: UIColor = UIColor.lightGreen
     }
 }
-
 
 extension DetailViewController {
     static func getSheetViewController(_ countryId: Int) -> UIViewController {
@@ -64,21 +63,17 @@ extension DetailViewController {
     }
 }
 
-class DetailViewController: UIViewController {
-    
-    let viewModel = DetailViewModel()
-    let layout = Layout()
-    let appearances = Appearance()
-    
-    var stackView: UIStackView? = UIStackView()
-    
-    let countryName = CountryNameView()
-    let progressConfirmed = ProgressView()
-    let progressDeaths = ProgressView()
-    let progressRecovered = ProgressView()
-    let histogramView = HistogramView()
-    
-    weak var sheetControl: SheetViewController?
+final class DetailViewController: UIViewController {
+    private let viewModel = DetailViewModel()
+    private let layout = Layout()
+    private let appearances = Appearance()
+    private var stackView: UIStackView? = UIStackView()
+    private let countryName = CountryNameView()
+    private let progressConfirmed = ProgressView()
+    private let progressDeaths = ProgressView()
+    private let progressRecovered = ProgressView()
+    private let histogramView = HistogramView()
+    weak private var sheetControl: SheetViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +92,9 @@ class DetailViewController: UIViewController {
         sheetControl?.setSizes([.fixed(550)], animated: true)
         viewModel.handleViewDidAppear()
     }
-    
+}
+
+private extension DetailViewController {
     func setupSubviews() {
         stackView = UIStackView()
         stackView?.translatesAutoresizingMaskIntoConstraints = false
@@ -107,8 +104,7 @@ class DetailViewController: UIViewController {
     
     func setupLayouts() {
         view.addSubview(stackView!)
-        stackView?.pinToSuperview(edges: [.top], insets: layout.stackViewInsets)
-        stackView?.pinToSuperview(edges: [.left,.right], insets: layout.stackViewInsets)
+        stackView?.pinToSuperview(edges: [.top, .left,.right], insets: layout.stackViewInsets)
         stackView?.spacing = layout.stackViewSpacing
     }
     

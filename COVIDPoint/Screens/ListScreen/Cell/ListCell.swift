@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol DetailedInfoProtocol {
+protocol OpenDetailedInfoProtocol {
     func openDetailedInfo(indexPath: IndexPath)
 }
 
-protocol RemoveInfoProtocol {
+protocol HiddenDetailedInfoProtocol {
     func removeDetailedInfo(indexPath: IndexPath)
 }
 
@@ -34,7 +34,7 @@ extension ListCell {
              removeInfoButtonSize: CGSize = .init(width: 20, height: 20),
              containerForButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 12, right: 10),
              containerForButtonSize: CGSize = .init(width: 175, height: 40),
-             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 3, right: 25),
+             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 23),
              imageButtonSize: CGSize = .init(width: 20, height: 30),
              detailedInfoButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 45),
              detailedInfoButtonSize: CGSize = .init(width: 100, height: 30)) {
@@ -83,6 +83,10 @@ extension ListCell {
 
 
 final class ListCell: BaseCell {
+    var cellIndexPath = IndexPath()
+    var openInfoDelegate: OpenDetailedInfoProtocol?
+    var removeInfoDelegate: HiddenDetailedInfoProtocol?
+
     private let appearances = Appearance()
     private var stackView = UIStackView()
     private let imageButton = UIImageView()
@@ -95,9 +99,6 @@ final class ListCell: BaseCell {
     private let histogramView = HistogramView()
     private let containerForButton = UIView()
     
-    var indexPath = IndexPath()
-    var openInfoDelegate: DetailedInfoProtocol?
-    var removeInfoDelegate: RemoveInfoProtocol?
   
     var viewModel: ListCellViewModelProtocol? {
         didSet {
@@ -114,12 +115,12 @@ final class ListCell: BaseCell {
             self.removeInfoButton.isHidden = _viewModel.isSelected ? false : true
             self.progressDeaths.isHidden = _viewModel.isSelected ? false : true
             self.progressRecovered.isHidden = _viewModel.isSelected ? false : true
-            self.histogramView.isHidden = _viewModel.isSelected ? false : true
+        //    self.histogramView.isHidden = _viewModel.isSelected ? false : true
         }
     }
     
     /// Отступы и размеры
-    public var layout: Layout? {
+    var layout: Layout? {
         didSet {
             self.addAndSetupSubviews(layout: self.layout ?? Layout())
         }
@@ -186,7 +187,7 @@ final class ListCell: BaseCell {
         stackView.addArrangedSubview(progressConfirmed)
         stackView.addArrangedSubview(progressDeaths)
         stackView.addArrangedSubview(progressRecovered)
-        stackView.addArrangedSubview(histogramView)
+     //   stackView.addArrangedSubview(histogramView)
         contentView.addSubview(stackView)
         stackView.pinToSuperview(edges: [.top, .left, .right], insets: layout.stackViewInsets)
         stackView.spacing = layout.stackViewSpacing
@@ -224,13 +225,13 @@ final class ListCell: BaseCell {
     
     @objc func openDetailedInfo() {
         if let openInfoDelegate = self.openInfoDelegate {
-            openInfoDelegate.openDetailedInfo(indexPath: indexPath)
+            openInfoDelegate.openDetailedInfo(indexPath: cellIndexPath)
         }
     }
     
     @objc func removeDetailedInfo() {
         if let removeInfoDelegate = self.removeInfoDelegate {
-            removeInfoDelegate.removeDetailedInfo(indexPath: indexPath)
+            removeInfoDelegate.removeDetailedInfo(indexPath: cellIndexPath)
         }
     }
 }

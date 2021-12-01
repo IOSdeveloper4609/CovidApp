@@ -138,7 +138,7 @@ final class MapViewController: UIViewController {
 // MARK: - Private
 private extension MapViewController {
     func addAndSetupSubviews(layout: Layout) {
-        /// настройка форматтера
+        /// настройка форматтера чисел
         numberFormatter.groupingSeparator = " "
         numberFormatter.numberStyle = .decimal
         numberFormatter.maximumFractionDigits = 2
@@ -163,7 +163,6 @@ private extension MapViewController {
                                            insets: layout.segmentControlInsets,
                                            safeArea: false,
                                            priority: .required)
-        self.segmentControl.pin(size: layout.segmentControlSize)
         self.segmentControl.addTarget(self, action: #selector(openListScreenViewController), for: .valueChanged)
         
         /// настройка контейнера для кнопок
@@ -181,7 +180,6 @@ private extension MapViewController {
         self.makeMapBiggerButton.setImage(UIImage(named: appearance.biggerImage), for: .normal)
         self.containerForButtons.addSubview(makeMapBiggerButton)
         self.makeMapBiggerButton.contentMode = .scaleAspectFit
-        self.makeMapBiggerButton.pin(size: layout.makeMapBiggerButtonSize)
         self.makeMapBiggerButton.pinToSuperview(edges: [.all],
                                            insets: layout.makeMapBiggerButtonInsets)
         /// настройка кнопки отдаления карты
@@ -189,7 +187,6 @@ private extension MapViewController {
         self.makeMapSmallerButton.setImage(UIImage(named: appearance.smallerImage), for: .normal)
         self.containerForButtons.addSubview(makeMapSmallerButton)
         self.makeMapSmallerButton.contentMode = .scaleAspectFit
-        self.makeMapSmallerButton.pin(size: layout.makeMapSmallerButtonSize)
         self.makeMapSmallerButton.pinToSuperview(edges: [.all],
                                             insets: layout.makeMapSmallerButtonInsets)
         
@@ -197,7 +194,6 @@ private extension MapViewController {
         self.delimiterImage.translatesAutoresizingMaskIntoConstraints = false
         self.delimiterImage.image = UIImage(named: appearance.delimiterImage)
         self.containerForButtons.addSubview(delimiterImage)
-        self.delimiterImage.pin(size: layout.delimiterImageSize)
         self.delimiterImage.pinToSuperview(edges: [.all],
                                             insets: layout.delimiterImageInsets)
     }
@@ -359,7 +355,6 @@ extension MapViewController: MKMapViewDelegate {
                 confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
                 confirmedLabel.textAlignment = .center
                 container.addSubview(confirmedLabel)
-                confirmedLabel.pin(size: layout.confirmedLabelSize)
                 confirmedLabel.pinCenterToSuperview(of: .vertical)
                 confirmedLabel.pinToSuperview(edges: [.all],
                                               insets: layout.confirmedLabelInsets)
@@ -382,7 +377,6 @@ extension MapViewController: MKMapViewDelegate {
             circleRenderer.fillColor = UIColor.backgroundCircleRadius
             circleRenderer.alpha = viewModel.circleRendererAlpha
         }
-        print(circleRenderer)
         
         return circleRenderer
     }

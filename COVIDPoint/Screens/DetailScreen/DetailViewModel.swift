@@ -7,8 +7,7 @@
 
 import UIKit
 
-class DetailViewModel {
-    
+final class DetailViewModel {
     weak var countryNameView: CountryNameViewProtocol?
     weak var progressConfirmed: ProgressViewProtocol?
     weak var progressDeaths: ProgressViewProtocol?
@@ -51,8 +50,8 @@ class DetailViewModel {
         
         guard let _data = data else { return }
         
-        countryNameView?.setName(_data.name ?? "Error")
-        countryNameView?.setIcon(_data.code  ?? "Error")
+        countryNameView?.setName(_data.name ?? "")
+        countryNameView?.setIcon(_data.code  ?? "")
         
         progressConfirmed?.setName("Подтверждено")
         progressConfirmed?.setCount(numberFormatter.string(from: _data.latestData.confirmed as NSNumber? ?? 0) ?? "")

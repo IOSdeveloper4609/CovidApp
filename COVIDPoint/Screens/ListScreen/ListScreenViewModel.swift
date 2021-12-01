@@ -18,6 +18,12 @@ protocol ListScreenViewModelProtocol {
     /// массив данных
     var data: [CountriesData] { get }
     
+    /// раскрытая ячейка
+    var expandedHeight: CGFloat { get }
+    
+    /// закрытая ячейка
+    var notExpandedHeight: CGFloat { get }
+    
     /// создаем ячейку
     func makeCellViewModel(_ index: Int) -> ListCellViewModel
     
@@ -33,10 +39,13 @@ protocol ListScreenViewModelProtocol {
 
 // MARK: ListScreenViewModel
 final class ListScreenViewModel: ListScreenViewModelProtocol {
-    
+  
     var data: [CountriesData] = LocalSessionManager.shared.covidData?.data ?? []
     
     var valueArray: [Bool] = []
+    
+    var expandedHeight: CGFloat = 520
+    var notExpandedHeight: CGFloat  = 235
     
     init(data: [CountriesData]) {
         self.data = data
@@ -47,20 +56,17 @@ final class ListScreenViewModel: ListScreenViewModelProtocol {
     }
     
     func selectItem(atIndex: Int) {
-        guard atIndex >= 0 && atIndex < valueArray.count else  {
-            return
-        }
+        guard atIndex >= 0 && atIndex < valueArray.count else { return }
         
         valueArray[atIndex].toggle()
     }
     
     func makeCellViewModel(_ index: Int) -> ListCellViewModel {
-        return ListCellViewModel(data: data[index], isSelected: valueArray[index])
+        return ListCellViewModel(data: data[index], isSelected: valueArray[safe: index] ?? Bool())
     }
     
     func cellState(index: Int) -> CellState {
-        let result: CellState = valueArray[index] ? .expandedHeight : .notExpandedHeight
-        
+        let result: CellState = valueArray[safe: index] ?? Bool() ? .expandedHeight : .notExpandedHeight
         return result
     }
 }

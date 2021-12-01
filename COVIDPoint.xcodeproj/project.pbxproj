@@ -16,15 +16,13 @@
 		1897789A2731216600F7A863 /* ViewInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778912731216600F7A863 /* ViewInitialization.swift */; };
 		1897789B2731216600F7A863 /* CountryNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778932731216600F7A863 /* CountryNameView.swift */; };
 		1897789C2731216600F7A863 /* CountryNameViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778942731216600F7A863 /* CountryNameViewProtocol.swift */; };
-		1897789D2731216600F7A863 /* CountryNameViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778952731216600F7A863 /* CountryNameViewBuilder.swift */; };
 		1897789E2731216600F7A863 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778972731216600F7A863 /* ProgressView.swift */; };
 		1897789F2731216600F7A863 /* ProgressViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778982731216600F7A863 /* ProgressViewProtocol.swift */; };
-		189778A02731216600F7A863 /* ProgressViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778992731216600F7A863 /* ProgressViewBuilder.swift */; };
 		189778A72731218000F7A863 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A42731218000F7A863 /* DetailViewController.swift */; };
 		189778A82731218000F7A863 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778A52731218000F7A863 /* DetailViewModel.swift */; };
 		189778AB2731308100F7A863 /* HistogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AA2731308100F7A863 /* HistogramView.swift */; };
 		189778AD273130C600F7A863 /* HistogramViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AC273130C600F7A863 /* HistogramViewProtocol.swift */; };
-		189778AF273130E600F7A863 /* HistogramViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189778AE273130E600F7A863 /* HistogramViewBuilder.swift */; };
+		8E11C84127565E4A0046D4BC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E11C84027565E4A0046D4BC /* Array.swift */; };
 		8E1811E9275646AC00DE1342 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1811E8275646AB00DE1342 /* MapViewModel.swift */; };
 		8E273E99273D313A00EDC4E7 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E273E98273D313A00EDC4E7 /* ListCell.swift */; };
 		8E2CF6F9274253410002DEA5 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2CF6F8274253410002DEA5 /* BaseCell.swift */; };
@@ -68,15 +66,13 @@
 		189778912731216600F7A863 /* ViewInitialization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewInitialization.swift; sourceTree = "<group>"; };
 		189778932731216600F7A863 /* CountryNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryNameView.swift; sourceTree = "<group>"; };
 		189778942731216600F7A863 /* CountryNameViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryNameViewProtocol.swift; sourceTree = "<group>"; };
-		189778952731216600F7A863 /* CountryNameViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryNameViewBuilder.swift; sourceTree = "<group>"; };
 		189778972731216600F7A863 /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		189778982731216600F7A863 /* ProgressViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewProtocol.swift; sourceTree = "<group>"; };
-		189778992731216600F7A863 /* ProgressViewBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewBuilder.swift; sourceTree = "<group>"; };
 		189778A42731218000F7A863 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		189778A52731218000F7A863 /* DetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		189778AA2731308100F7A863 /* HistogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramView.swift; sourceTree = "<group>"; };
 		189778AC273130C600F7A863 /* HistogramViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewProtocol.swift; sourceTree = "<group>"; };
-		189778AE273130E600F7A863 /* HistogramViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramViewBuilder.swift; sourceTree = "<group>"; };
+		8E11C84027565E4A0046D4BC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		8E1811E8275646AB00DE1342 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		8E273E98273D313A00EDC4E7 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		8E2CF6F8274253410002DEA5 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
@@ -149,7 +145,6 @@
 		18478472271D8CF200930B89 /* COVIDPoint */ = {
 			isa = PBXGroup;
 			children = (
-				8EC366FA2732948300F7A3A6 /* LocalSessionManager.swift */,
 				CEC6FACE2723091900865346 /* Appearance */,
 				CE77AFDB272AC53F00A72FC5 /* Extensions */,
 				CE54FB8D2722F18200755A50 /* Utils */,
@@ -157,6 +152,7 @@
 				CEC6FA9F2722EB5F00865346 /* UIComponents */,
 				CE54FB8C2722F15600755A50 /* Models */,
 				8EC367112739224000F7A3A6 /* Controllers */,
+				8E11C842275668D00046D4BC /* LocalSessionManager */,
 				CE54FB972722F25900755A50 /* Screens */,
 				CE54FB942722F22100755A50 /* AppDelegate */,
 				1847847C271D8CF400930B89 /* Assets.xcassets */,
@@ -191,7 +187,6 @@
 			isa = PBXGroup;
 			children = (
 				189778932731216600F7A863 /* CountryNameView.swift */,
-				189778952731216600F7A863 /* CountryNameViewBuilder.swift */,
 				189778942731216600F7A863 /* CountryNameViewProtocol.swift */,
 			);
 			path = CountryNameView;
@@ -201,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				189778972731216600F7A863 /* ProgressView.swift */,
-				189778992731216600F7A863 /* ProgressViewBuilder.swift */,
 				189778982731216600F7A863 /* ProgressViewProtocol.swift */,
 			);
 			path = ProgressView;
@@ -220,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				189778AA2731308100F7A863 /* HistogramView.swift */,
-				189778AE273130E600F7A863 /* HistogramViewBuilder.swift */,
 				189778AC273130C600F7A863 /* HistogramViewProtocol.swift */,
 			);
 			path = HistogramView;
@@ -241,6 +234,14 @@
 				8FDB8160977F29687D9F9A7B /* Pods-COVIDPoint.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8E11C842275668D00046D4BC /* LocalSessionManager */ = {
+			isa = PBXGroup;
+			children = (
+				8EC366FA2732948300F7A3A6 /* LocalSessionManager.swift */,
+			);
+			path = LocalSessionManager;
 			sourceTree = "<group>";
 		};
 		8E273E9D273D347F00EDC4E7 /* Cell */ = {
@@ -323,6 +324,7 @@
 				CE77AFE1272C308300A72FC5 /* UIColor.swift */,
 				CE77AFDC272AC55400A72FC5 /* UIView.swift */,
 				CE77AFE7272C391E00A72FC5 /* UISegmentControl.swift */,
+				8E11C84027565E4A0046D4BC /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -522,7 +524,6 @@
 				CE77AFE8272C391E00A72FC5 /* UISegmentControl.swift in Sources */,
 				CEC6FACB272308D900865346 /* AppDelegateWindowProtocol.swift in Sources */,
 				CEC6FAA62722EC0C00865346 /* AutolayoutUtils.swift in Sources */,
-				189778A02731216600F7A863 /* ProgressViewBuilder.swift in Sources */,
 				1897789E2731216600F7A863 /* ProgressView.swift in Sources */,
 				CEC6FAE7272696BF00865346 /* ThemeAppearance.swift in Sources */,
 				CEC6FAD927268EBA00865346 /* ThemesApplication.swift in Sources */,
@@ -530,6 +531,7 @@
 				8E2CF6FB2742568A0002DEA5 /* ListCellViewModel.swift in Sources */,
 				8EC366FB2732948300F7A3A6 /* LocalSessionManager.swift in Sources */,
 				CE577EB9272C0F0400B02F07 /* SplashRequestManager.swift in Sources */,
+				8E11C84127565E4A0046D4BC /* Array.swift in Sources */,
 				8E2CF6F9274253410002DEA5 /* BaseCell.swift in Sources */,
 				CEC6FADF27268FAC00865346 /* DarkTheme.swift in Sources */,
 				CEC6FAD627268C7800865346 /* ThemeProtocol.swift in Sources */,
@@ -539,11 +541,9 @@
 				CEC6FAE42726930200865346 /* LocalDataSavingProtocol.swift in Sources */,
 				CE77AFD9272AC4FA00A72FC5 /* AppearanceViewProtocol.swift in Sources */,
 				CE577EB6272C0E5A00B02F07 /* SplashViewModel.swift in Sources */,
-				189778AF273130E600F7A863 /* HistogramViewBuilder.swift in Sources */,
 				CEC6FADC27268F0600865346 /* DefaultTheme.swift in Sources */,
 				1897789F2731216600F7A863 /* ProgressViewProtocol.swift in Sources */,
 				189778AD273130C600F7A863 /* HistogramViewProtocol.swift in Sources */,
-				1897789D2731216600F7A863 /* CountryNameViewBuilder.swift in Sources */,
 				189778A72731218000F7A863 /* DetailViewController.swift in Sources */,
 				18761AA4272038D00058BAC5 /* MapViewController.swift in Sources */,
 				CEC6FB092726FDBB00865346 /* ListScreenViewModel.swift in Sources */,
@@ -697,8 +697,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 48KPFRBBCK;
 				INFOPLIST_FILE = COVIDPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -708,7 +708,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.iwgroup.covid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = COVIDPointDevProfile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -720,8 +720,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 48KPFRBBCK;
 				INFOPLIST_FILE = COVIDPoint/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -731,7 +731,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.iwgroup.covid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = COVIDPointDevProfile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

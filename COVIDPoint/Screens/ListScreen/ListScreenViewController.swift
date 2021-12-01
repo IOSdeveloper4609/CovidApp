@@ -52,20 +52,12 @@ class ListScreenViewController: UIViewController {
     private var segmentControl: UISegmentedControl!
     private var mainCollectionView: UICollectionView!
     
-    private var cellWidth: CGFloat {
-        return mainCollectionView.frame.size.width - 50
-    }
-    private var expandedHeight : CGFloat = 520
-    private var notExpandedHeight : CGFloat = 235
-    
     /// Layout
     private var layout: ListScreenViewController.Layout!
     /// Appearance
     private var appearance: ListScreenViewController.Appearance!
-    
-    /// вьюмодель
+    /// Вьюмодель
     var viewModel: ListScreenViewModelProtocol!
-      
     
     /// Инициализатор
     /// - Parameters:
@@ -138,7 +130,6 @@ class ListScreenViewController: UIViewController {
                                            insets: layout.segmentControlInsets,
                                            safeArea: false,
                                            priority: .required)
-        self.segmentControl.pin(size: layout.segmentControlSize)
         self.segmentControl.addTarget(self, action: #selector(openMapViewController), for: .valueChanged)
     }
     
@@ -170,14 +161,17 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell
-        cell?.indexPath = indexPath
-        cell?.openInfoDelegate = self
-        cell?.removeInfoDelegate = self
-        cell?.layout = self.layout.cellLayout
-        cell?.viewModel = self.viewModel.makeCellViewModel(indexPath.row)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCell.identifier, for: indexPath) as? ListCell else {
+            assertionFailure("this cell is missing")
+            return UICollectionViewCell()
+        }
+        cell.cellIndexPath = indexPath
+        cell.openInfoDelegate = self
+        cell.removeInfoDelegate = self
+        cell.layout = self.layout.cellLayout
+        cell.viewModel = self.viewModel.makeCellViewModel(indexPath.row)
 
-        return cell ?? UICollectionViewCell()
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -187,14 +181,14 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
 
         switch cellState {
         case .expandedHeight:
-            return CGSize(width: cellWidth, height: expandedHeight)
+            return CGSize(width: mainCollectionView.frame.size.width - 50, height: viewModel.expandedHeight)
         case .notExpandedHeight:
-            return CGSize(width: cellWidth, height: notExpandedHeight)
+            return CGSize(width: mainCollectionView.frame.size.width - 50, height: viewModel.notExpandedHeight)
         }
     }
 }
 
-extension ListScreenViewController: DetailedInfoProtocol {
+extension ListScreenViewController: OpenDetailedInfoProtocol {
     func openDetailedInfo(indexPath: IndexPath) {
         viewModel.selectItem(atIndex: indexPath.row)
         
@@ -209,18 +203,17 @@ extension ListScreenViewController: DetailedInfoProtocol {
     }
 }
 
-extension ListScreenViewController: RemoveInfoProtocol {
+extension ListScreenViewController: HiddenDetailedInfoProtocol {
     func removeDetailedInfo(indexPath: IndexPath) {
-        viewModel.valueArray[indexPath.row] = !viewModel.valueArray[indexPath.row]
+        viewModel.valueArray[indexPath.row] = !(viewModel.valueArray[safe: indexPath.row] ?? Bool())
         
-        UIView.animate(withDuration: 0.5,
+        UIView.animate(withDuration: 0.7,
                        delay: 0.0,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.5,
+                       usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 0.7,
                        options: .curveEaseInOut,
                        animations: {
             self.mainCollectionView.reloadItems(at: [indexPath])
         })
     }
 }
-

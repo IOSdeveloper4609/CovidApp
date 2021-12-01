@@ -15,13 +15,12 @@ protocol ListCellViewModelProtocol {
     var progressRecovered: ProgressViewProtocol? { get set }
     var histogramView: HistogramViewProtocol? { get set }
     var data: CountriesData? { get }
+    var isSelected: Bool { get }
     func setData()
     func setProgressData()
-    var isSelected: Bool { get set }
 }
 
 final class ListCellViewModel: ListCellViewModelProtocol {
-    
     var countryNameView: CountryNameViewProtocol?
     var progressConfirmed: ProgressViewProtocol?
     var progressDeaths: ProgressViewProtocol?
