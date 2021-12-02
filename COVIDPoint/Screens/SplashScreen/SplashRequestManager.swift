@@ -7,7 +7,7 @@ protocol SplashRequestManagerProtocol {
 
 class SplashRequestManager: SplashRequestManagerProtocol {
     func getCountryInfo(completion: @escaping (Countries?, NSError?) -> Void) {
-        let urlString = Constants.kBaseUrl + Constants.kCountries
+        let urlString =  Constants.kBaseUrl + Constants.kCountries
         AF.request(urlString, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { results in
             switch results.result {
             case .success( _):

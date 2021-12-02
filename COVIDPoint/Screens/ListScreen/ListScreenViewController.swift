@@ -150,6 +150,17 @@ class ListScreenViewController: UIViewController {
         self.segmentControlContainer.apply(style: appearance.translucentBackgroundStyle)
         self.segmentControl.apply(style: appearance.screenChangeControlStyle)
     }
+    
+    private func performCellAnimate(completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 0.7,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 0.7,
+                       options: .curveEaseInOut,
+                       animations: {
+            completion()
+        })
+    }
 }
 
 extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
@@ -167,7 +178,7 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
         }
         cell.cellIndexPath = indexPath
         cell.openInfoDelegate = self
-        cell.removeInfoDelegate = self
+        cell.hiddenInfoDelegate = self
         cell.layout = self.layout.cellLayout
         cell.viewModel = self.viewModel.makeCellViewModel(indexPath.row)
 
@@ -181,7 +192,7 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
 
         switch cellState {
         case .expandedHeight:
-            return CGSize(width: mainCollectionView.frame.size.width - 50, height: viewModel.expandedHeight)
+            return CGSize(width: mainCollectionView.frame.size.width - 25, height: viewModel.expandedHeight)
         case .notExpandedHeight:
             return CGSize(width: mainCollectionView.frame.size.width - 50, height: viewModel.notExpandedHeight)
         }
@@ -192,28 +203,18 @@ extension ListScreenViewController: OpenDetailedInfoProtocol {
     func openDetailedInfo(indexPath: IndexPath) {
         viewModel.selectItem(atIndex: indexPath.row)
         
-        UIView.animate(withDuration: 0.7,
-                       delay: 0.0,
-                       usingSpringWithDamping: 0.7,
-                       initialSpringVelocity: 0.7,
-                       options: .curveEaseInOut,
-                       animations: {
-            self.mainCollectionView.reloadItems(at: [indexPath])
-        })
+        performCellAnimate { [weak self] in
+            self?.mainCollectionView.reloadItems(at: [indexPath])
+        }
     }
 }
 
 extension ListScreenViewController: HiddenDetailedInfoProtocol {
-    func removeDetailedInfo(indexPath: IndexPath) {
+    func hiddenDetailedInfo(indexPath: IndexPath) {
         viewModel.valueArray[indexPath.row] = !(viewModel.valueArray[safe: indexPath.row] ?? Bool())
         
-        UIView.animate(withDuration: 0.7,
-                       delay: 0.0,
-                       usingSpringWithDamping: 0.7,
-                       initialSpringVelocity: 0.7,
-                       options: .curveEaseInOut,
-                       animations: {
-            self.mainCollectionView.reloadItems(at: [indexPath])
-        })
+        performCellAnimate { [weak self] in
+            self?.mainCollectionView.reloadItems(at: [indexPath])
+        }
     }
 }

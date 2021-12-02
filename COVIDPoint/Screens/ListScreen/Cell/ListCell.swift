@@ -12,7 +12,7 @@ protocol OpenDetailedInfoProtocol {
 }
 
 protocol HiddenDetailedInfoProtocol {
-    func removeDetailedInfo(indexPath: IndexPath)
+    func hiddenDetailedInfo(indexPath: IndexPath)
 }
 
 extension ListCell {
@@ -85,7 +85,7 @@ extension ListCell {
 final class ListCell: BaseCell {
     var cellIndexPath = IndexPath()
     var openInfoDelegate: OpenDetailedInfoProtocol?
-    var removeInfoDelegate: HiddenDetailedInfoProtocol?
+    var hiddenInfoDelegate: HiddenDetailedInfoProtocol?
 
     private let appearances = Appearance()
     private var stackView = UIStackView()
@@ -99,7 +99,6 @@ final class ListCell: BaseCell {
     private let histogramView = HistogramView()
     private let containerForButton = UIView()
     
-  
     var viewModel: ListCellViewModelProtocol? {
         didSet {
             guard var _viewModel = viewModel else { return }
@@ -170,7 +169,7 @@ final class ListCell: BaseCell {
         removeInfoButton.setImage(UIImage(named: appearances.removeInfoButtonIcon), for: .normal)
         removeInfoButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         removeInfoButton.alpha = 0.5
-        removeInfoButton.addTarget(self, action: #selector(removeDetailedInfo), for: .touchUpInside)
+        removeInfoButton.addTarget(self, action: #selector(hiddenDetailedInfo), for: .touchUpInside)
         contentView.addSubview(removeInfoButton)
         removeInfoButton.isHidden = true
         removeInfoButton.pinToSuperview(edges: [.right, .top],
@@ -229,9 +228,9 @@ final class ListCell: BaseCell {
         }
     }
     
-    @objc func removeDetailedInfo() {
-        if let removeInfoDelegate = self.removeInfoDelegate {
-            removeInfoDelegate.removeDetailedInfo(indexPath: cellIndexPath)
+    @objc func hiddenDetailedInfo() {
+        if let removeInfoDelegate = self.hiddenInfoDelegate {
+            removeInfoDelegate.hiddenDetailedInfo(indexPath: cellIndexPath)
         }
     }
 }

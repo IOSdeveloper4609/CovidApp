@@ -3,7 +3,7 @@ import Foundation
 struct Countries: Codable {
     var data: [CountriesData]?
 }
-    
+
 struct CountriesData: Codable {
     var coordinates: Coordinates?
     var name: String?
@@ -15,8 +15,8 @@ struct CountriesData: Codable {
 }
 
 struct Coordinates: Codable {
-    var latitude: Float?
-    var longitude: Float?
+    var latitude: Double?
+    var longitude: Double?
 }
 
 struct Today: Codable {
@@ -30,3 +30,7 @@ struct LatestData: Codable {
     var recovered: Int?
     var critical: Int?
 }
+
+
+
+
