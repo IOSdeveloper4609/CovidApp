@@ -90,6 +90,11 @@ class ListScreenViewController: UIViewController {
         self.apply(self.appearance)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.segmentControl.selectedSegmentIndex = 1
+    }
+    
     /// Инициализация и настройка отступов UI элементов
     private func addAndSetupSubviews(layout: ListScreenViewController.Layout) {
         let flowLayout = UICollectionViewFlowLayout()
@@ -136,10 +141,11 @@ class ListScreenViewController: UIViewController {
     @objc func openMapViewController() {
         switch segmentControl.selectedSegmentIndex {
         case 0:
-            let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
-            let listScreen = MapViewController(viewModel: vm)
-            listScreen.modalPresentationStyle = .fullScreen
-            self.present(listScreen, animated: true, completion: nil)
+//            let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
+//            let listScreen = MapViewController(viewModel: vm)
+//            listScreen.modalPresentationStyle = .fullScreen
+//            self.present(listScreen, animated: true, completion: nil)
+            self.tabBarController?.selectedIndex = 0
         default:
             print("selectedSegmentIndex")
         }

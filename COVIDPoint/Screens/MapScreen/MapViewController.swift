@@ -123,6 +123,11 @@ final class MapViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.segmentControl.selectedSegmentIndex = 0
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -226,11 +231,12 @@ private extension MapViewController {
         case 0:
             print("selectedSegmentIndex")
         default:
-            let listScreen = ListScreenViewController(layout: .init(),
-                                                      appearance: .init(),
-                                                      viewModel: ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? []))
-            listScreen.modalPresentationStyle = .fullScreen
-            self.present(listScreen, animated: true, completion: nil)
+//            let listScreen = ListScreenViewController(layout: .init(),
+//                                                      appearance: .init(),
+//                                                      viewModel: ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? []))
+//            listScreen.modalPresentationStyle = .fullScreen
+//            self.present(listScreen, animated: true, completion: nil)
+            self.tabBarController?.selectedIndex = 1
         }
     }
     
@@ -396,16 +402,16 @@ extension MapViewController: MKMapViewDelegate {
 //            return annotationView
 //        }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        var circleRenderer = MKCircleRenderer()
-        if let overlay = overlay as? MKCircle {
-            circleRenderer = MKCircleRenderer(circle: overlay)
-            circleRenderer.fillColor = UIColor.backgroundCircleRadius
-            circleRenderer.alpha = viewModel.circleRendererAlpha
-        }
-        
-        return circleRenderer
-    }
+//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+//        var circleRenderer = MKCircleRenderer()
+//        if let overlay = overlay as? MKCircle {
+//            circleRenderer = MKCircleRenderer(circle: overlay)
+//            circleRenderer.fillColor = UIColor.backgroundCircleRadius
+//            circleRenderer.alpha = viewModel.circleRendererAlpha
+//        }
+//        
+//        return circleRenderer
+//    }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let id = Int((view.annotation?.subtitle ?? "") ?? "") else { return }

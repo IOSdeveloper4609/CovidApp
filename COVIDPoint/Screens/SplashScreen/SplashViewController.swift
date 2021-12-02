@@ -40,8 +40,9 @@ final class SplashViewController: UIViewController {
     
     /// Инициализатор
     /// - Parameter viewModel: SplashViewModelProtocol
-    init(viewModel: SplashViewModelProtocol) {
+    init(viewModel: SplashViewModelProtocol, window: UIWindow?) {
         self.viewModel = viewModel
+        self.window = window
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -53,7 +54,7 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+        //setupTabBar()
         viewModel.getCountryInfo()
         setupSplashScreenImage()
         setupCompanyLogoImage()
@@ -61,7 +62,7 @@ final class SplashViewController: UIViewController {
     }
     
     func setupTabBar() {
-        self.window = UIWindow(frame: UIScreen.main.bounds)
+        //self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = .blue
         /// UITabBarController
         let tabBarController = UITabBarController()
@@ -101,10 +102,11 @@ final class SplashViewController: UIViewController {
     private func setupObserve() {
        let _ = self.viewModel.upload.observeNext(with: { value in
             if value {
-                let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
-                let mapVC = MapViewController(viewModel: vm)
-                mapVC.modalPresentationStyle = .fullScreen
-                self.show(mapVC, sender: nil)
+//                let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
+//                let mapVC = MapViewController(viewModel: vm)
+//                mapVC.modalPresentationStyle = .fullScreen
+//                self.show(mapVC, sender: nil)
+                self.setupTabBar()
             }
         })
     }

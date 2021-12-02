@@ -45,7 +45,8 @@ extension AppDelegate: AppDelegateWindowProtocol {
         self.window?.backgroundColor = .white
         let splashVM = SplashViewModel(requestManager: SplashRequestManager(),
                                        localSessionManager: LocalSessionManager.shared)
-        let splashVC = SplashViewController(viewModel: splashVM)
+        let splashVC = SplashViewController(viewModel: splashVM,
+                                            window: self.window)
         self.window?.rootViewController = splashVC
         self.window?.makeKeyAndVisible()
     }
