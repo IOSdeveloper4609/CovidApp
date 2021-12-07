@@ -29,16 +29,13 @@ extension ProgressView {
     }
 
     struct Appearance: AppearanceProtocol {
-        let typeLabelFont: UIFont = UIFont.systemFont(ofSize: 14, weight: .medium)
-        let typeLabelColor: UIColor = UIColor.black
-        
-        let countLabelFont: UIFont = UIFont.systemFont(ofSize: 24, weight: .bold)
-        let countLabelColor: UIColor = UIColor.black
-        
-        let plusCountLabelFont: UIFont = UIFont.systemFont(ofSize: 16, weight: .bold)
-        let plusCountLabelColor: UIColor = UIColor.gray
-        
-        let progressViewBackgroundColor: UIColor = UIColor.scaleLightGray
+        let typeLabelFont: UIFont = .systemFont(ofSize: 14, weight: .medium)
+        let typeLabelColor: UIColor = .black
+        let countLabelFont: UIFont = .systemFont(ofSize: 24, weight: .bold)
+        let countLabelColor: UIColor = .black
+        let plusCountLabelFont: UIFont = .systemFont(ofSize: 16, weight: .bold)
+        let plusCountLabelColor: UIColor = .gray
+        let progressViewBackgroundColor: UIColor = .scaleLightGray
     }
 }
 
@@ -71,21 +68,21 @@ class ProgressView: InstancedFromBuilder, ProgressViewProtocol {
     override func setupLayouts() {
         pin(height: layout.size.height)
         
-        addSubview(typeLabel!)
+        addSubview(typeLabel ?? UILabel())
         typeLabel?.pinToSuperview(edges: [.top,.left], insets: layout.typeLabelInsets)
         
-        addSubview(countLabel!)
-        countLabel?.pinTop(toBottom: typeLabel!, spacing: layout.countLabelInsets.top)
+        addSubview(countLabel ?? UILabel())
+        countLabel?.pinTop(toBottom: typeLabel ?? UILabel(), spacing: layout.countLabelInsets.top)
         countLabel?.pinToSuperview(edges: [.left], insets: layout.countLabelInsets)
         
-        addSubview(plusCountLabel!)
+        addSubview(plusCountLabel ?? UILabel())
         plusCountLabel?.pinToSuperview(edges: [.right], insets: layout.plusCountLabelInsets)
         if layout.plusCountLabelCenterY {
-            plusCountLabel?.pinCenter(to: countLabel!, of: .vertical)
+            plusCountLabel?.pinCenter(to: countLabel ?? UILabel(), of: .vertical)
         }
         
-        addSubview(progressView!)
-        progressView?.pinTop(toBottom: countLabel!, spacing: layout.progressViewInsets.top)
+        addSubview(progressView ?? UIView())
+        progressView?.pinTop(toBottom: countLabel ?? UILabel(), spacing: layout.progressViewInsets.top)
         progressView?.pinToSuperview(edges: [.left,.right], insets: layout.progressViewInsets)
     }
     

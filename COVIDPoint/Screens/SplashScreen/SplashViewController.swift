@@ -1,6 +1,6 @@
 import UIKit
 
-// MARK: Layout & Appearance & State
+// MARK: Layout & Appearance
 extension SplashViewController {
     /// Layout
     struct Layout {
@@ -10,7 +10,7 @@ extension SplashViewController {
         
         init(imageInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
              companyLogoImageSize: CGSize = .init(width: 55, height: 56),
-             companyLogoImageInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 150, right: 0) ) {
+             companyLogoImageInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 44, right: 0) ) {
             self.imageInsets = imageInsets
             self.companyLogoImageSize = companyLogoImageSize
             self.companyLogoImageInsets = companyLogoImageInsets
@@ -54,7 +54,6 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupTabBar()
         viewModel.getCountryInfo()
         setupSplashScreenImage()
         setupCompanyLogoImage()
@@ -62,8 +61,6 @@ final class SplashViewController: UIViewController {
     }
     
     func setupTabBar() {
-        //self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.backgroundColor = .blue
         /// UITabBarController
         let tabBarController = UITabBarController()
         /// Статистика представленная на карте
@@ -102,10 +99,6 @@ final class SplashViewController: UIViewController {
     private func setupObserve() {
        let _ = self.viewModel.upload.observeNext(with: { value in
             if value {
-//                let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
-//                let mapVC = MapViewController(viewModel: vm)
-//                mapVC.modalPresentationStyle = .fullScreen
-//                self.show(mapVC, sender: nil)
                 self.setupTabBar()
             }
         })

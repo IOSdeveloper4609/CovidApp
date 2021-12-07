@@ -12,7 +12,6 @@ final class DetailViewModel {
     weak var progressConfirmed: ProgressViewProtocol?
     weak var progressDeaths: ProgressViewProtocol?
     weak var progressRecovered: ProgressViewProtocol?
-    weak var histogramView: HistogramViewProtocol?
     
     var countryId: Int?
     private var data: CountriesData?
@@ -24,9 +23,8 @@ final class DetailViewModel {
         data = LocalSessionManager.shared.covidData?.data?[countryId]
     }
     
-    // Функция запускается только после отображения экрана
+    // Функция запускается во время отображения экрана
     func handleViewDidAppear() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
             guard let deathsData = self.data?.latestData.deaths,
                   let confirmedData  = self.data?.latestData.confirmed,
                   let recoveredData  = self.data?.latestData.recovered,
@@ -40,7 +38,6 @@ final class DetailViewModel {
             self.progressDeaths?.setProgress(progressDeathsData)
             self.progressRecovered?.setProgress(progressRecoveredData)
             self.setData()
-        }
     }
     
     func setData() {
@@ -53,22 +50,16 @@ final class DetailViewModel {
         countryNameView?.setName(_data.name ?? "")
         countryNameView?.setIcon(_data.code  ?? "")
         
-        progressConfirmed?.setName("Подтверждено")
+        progressConfirmed?.setName("Подтверждено".localisation())
         progressConfirmed?.setCount(numberFormatter.string(from: _data.latestData.confirmed as NSNumber? ?? 0) ?? "")
         progressConfirmed?.setPlusCount("+"  + numberFormatter.string(from: _data.today?.confirmed  as NSNumber? ?? 0)!)
         
-        progressDeaths?.setName("Смертельные случаи")
+        progressDeaths?.setName("Смертельные случаи".localisation())
         progressDeaths?.setCount(numberFormatter.string(from: _data.latestData.deaths as NSNumber? ?? 0) ?? "")
         progressDeaths?.setPlusCount(nil)
         
-        progressRecovered?.setName("Выздоро­вевшие")
+        progressRecovered?.setName("Выздopoвeвшие".localisation())
         progressRecovered?.setCount(numberFormatter.string(from: _data.latestData.recovered as NSNumber? ?? 0) ?? "")
         progressRecovered?.setPlusCount(nil)
-        
-        histogramView?.setTitle("Динамика заражения")
-        let columns: [CGFloat] = (1...31).map { 1/31 * CGFloat($0) }
-        histogramView?.setColumn(columns)
-        histogramView?.setStartData("01 ноября 2021")
-        histogramView?.setEndData("31 ноября 2021")
     }
 }

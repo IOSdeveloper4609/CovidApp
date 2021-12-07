@@ -23,7 +23,7 @@ extension CountryNameView {
 
     struct Appearance: AppearanceProtocol {
         var countryLabelFont: UIFont = UIFont.systemFont(ofSize: 24, weight: .bold)
-        var countryLabelColor: UIColor = UIColor.black
+        var countryLabelColor: UIColor = .black
         
         var countryIconCorner: Bool = true
     }
@@ -49,13 +49,13 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
     override func setupLayouts() {
         pin(height: layout.size.height)
 
-        addSubview(countryLabel!)
+        addSubview(countryLabel ?? UILabel())
         countryLabel?.pinToSuperview(edges: [.left, .right], insets: layout.countryLabelInsets)
         if layout.countryLabelCenterY {
             countryLabel?.pinCenterToSuperview(of: .vertical)
         }
 
-        addSubview(countryIcon!)
+        addSubview(countryIcon ?? UIImageView())
         countryIcon?.pinToSuperview(edges: [.right], insets: layout.countryIconInsets)
         countryIcon?.pin(size: layout.countryIconSize)
         if layout.countryIconCenterY {
@@ -78,12 +78,13 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
     }
 
     func setIcon(_ countryCode: String) {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
+       // let image = UIImageView()
+        //image.translatesAutoresizingMaskIntoConstraints = false
         let urlStr = String(format: Constants.flags, countryCode.lowercased())
         let url = URL(string: urlStr)
-        image.sd_setImage(with: url)
-        countryIcon?.addSubview(image)
-        image.pinToSuperview()
+        countryIcon?.sd_setImage(with: url)
+        addSubview(countryIcon ?? UIImageView())
+       
+       // image.pinToSuperview()
     }
 }

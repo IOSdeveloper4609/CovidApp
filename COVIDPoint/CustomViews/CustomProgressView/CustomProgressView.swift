@@ -10,7 +10,7 @@ import UIKit
 class CustomProgressView: UIView {
     
     var defaultHeight: CGFloat = 5
-    var defaultBackgroundColor: UIColor = UIColor.gray
+    var defaultBackgroundColor: UIColor = .gray
     var gradientColors: [UIColor] = []
     
     init() {

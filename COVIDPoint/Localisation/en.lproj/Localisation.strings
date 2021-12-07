@@ -1,0 +1,12 @@
+/* 
+  Localization.strings
+  COVIDPoint
+
+  Created by usermac on 06.12.2021.
+  
+*/
+"Смертельные случаи" = "Deadly cases";
+"Выздopoвeвшие" = "Recovered";
+"Подтверждено" = "Confirmed";
+"подробнее" = "detailed";
+

@@ -13,7 +13,6 @@ protocol ListCellViewModelProtocol {
     var progressConfirmed: ProgressViewProtocol? { get set }
     var progressDeaths: ProgressViewProtocol? { get set }
     var progressRecovered: ProgressViewProtocol? { get set }
-    var histogramView: HistogramViewProtocol? { get set }
     var data: CountriesData? { get }
     var isSelected: Bool { get }
     func setData()
@@ -25,7 +24,6 @@ final class ListCellViewModel: ListCellViewModelProtocol {
     var progressConfirmed: ProgressViewProtocol?
     var progressDeaths: ProgressViewProtocol?
     var progressRecovered: ProgressViewProtocol?
-    var histogramView: HistogramViewProtocol?
         
     var isSelected: Bool
     var data: CountriesData?
@@ -43,26 +41,20 @@ final class ListCellViewModel: ListCellViewModelProtocol {
         numberFormatter.numberStyle = .decimal
         numberFormatter.maximumFractionDigits = 2
         
-        countryNameView?.setName(data?.name ?? "Error")
-        countryNameView?.setIcon(data?.code  ?? "Error")
+        countryNameView?.setName(data?.name ?? "")
+        countryNameView?.setIcon(data?.code  ?? "")
         
-        progressConfirmed?.setName("Подтверждено")
+        progressConfirmed?.setName("Подтверждено".localisation())
         progressConfirmed?.setCount(numberFormatter.string(from: Int(data?.latestData.confirmed ?? 0) as NSNumber? ?? 0) ?? "")
         progressConfirmed?.setPlusCount("+" + numberFormatter.string(from: Int(data?.today?.confirmed ?? 0) as NSNumber? ?? 0)!)
         
-        progressDeaths?.setName("Смертельные случаи")
+        progressDeaths?.setName("Смертельные случаи".localisation())
         progressDeaths?.setCount(numberFormatter.string(from: Int(data?.latestData.deaths ?? 0) as NSNumber? ?? 0) ?? "")
         progressDeaths?.setPlusCount(nil)
         
-        progressRecovered?.setName("Выздоро­вевшие")
+        progressRecovered?.setName("Выздopoвeвшие".localisation())
         progressRecovered?.setCount(numberFormatter.string(from: Int(data?.latestData.recovered ?? 0) as NSNumber? ?? 0) ?? "")
         progressRecovered?.setPlusCount(nil)
-        
-        histogramView?.setTitle("Динамика заражения")
-        let columns: [CGFloat] = (1...31).map { 1/31 * CGFloat($0) }
-        histogramView?.setColumn(columns)
-        histogramView?.setStartData("01 ноября 2021")
-        histogramView?.setEndData("31 ноября 2021")
     }
     
     func setProgressData() {

@@ -26,7 +26,7 @@ extension UIView {
         /// Инициализатор
         /// - Parameters:
         ///   - backgroundColor: Цвет фона
-        public init(backgroundColor: UIColor = .clear,
+        public init(backgroundColor: UIColor = .white,
                     backgroundGradient: CAGradientLayer? = nil) {
             self.backgroundColor = backgroundColor
             self.backgroundGradient = backgroundGradient

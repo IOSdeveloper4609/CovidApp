@@ -17,6 +17,7 @@ protocol HiddenDetailedInfoProtocol {
 
 extension ListCell {
     struct Layout {
+        let containerForUIInsets: UIEdgeInsets
         let stackViewInsets: UIEdgeInsets
         let stackViewSpacing: CGFloat
         let removeInfoButtonInsets: UIEdgeInsets
@@ -28,16 +29,18 @@ extension ListCell {
         let detailedInfoButtonInsets: UIEdgeInsets
         let detailedInfoButtonSize: CGSize
         
-        init(stackViewInsets: UIEdgeInsets = .init(top: 35, left: 15, bottom: 50, right: 15),
+        init(containerForUIInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
+            stackViewInsets: UIEdgeInsets = .init(top: 35, left: 15, bottom: 50, right: 15),
              stackViewSpacing: CGFloat = 20,
              removeInfoButtonInsets: UIEdgeInsets = .init(top: 10, left: 0, bottom: 0, right: 10),
              removeInfoButtonSize: CGSize = .init(width: 20, height: 20),
              containerForButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 12, right: 10),
              containerForButtonSize: CGSize = .init(width: 175, height: 40),
-             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 23),
+             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 30),
              imageButtonSize: CGSize = .init(width: 20, height: 30),
              detailedInfoButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 45),
              detailedInfoButtonSize: CGSize = .init(width: 100, height: 30)) {
+            self.containerForUIInsets = containerForUIInsets
             self.stackViewInsets = stackViewInsets
             self.stackViewSpacing = stackViewSpacing
             self.removeInfoButtonInsets = removeInfoButtonInsets
@@ -82,7 +85,10 @@ extension ListCell {
     }
 
 
-final class ListCell: BaseCell {
+final class ListCell: UICollectionViewCell {
+    
+    static var identifier = "ListCell"
+    
     var cellIndexPath = IndexPath()
     var openInfoDelegate: OpenDetailedInfoProtocol?
     var hiddenInfoDelegate: HiddenDetailedInfoProtocol?
@@ -93,11 +99,11 @@ final class ListCell: BaseCell {
     private let detailedInfoButton = UIButton()
     private let removeInfoButton = UIButton()
     private let countryName = CountryNameView()
-    private var progressConfirmed = ProgressView()
+    private let progressConfirmed = ProgressView()
     private let progressDeaths = ProgressView()
     private let progressRecovered = ProgressView()
-    private let histogramView = HistogramView()
     private let containerForButton = UIView()
+    private let containerForUI = UIView()
     
     var viewModel: ListCellViewModelProtocol? {
         didSet {
@@ -106,15 +112,13 @@ final class ListCell: BaseCell {
             _viewModel.progressConfirmed = progressConfirmed
             _viewModel.progressDeaths = progressDeaths
             _viewModel.progressRecovered = progressRecovered
-            _viewModel.histogramView = histogramView
             _viewModel.setData()
             _viewModel.setProgressData()
-            
+
             self.containerForButton.isHidden = _viewModel.isSelected ? true : false
             self.removeInfoButton.isHidden = _viewModel.isSelected ? false : true
             self.progressDeaths.isHidden = _viewModel.isSelected ? false : true
             self.progressRecovered.isHidden = _viewModel.isSelected ? false : true
-        //    self.histogramView.isHidden = _viewModel.isSelected ? false : true
         }
     }
     
@@ -128,7 +132,6 @@ final class ListCell: BaseCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
     
-        setupCell()
         setupProgressViewColors()
     }
     
@@ -138,20 +141,19 @@ final class ListCell: BaseCell {
         viewModel?.progressConfirmed = nil
         viewModel?.progressDeaths = nil
         viewModel?.progressRecovered = nil
-        viewModel?.histogramView = nil
     }
-    
+
     func setupProgressViewColors() {
         progressConfirmed.setProgressGradientColor([
             appearances.progressConfirmedStartColor,
             appearances.progressConfirmedEndColor
         ])
-        
+
         progressDeaths.setProgressGradientColor([
             appearances.progressDeathsStartColor,
             appearances.progressDeathsEndColor
         ])
-        
+
         progressRecovered.setProgressGradientColor([
             appearances.progressRecoveredStartColor,
             appearances.progressRecoveredEndColor
@@ -163,6 +165,23 @@ final class ListCell: BaseCell {
     }
     
     func addAndSetupSubviews(layout: ListCell.Layout) {
+        /// контейнер для UI
+        containerForUI.translatesAutoresizingMaskIntoConstraints = false
+        containerForUI.backgroundColor = .systemGray
+//        containerForUI.layer.cornerRadius = 20
+//        containerForUI.clipsToBounds = true
+//        containerForUI.layer.backgroundColor = UIColor.white.cgColor
+//        containerForUI.layer.shadowColor = UIColor.gray.cgColor
+//        containerForUI.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
+//        containerForUI.layer.shadowRadius = 1.0
+//        containerForUI.layer.shadowOpacity = 1.0
+//        containerForUI.layer.masksToBounds = false
+        contentView.addSubview(containerForUI)
+        containerForUI.pinToSuperview(edges: [.all],
+                                      insets: layout.containerForUIInsets,
+                                      safeArea: false,
+                                      priority: .required)
+        
         /// настройка кнопки скрытия инфы
         removeInfoButton.translatesAutoresizingMaskIntoConstraints = false
         removeInfoButton.setTitleColor(.black, for: .normal)
@@ -170,13 +189,14 @@ final class ListCell: BaseCell {
         removeInfoButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         removeInfoButton.alpha = 0.5
         removeInfoButton.addTarget(self, action: #selector(hiddenDetailedInfo), for: .touchUpInside)
-        contentView.addSubview(removeInfoButton)
+        containerForUI.addSubview(removeInfoButton)
         removeInfoButton.isHidden = true
+        removeInfoButton.pin(size: layout.removeInfoButtonSize)
         removeInfoButton.pinToSuperview(edges: [.right, .top],
                                         insets: layout.removeInfoButtonInsets,
-                                        safeArea: false, priority: .required)
-        removeInfoButton.pin(size: layout.removeInfoButtonSize)
-
+                                        safeArea: false,
+                                        priority: .required)
+        
         /// настройка stackView
         stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -186,40 +206,43 @@ final class ListCell: BaseCell {
         stackView.addArrangedSubview(progressConfirmed)
         stackView.addArrangedSubview(progressDeaths)
         stackView.addArrangedSubview(progressRecovered)
-     //   stackView.addArrangedSubview(histogramView)
-        contentView.addSubview(stackView)
-        stackView.pinToSuperview(edges: [.top, .left, .right], insets: layout.stackViewInsets)
+        containerForUI.addSubview(stackView)
         stackView.spacing = layout.stackViewSpacing
+        stackView.pinToSuperview(edges: [.top, .left, .right],
+                                 insets: layout.stackViewInsets)
         
         /// настройка контейнера для кнопки и картинки
         containerForButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(containerForButton)
+        containerForUI.addSubview(containerForButton)
+        containerForButton.pin(size: layout.containerForButtonSize)
         containerForButton.pinToSuperview(edges: [.right, .bottom],
                                           insets: layout.containerForButtonInsets,
-                                        safeArea: false, priority: .required)
-        containerForButton.pin(size: layout.containerForButtonSize)
-
+                                          safeArea: false,
+                                          priority: .required)
+        
         /// настройка картинки на кнопке
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.image = UIImage(named: appearances.detailedInfoButtonIcon)
         containerForButton.addSubview(imageButton)
+        imageButton.pin(size: layout.imageButtonSize)
         imageButton.pinToSuperview(edges: [.right, .bottom],
                                    insets: layout.imageButtonInsets,
-                                        safeArea: false, priority: .required)
-        imageButton.pin(size: layout.imageButtonSize)
+                                   safeArea: false,
+                                   priority: .required)
         
         /// настройка кнопки подробнее
         detailedInfoButton.translatesAutoresizingMaskIntoConstraints = false
         detailedInfoButton.setTitleColor(.black, for: .normal)
-        detailedInfoButton.setTitle("подробнее", for: .normal)
+        detailedInfoButton.setTitle("подробнее".localisation(), for: .normal)
         detailedInfoButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         detailedInfoButton.alpha = 0.5
         detailedInfoButton.addTarget(self, action: #selector(openDetailedInfo), for: .touchUpInside)
         containerForButton.addSubview(detailedInfoButton)
+        detailedInfoButton.pin(size: layout.detailedInfoButtonSize)
         detailedInfoButton.pinToSuperview(edges: [.right, .bottom],
                                           insets: layout.detailedInfoButtonInsets,
-                                        safeArea: false, priority: .required)
-        detailedInfoButton.pin(size: layout.detailedInfoButtonSize)
+                                          safeArea: false,
+                                          priority: .required)
     }
     
     @objc func openDetailedInfo() {
@@ -227,7 +250,7 @@ final class ListCell: BaseCell {
             openInfoDelegate.openDetailedInfo(indexPath: cellIndexPath)
         }
     }
-    
+
     @objc func hiddenDetailedInfo() {
         if let removeInfoDelegate = self.hiddenInfoDelegate {
             removeInfoDelegate.hiddenDetailedInfo(indexPath: cellIndexPath)

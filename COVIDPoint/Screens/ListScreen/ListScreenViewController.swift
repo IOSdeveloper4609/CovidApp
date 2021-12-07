@@ -19,7 +19,7 @@ extension ListScreenViewController {
         let cellLayout: ListCell.Layout
         
         init(segmentControlContainerInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
-             segmentControlContainerSize: CGSize = .init(width: 0, height: 124),
+             segmentControlContainerSize: CGSize = .init(width: 0, height: 110),
              segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
              collectionViewInsets: UIEdgeInsets = .init(top: 120, left: 0, bottom: 0, right: 0),
@@ -101,9 +101,10 @@ class ListScreenViewController: UIViewController {
         flowLayout.scrollDirection = .vertical
         self.mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         guard let mainCollectionView = mainCollectionView else { return }
-        mainCollectionView.showsVerticalScrollIndicator = false
-        mainCollectionView.isPagingEnabled = false
+        mainCollectionView.showsVerticalScrollIndicator = true
         mainCollectionView.backgroundColor = .white
+        mainCollectionView.isPagingEnabled = false
+        mainCollectionView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right:0 )
         mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
         mainCollectionView.register(ListCell.self, forCellWithReuseIdentifier: ListCell.identifier)
         mainCollectionView.dataSource = self
@@ -141,11 +142,8 @@ class ListScreenViewController: UIViewController {
     @objc func openMapViewController() {
         switch segmentControl.selectedSegmentIndex {
         case 0:
-//            let vm = MapViewModel(localSessionManager: LocalSessionManager.shared)
-//            let listScreen = MapViewController(viewModel: vm)
-//            listScreen.modalPresentationStyle = .fullScreen
-//            self.present(listScreen, animated: true, completion: nil)
             self.tabBarController?.selectedIndex = 0
+        
         default:
             print("selectedSegmentIndex")
         }
@@ -155,17 +153,6 @@ class ListScreenViewController: UIViewController {
     private func apply(_ appearance: ListScreenViewController.Appearance) {
         self.segmentControlContainer.apply(style: appearance.translucentBackgroundStyle)
         self.segmentControl.apply(style: appearance.screenChangeControlStyle)
-    }
-    
-    private func performCellAnimate(completion: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.7,
-                       delay: 0.0,
-                       usingSpringWithDamping: 0.7,
-                       initialSpringVelocity: 0.7,
-                       options: .curveEaseInOut,
-                       animations: {
-            completion()
-        })
     }
 }
 
@@ -202,14 +189,16 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
         case .notExpandedHeight:
             return CGSize(width: mainCollectionView.frame.size.width - 50, height: viewModel.notExpandedHeight)
         }
+        
+    //    return CGSize(width: 300, height: viewModel.notExpandedHeight)
     }
 }
 
 extension ListScreenViewController: OpenDetailedInfoProtocol {
     func openDetailedInfo(indexPath: IndexPath) {
         viewModel.selectItem(atIndex: indexPath.row)
-        
-        performCellAnimate { [weak self] in
+
+            viewModel.performCellAnimate { [weak self] in
             self?.mainCollectionView.reloadItems(at: [indexPath])
         }
     }
@@ -217,9 +206,9 @@ extension ListScreenViewController: OpenDetailedInfoProtocol {
 
 extension ListScreenViewController: HiddenDetailedInfoProtocol {
     func hiddenDetailedInfo(indexPath: IndexPath) {
-        viewModel.valueArray[indexPath.row] = !(viewModel.valueArray[safe: indexPath.row] ?? Bool())
-        
-        performCellAnimate { [weak self] in
+        viewModel.valueArray[indexPath.row] = false
+
+        viewModel.performCellAnimate { [weak self] in
             self?.mainCollectionView.reloadItems(at: [indexPath])
         }
     }

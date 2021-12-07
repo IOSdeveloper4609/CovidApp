@@ -15,14 +15,12 @@ private extension DetailViewController {
     }
     
     struct Appearance: AppearanceProtocol {
-        let progressConfirmedStartColor: UIColor = UIColor.gray
-        let progressConfirmedEndColor: UIColor = UIColor.darkGray
-        
-        let progressDeathsStartColor: UIColor = UIColor.darkRed
-        let progressDeathsEndColor: UIColor = UIColor.lightRed
-        
-        let progressRecoveredStartColor: UIColor = UIColor.darkGreen
-        let progressRecoveredEndColor: UIColor = UIColor.lightGreen
+        let progressConfirmedStartColor: UIColor = .gray
+        let progressConfirmedEndColor: UIColor = .darkGray
+        let progressDeathsStartColor: UIColor = .darkRed
+        let progressDeathsEndColor: UIColor = .lightRed
+        let progressRecoveredStartColor: UIColor = .darkGreen
+        let progressRecoveredEndColor: UIColor = .lightGreen
     }
 }
 
@@ -72,7 +70,6 @@ final class DetailViewController: UIViewController {
     private let progressConfirmed = ProgressView()
     private let progressDeaths = ProgressView()
     private let progressRecovered = ProgressView()
-    private let histogramView = HistogramView()
     weak private var sheetControl: SheetViewController?
     
     override func viewDidLoad() {
@@ -89,7 +86,7 @@ final class DetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        sheetControl?.setSizes([.fixed(550)], animated: true)
+        sheetControl?.setSizes([.fixed(400)], animated: true)
         viewModel.handleViewDidAppear()
     }
 }
@@ -103,7 +100,7 @@ private extension DetailViewController {
     }
     
     func setupLayouts() {
-        view.addSubview(stackView!)
+        view.addSubview(stackView ?? UIStackView())
         stackView?.pinToSuperview(edges: [.top, .left,.right], insets: layout.stackViewInsets)
         stackView?.spacing = layout.stackViewSpacing
     }
@@ -128,17 +125,11 @@ private extension DetailViewController {
     func configure() {
         viewModel.countryNameView = countryName
         stackView?.addArrangedSubview(countryName)
-        
         viewModel.progressConfirmed = progressConfirmed
         stackView?.addArrangedSubview(progressConfirmed)
-        
         viewModel.progressDeaths = progressDeaths
         stackView?.addArrangedSubview(progressDeaths)
-        
         viewModel.progressRecovered = progressRecovered
         stackView?.addArrangedSubview(progressRecovered)
-        
-        viewModel.histogramView = histogramView
-        stackView?.addArrangedSubview(histogramView)
     }
 }

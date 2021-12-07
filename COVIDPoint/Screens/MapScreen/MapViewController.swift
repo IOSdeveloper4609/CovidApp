@@ -34,7 +34,7 @@ private extension MapViewController {
         init(segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
              mapInsets: UIEdgeInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-             containerSize: CGSize = .init(width: 70, height: 20),
+             containerSize: CGSize = .init(width: 70, height: 50),
              containerInsets: UIEdgeInsets = .init(top: 0, left: -29, bottom: 20, right: 0),
              confirmedLabelSize: CGSize = .init(width: 55, height: 0),
              confirmedLabelInsets: UIEdgeInsets = .init(top: 5, left: 2, bottom: 5, right: 2),
@@ -110,8 +110,7 @@ final class MapViewController: UIViewController {
     private let delimiterImage = UIImageView()
     private let containerForButtons = UIView()
     private let numberFormatter = NumberFormatter()
-    private let userLocationButton = UIButton()
-    
+   
     /// Инициализатор
     /// - Parameter viewModel: MapViewModelProtocol
     init(viewModel: MapViewModelProtocol) {
@@ -122,17 +121,16 @@ final class MapViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+        
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("first screen loaded")
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.segmentControl.selectedSegmentIndex = 0
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print("first screen loaded")
-       
     }
     
     override func loadView() {
@@ -145,8 +143,6 @@ final class MapViewController: UIViewController {
         viewModel.getCountries()
         setupCameraZoomRange()
     }
-    
-    
 }
 
 // MARK: - Private
@@ -210,20 +206,6 @@ private extension MapViewController {
         self.containerForButtons.addSubview(delimiterImage)
         self.delimiterImage.pinToSuperview(edges: [.all],
                                             insets: layout.delimiterImageInsets)
-        
-        
-        self.userLocationButton.translatesAutoresizingMaskIntoConstraints = false
-        self.userLocationButton.setImage(UIImage(named: appearance.userLocationButtonIcon), for: .normal)
-        self.mapView.addSubview(userLocationButton)
-        self.userLocationButton.contentMode = .scaleAspectFit
-        self.userLocationButton.pinToSuperview(edges: [.top, .right],
-                                               insets: layout.userLocationButtonInsets)
-        self.userLocationButton.addTarget(self, action: #selector(locationManagerButton), for: .touchUpInside)
-        
-    }
-    
-    @objc func locationManagerButton() {
-        mapView.setCenter(mapView.userLocation.coordinate, animated: true)
     }
     
     @objc func openListScreenViewController() {
@@ -231,11 +213,6 @@ private extension MapViewController {
         case 0:
             print("selectedSegmentIndex")
         default:
-//            let listScreen = ListScreenViewController(layout: .init(),
-//                                                      appearance: .init(),
-//                                                      viewModel: ListScreenViewModel(data: LocalSessionManager.shared.covidData?.data ?? []))
-//            listScreen.modalPresentationStyle = .fullScreen
-//            self.present(listScreen, animated: true, completion: nil)
             self.tabBarController?.selectedIndex = 1
         }
     }
@@ -272,6 +249,7 @@ private extension MapViewController {
                 annotation.coordinate = CLLocationCoordinate2D(latitude: data?.lat ?? 0.0,
                                                                longitude: data?.lon ?? 0.0)
                 
+                
                 let numberResult = Int(data?.confirmed ?? 0)
             
                 annotation.title = _self.numberFormatter.string(from: (numberResult as NSNumber ))
@@ -286,7 +264,7 @@ private extension MapViewController {
             
         }.store(in: reactive.bag)
         
-        /// повесил нажатие на кнопку
+        /// приблизить карту
         makeMapBiggerButton.reactive.tap.observeNext {
             let currentCamera = self.mapView.camera
             let newCamera: MKMapCamera
@@ -295,7 +273,8 @@ private extension MapViewController {
                                         fromDistance: currentCamera.altitude / self.viewModel.valueCameraMap,
                                         pitch: currentCamera.pitch,
                                         heading: currentCamera.heading)
-            } else {
+            }
+            else {
                 newCamera = MKMapCamera()
                 newCamera.centerCoordinate = currentCamera.centerCoordinate
                 newCamera.heading = currentCamera.heading
@@ -307,7 +286,7 @@ private extension MapViewController {
             
         }.store(in: reactive.bag)
         
-        /// повесил нажатие на кнопку
+        /// отдалить карту
         makeMapSmallerButton.reactive.tap.observeNext {
             let currentCamera = self.mapView.camera
             let newCamera: MKMapCamera
@@ -346,7 +325,7 @@ private extension MapViewController {
     func showCircle(coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) {
         let circle = MKCircle(center: coordinate,
                               radius: radius)
-        
+                
         mapView.addOverlay(circle)
     }
 }
@@ -361,20 +340,23 @@ extension MapViewController: CLLocationManagerDelegate {
         }
     }
 }
+
  
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
-        /// добавили кастомную картинку на точки в карте
+//        /// добавили кастомную картинку на точки в карте
 //        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//
 //
 //            let reuseId = appearance.reuseId
 //
 //            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
 //            if annotationView == nil {
 //                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-//                annotationView?.canShowCallout = true
-//                let container = UIView()
+             //   annotationView?.canShowCallout = true
+//                let container = UIButton()
 //                container.backgroundColor = .white
+//                container.addTarget(self, action: #selector(action), for: .touchUpInside)
 //                annotationView?.addSubview(container)
 //                container.translatesAutoresizingMaskIntoConstraints = false
 //                container.pin(size: layout.containerSize)
@@ -382,7 +364,10 @@ extension MapViewController: MKMapViewDelegate {
 //                                         insets: layout.containerInsets)
 //                container.layer.masksToBounds = false
 //                container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
-//
+
+//                let taap = UITapGestureRecognizer(target: self, action: #selector(action))
+//                container.addGestureRecognizer(taap)
+
 //                let confirmedLabel = UILabel()
 //                confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
 //                confirmedLabel.textAlignment = .center
@@ -399,19 +384,30 @@ extension MapViewController: MKMapViewDelegate {
 //            } else {
 //                annotationView?.annotation = annotation
 //            }
+//            let container = UIButton()
+//            container.backgroundColor = .white
+//            container.addTarget(self, action: #selector(action), for: .touchUpInside)
+//            annotationView?.addSubview(container)
+//            container.translatesAutoresizingMaskIntoConstraints = false
+//            container.pin(size: layout.containerSize)
+//            container.pinToSuperview(edges: [.left,.bottom],
+//                                     insets: layout.containerInsets)
+//            container.layer.masksToBounds = false
+//            container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
 //            return annotationView
 //        }
+//
     
-//    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-//        var circleRenderer = MKCircleRenderer()
-//        if let overlay = overlay as? MKCircle {
-//            circleRenderer = MKCircleRenderer(circle: overlay)
-//            circleRenderer.fillColor = UIColor.backgroundCircleRadius
-//            circleRenderer.alpha = viewModel.circleRendererAlpha
-//        }
-//        
-//        return circleRenderer
-//    }
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        var circleRenderer = MKCircleRenderer()
+        if let overlay = overlay as? MKCircle {
+            circleRenderer = MKCircleRenderer(circle: overlay)
+            circleRenderer.fillColor = UIColor.backgroundCircleRadius
+            circleRenderer.alpha = viewModel.circleRendererAlpha
+        }
+        
+        return circleRenderer
+    }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let id = Int((view.annotation?.subtitle ?? "") ?? "") else { return }
@@ -420,4 +416,6 @@ extension MapViewController: MKMapViewDelegate {
         mapView.selectedAnnotations.removeAll()
     }
 }
+
+
 

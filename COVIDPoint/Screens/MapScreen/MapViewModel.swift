@@ -45,7 +45,6 @@ final class MapViewModel: MapViewModelProtocol {
     let minCamera: Double = 1000000
     let maxCamera: Double = 4000000
     var result = PassthroughSubject<[CountryState?], Never>()
-   // let networkManager = NetworkManager()
     var countries: Countries?
     var countryState = [CountryState]() {
         didSet {

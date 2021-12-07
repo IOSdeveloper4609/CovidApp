@@ -35,6 +35,9 @@ protocol ListScreenViewModelProtocol {
     
     /// состояние ячейки
     func cellState(index: Int) -> CellState
+    
+    /// анимация ячейки
+    func performCellAnimate(completion: @escaping () -> Void)
 }
 
 // MARK: ListScreenViewModel
@@ -44,7 +47,7 @@ final class ListScreenViewModel: ListScreenViewModelProtocol {
     
     var valueArray: [Bool] = []
     
-    var expandedHeight: CGFloat = 520
+    var expandedHeight: CGFloat = 400
     var notExpandedHeight: CGFloat  = 235
     
     init(data: [CountriesData]) {
@@ -68,5 +71,16 @@ final class ListScreenViewModel: ListScreenViewModelProtocol {
     func cellState(index: Int) -> CellState {
         let result: CellState = valueArray[safe: index] ?? Bool() ? .expandedHeight : .notExpandedHeight
         return result
+    }
+    
+    func performCellAnimate(completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 0.7,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.7,
+                       initialSpringVelocity: 0.7,
+                       options: .curveEaseInOut,
+                       animations: {
+            completion()
+        })
     }
 }
