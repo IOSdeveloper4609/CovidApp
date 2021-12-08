@@ -312,18 +312,6 @@ extension MapViewController: MKMapViewDelegate {
             return annotationView
         }
 
-    
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        var circleRenderer = MKCircleRenderer()
-        if let overlay = overlay as? MKCircle {
-            circleRenderer = MKCircleRenderer(circle: overlay)
-            circleRenderer.fillColor = UIColor.backgroundCircleRadius
-            circleRenderer.alpha = viewModel.circleRendererAlpha
-        }
-        
-        return circleRenderer
-    }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let id = Int((view.annotation?.subtitle ?? "") ?? "") else { return }
         let detailVC  = DetailViewController.getSheetViewController(id)

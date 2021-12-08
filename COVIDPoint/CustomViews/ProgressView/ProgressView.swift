@@ -16,14 +16,10 @@ enum ProgressViewType {
 extension ProgressView {
     struct Layout {
         let size: CGSize = CGSize(width: 0, height: 66)
-        
         let typeLabelInsets: UIEdgeInsets = UIEdgeInsets(all: 0)
-        
         let countLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 7, left: 0, bottom: 0, right: 0)
-        
         let plusCountLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let plusCountLabelCenterY: Bool = true
-        
         let progressViewInsets: UIEdgeInsets = UIEdgeInsets(top: 7, left: 0, bottom: 0, right: 0)
         let progressViewSize: CGSize = CGSize(width: 0, height: 6)
     }
