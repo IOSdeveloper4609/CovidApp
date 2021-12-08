@@ -10,21 +10,18 @@ import SDWebImage
 
 extension CountryNameView {
     struct Layout {
-        var size: CGSize = CGSize(width: 0, height: 58)
-        
+        var size: CGSize = CGSize(width: 0, height: 30)
         var countryLabelInsets: UIEdgeInsets = UIEdgeInsets(all: 0)
         var countryLabelCenterY: Bool = true
         var countryIconCorner: Bool = true
-        
         var countryIconInsets: UIEdgeInsets = UIEdgeInsets(all: 0)
-        var countryIconSize: CGSize = CGSize(width: 58, height: 58)
+        var countryIconSize: CGSize = CGSize(width: 50, height: 50)
         var countryIconCenterY: Bool = true
     }
 
     struct Appearance: AppearanceProtocol {
         var countryLabelFont: UIFont = UIFont.systemFont(ofSize: 24, weight: .bold)
         var countryLabelColor: UIColor = .black
-        
         var countryIconCorner: Bool = true
     }
 }
@@ -48,19 +45,25 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
 
     override func setupLayouts() {
         pin(height: layout.size.height)
-
-        addSubview(countryLabel ?? UILabel())
-        countryLabel?.pinToSuperview(edges: [.left, .right], insets: layout.countryLabelInsets)
-        if layout.countryLabelCenterY {
-            countryLabel?.pinCenterToSuperview(of: .vertical)
-        }
-
+        
         addSubview(countryIcon ?? UIImageView())
         countryIcon?.pinToSuperview(edges: [.right], insets: layout.countryIconInsets)
         countryIcon?.pin(size: layout.countryIconSize)
         if layout.countryIconCenterY {
             countryIcon?.pinCenterToSuperview(of: .vertical)
         }
+        
+        guard let _countryIcon = countryIcon else {
+            return
+        }
+
+        addSubview(countryLabel ?? UILabel())
+        countryLabel?.rightAnchor.constraint(equalTo: _countryIcon.leftAnchor,constant: -20).isActive = true
+        countryLabel?.pinToSuperview(edges: [.left], insets: layout.countryLabelInsets)
+        if layout.countryLabelCenterY {
+            countryLabel?.pinCenterToSuperview(of: .vertical)
+        }
+
     }
 
     override func setupAppearances() {
@@ -69,7 +72,7 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
 
         if appearance.countryIconCorner {
             countryIcon?.layer.masksToBounds = true
-            countryIcon?.layer.cornerRadius = layout.size.height / 2
+            countryIcon?.layer.cornerRadius = 25
         }
     }
 
@@ -78,13 +81,9 @@ class CountryNameView: InstancedFromBuilder, CountryNameViewProtocol {
     }
 
     func setIcon(_ countryCode: String) {
-       // let image = UIImageView()
-        //image.translatesAutoresizingMaskIntoConstraints = false
         let urlStr = String(format: Constants.flags, countryCode.lowercased())
         let url = URL(string: urlStr)
         countryIcon?.sd_setImage(with: url)
-        addSubview(countryIcon ?? UIImageView())
-       
-       // image.pinToSuperview()
+        self.addSubview(countryIcon ?? UIImageView())
     }
 }

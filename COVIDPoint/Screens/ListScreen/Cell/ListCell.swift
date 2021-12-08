@@ -30,15 +30,15 @@ extension ListCell {
         let detailedInfoButtonSize: CGSize
         
         init(containerForUIInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
-            stackViewInsets: UIEdgeInsets = .init(top: 35, left: 15, bottom: 50, right: 15),
+             stackViewInsets: UIEdgeInsets = .init(top: 40, left: 15, bottom: 50, right: 15),
              stackViewSpacing: CGFloat = 20,
-             removeInfoButtonInsets: UIEdgeInsets = .init(top: 10, left: 0, bottom: 0, right: 10),
+             removeInfoButtonInsets: UIEdgeInsets = .init(top: 5, left: 0, bottom: 0, right: 10),
              removeInfoButtonSize: CGSize = .init(width: 20, height: 20),
              containerForButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 12, right: 10),
              containerForButtonSize: CGSize = .init(width: 175, height: 40),
-             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 30),
+             imageButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 20),
              imageButtonSize: CGSize = .init(width: 20, height: 30),
-             detailedInfoButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 45),
+             detailedInfoButtonInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 40),
              detailedInfoButtonSize: CGSize = .init(width: 100, height: 30)) {
             self.containerForUIInsets = containerForUIInsets
             self.stackViewInsets = stackViewInsets
@@ -104,6 +104,7 @@ final class ListCell: UICollectionViewCell {
     private let progressRecovered = ProgressView()
     private let containerForButton = UIView()
     private let containerForUI = UIView()
+    private let boxView = UIView()
     
     var viewModel: ListCellViewModelProtocol? {
         didSet {
@@ -165,18 +166,20 @@ final class ListCell: UICollectionViewCell {
     }
     
     func addAndSetupSubviews(layout: ListCell.Layout) {
+        boxView.translatesAutoresizingMaskIntoConstraints = false
+        boxView.backgroundColor = .clear
+        self.addSubview(boxView)
+        boxView.pinToSuperview(edges: [.all],
+                                      insets: layout.containerForUIInsets,
+                                      safeArea: false,
+                                      priority: .required)
+        
         /// контейнер для UI
         containerForUI.translatesAutoresizingMaskIntoConstraints = false
-        containerForUI.backgroundColor = .systemGray
-//        containerForUI.layer.cornerRadius = 20
-//        containerForUI.clipsToBounds = true
-//        containerForUI.layer.backgroundColor = UIColor.white.cgColor
-//        containerForUI.layer.shadowColor = UIColor.gray.cgColor
-//        containerForUI.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
-//        containerForUI.layer.shadowRadius = 1.0
-//        containerForUI.layer.shadowOpacity = 1.0
-//        containerForUI.layer.masksToBounds = false
-        contentView.addSubview(containerForUI)
+        containerForUI.backgroundColor = .white
+        containerForUI.layer.cornerRadius = 20
+        containerForUI.clipsToBounds = true
+        boxView.addSubview(containerForUI)
         containerForUI.pinToSuperview(edges: [.all],
                                       insets: layout.containerForUIInsets,
                                       safeArea: false,
@@ -233,7 +236,7 @@ final class ListCell: UICollectionViewCell {
         /// настройка кнопки подробнее
         detailedInfoButton.translatesAutoresizingMaskIntoConstraints = false
         detailedInfoButton.setTitleColor(.black, for: .normal)
-        detailedInfoButton.setTitle("подробнее".localisation(), for: .normal)
+        detailedInfoButton.setTitle("Подробнее".localisation(), for: .normal)
         detailedInfoButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         detailedInfoButton.alpha = 0.5
         detailedInfoButton.addTarget(self, action: #selector(openDetailedInfo), for: .touchUpInside)

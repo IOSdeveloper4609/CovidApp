@@ -20,13 +20,13 @@ extension UIView {
     
     /// Стиль UIView
     public struct Style {
-        let backgroundColor: UIColor
+        var backgroundColor = UIColor(red: 236.0 / 255.0, green: 236.0 / 255.0, blue: 237.0 / 255.0, alpha: 1)
         let backgroundGradient: CAGradientLayer?
         
         /// Инициализатор
         /// - Parameters:
         ///   - backgroundColor: Цвет фона
-        public init(backgroundColor: UIColor = .white,
+        public init(backgroundColor: UIColor,
                     backgroundGradient: CAGradientLayer? = nil) {
             self.backgroundColor = backgroundColor
             self.backgroundGradient = backgroundGradient

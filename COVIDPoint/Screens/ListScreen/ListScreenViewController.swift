@@ -20,7 +20,7 @@ extension ListScreenViewController {
         
         init(segmentControlContainerInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0),
              segmentControlContainerSize: CGSize = .init(width: 0, height: 110),
-             segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
+             segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 88, bottom: 0, right: 88),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
              collectionViewInsets: UIEdgeInsets = .init(top: 120, left: 0, bottom: 0, right: 0),
              cellLayout: ListCell.Layout = .init()) {
@@ -37,11 +37,14 @@ extension ListScreenViewController {
     struct Appearance: AppearanceProtocol {
         let mapImage: String
         let listImage: String
+        let containerSegmentControlBackground: UIColor
         
         init(mapImage: String = "map",
-             listImage: String = "list") {
+             listImage: String = "list",
+             containerSegmentControlBackground: UIColor = UIColor(red: 236.0 / 255.0, green: 236.0 / 255.0, blue: 237.0 / 255.0, alpha: 1)) {
             self.mapImage = mapImage
             self.listImage = listImage
+            self.containerSegmentControlBackground = containerSegmentControlBackground
         }
     }
 }
@@ -97,12 +100,14 @@ class ListScreenViewController: UIViewController {
     
     /// Инициализация и настройка отступов UI элементов
     private func addAndSetupSubviews(layout: ListScreenViewController.Layout) {
+        view.backgroundColor = appearance.containerSegmentControlBackground
+        /// Настройка CollectionView
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         self.mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         guard let mainCollectionView = mainCollectionView else { return }
         mainCollectionView.showsVerticalScrollIndicator = true
-        mainCollectionView.backgroundColor = .white
+        mainCollectionView.backgroundColor = appearance.containerSegmentControlBackground
         mainCollectionView.isPagingEnabled = false
         mainCollectionView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right:0 )
         mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,9 +119,11 @@ class ListScreenViewController: UIViewController {
                                           insets: layout.collectionViewInsets,
                                           safeArea: false,
                                           priority: .required)
+        
         /// Настройка SegmentControlContainer
         self.segmentControlContainer = UIView()
         self.segmentControlContainer.translatesAutoresizingMaskIntoConstraints = false
+        self.segmentControlContainer.backgroundColor = appearance.containerSegmentControlBackground
         self.view.addSubview(self.segmentControlContainer)
         self.segmentControlContainer.pinToSuperview(edges: [.left, .top, .right],
                                                     insets: layout.segmentControlContainerInsets,
@@ -132,10 +139,12 @@ class ListScreenViewController: UIViewController {
         self.segmentControl.selectedSegmentIndex = 1
         self.segmentControl.translatesAutoresizingMaskIntoConstraints = false
         self.segmentControlContainer.addSubview(self.segmentControl)
-        self.segmentControl.pinToSuperview(edges: [.top, .left, .right],
+        self.segmentControl.pin(size: layout.segmentControlSize)
+        self.segmentControl.pinToSuperview(edges: [.top],
                                            insets: layout.segmentControlInsets,
                                            safeArea: false,
                                            priority: .required)
+        self.segmentControl.pinCenterToSuperview(of: .horizontal)
         self.segmentControl.addTarget(self, action: #selector(openMapViewController), for: .valueChanged)
     }
     
@@ -151,7 +160,6 @@ class ListScreenViewController: UIViewController {
     
     /// Применение стилей
     private func apply(_ appearance: ListScreenViewController.Appearance) {
-        self.segmentControlContainer.apply(style: appearance.translucentBackgroundStyle)
         self.segmentControl.apply(style: appearance.screenChangeControlStyle)
     }
 }
@@ -185,12 +193,10 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
 
         switch cellState {
         case .expandedHeight:
-            return CGSize(width: mainCollectionView.frame.size.width - 25, height: viewModel.expandedHeight)
+            return CGSize(width: mainCollectionView.frame.size.width - 18, height: viewModel.expandedHeight)
         case .notExpandedHeight:
-            return CGSize(width: mainCollectionView.frame.size.width - 50, height: viewModel.notExpandedHeight)
+            return CGSize(width: mainCollectionView.frame.size.width - 52, height: viewModel.notExpandedHeight)
         }
-        
-    //    return CGSize(width: 300, height: viewModel.notExpandedHeight)
     }
 }
 

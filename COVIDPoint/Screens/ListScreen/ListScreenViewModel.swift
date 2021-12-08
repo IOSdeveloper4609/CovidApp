@@ -47,8 +47,8 @@ final class ListScreenViewModel: ListScreenViewModelProtocol {
     
     var valueArray: [Bool] = []
     
-    var expandedHeight: CGFloat = 400
-    var notExpandedHeight: CGFloat  = 235
+    var expandedHeight: CGFloat = 355
+    var notExpandedHeight: CGFloat  = 205
     
     init(data: [CountriesData]) {
         self.data = data

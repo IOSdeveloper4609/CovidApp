@@ -37,28 +37,67 @@ extension DetailViewController {
             useInlineMode: false,
             horizontalPadding: 0,
             maxWidth: nil)
-        
+
         vc.viewModel.countryId = countryId
-        
+
         let sheetController = SheetViewController(
             controller: vc,
             sizes: [],
             options: options)
-        
+
         vc.sheetControl = sheetController
-        
+
         sheetController.gripSize = CGSize(width: 50, height: 4)
         sheetController.gripColor = UIColor(hex: "#E6E6E6")
         sheetController.cornerRadius = 20
+        sheetController.overlayColor  = .clear
+        if #available(iOS 13.0, *) {
+            sheetController.blurEffect = UIBlurEffect(style: .systemChromeMaterialLight)
+        }
         sheetController.minimumSpaceAbovePullBar = 0
         sheetController.treatPullBarAsClear = false
         sheetController.dismissOnOverlayTap = true
         sheetController.dismissOnPull = true
         sheetController.allowPullingPastMaxHeight = false
         sheetController.autoAdjustToKeyboard = true
-        sheetController.animateIn(size: .fixed(200), duration: 2, completion: nil)
+        sheetController.animateIn(size: .fixed(400), duration: 0, completion: nil)
         return sheetController
     }
+    
+//    static func getSheetViewController(_ countryId: Int) -> UIViewController {
+//            let vc = DetailViewController()
+//            let options = SheetOptions(
+//                pullBarHeight: 24,
+//                presentingViewCornerRadius: 20,
+//                shouldExtendBackground: true,
+//                setIntrinsicHeightOnNavigationControllers: true,
+//                useFullScreenMode: true,
+//                shrinkPresentingViewController: true,
+//                useInlineMode: false,
+//                horizontalPadding: 0,
+//                maxWidth: nil)
+//
+//            vc.viewModel.countryId = countryId
+//
+//            let sheetController = SheetViewController(
+//                controller: vc,
+//                sizes: [],
+//                options: options)
+//
+//            vc.sheetControl = sheetController
+//
+//            sheetController.gripSize = CGSize(width: 50, height: 4)
+//            sheetController.gripColor = UIColor(hex: "#E6E6E6")
+//            sheetController.cornerRadius = 20
+//            sheetController.minimumSpaceAbovePullBar = 0
+//            sheetController.treatPullBarAsClear = false
+//            sheetController.dismissOnOverlayTap = true
+//            sheetController.dismissOnPull = true
+//            sheetController.allowPullingPastMaxHeight = false
+//            sheetController.autoAdjustToKeyboard = true
+//            sheetController.animateIn(size: .fixed(200), duration: 2, completion: nil)
+//            return sheetController
+//        }
 }
 
 final class DetailViewController: UIViewController {

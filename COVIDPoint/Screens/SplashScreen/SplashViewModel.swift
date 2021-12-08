@@ -5,6 +5,7 @@ import ReactiveKit
 protocol SplashViewModelProtocol {
     var upload: PassthroughSubject<Bool, Never> { get }
     func getCountryInfo()
+    func updateCovidData(_ covidData: Countries?)
 }
 
 final class SplashViewModel: SplashViewModelProtocol {
@@ -30,7 +31,7 @@ final class SplashViewModel: SplashViewModelProtocol {
         }
     }
     
-    private func updateCovidData(_ covidData: Countries?) {
+    func updateCovidData(_ covidData: Countries?) {
         if var _localSessionManager = self.localSessionManager {
             _localSessionManager.covidData = covidData
         }

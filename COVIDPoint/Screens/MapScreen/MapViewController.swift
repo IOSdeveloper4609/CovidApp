@@ -31,11 +31,11 @@ private extension MapViewController {
         let userLocationButtonInsets: UIEdgeInsets
         
         /// Инициализатор
-        init(segmentControlInsets: UIEdgeInsets = .init(top: 65, left: 100, bottom: 0, right: 100),
+        init(segmentControlInsets: UIEdgeInsets = .init(top: 66, left: 88, bottom: 0, right: 88),
              segmentControlSize: CGSize = .init(width: 200, height: 38),
              mapInsets: UIEdgeInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0),
-             containerSize: CGSize = .init(width: 70, height: 50),
-             containerInsets: UIEdgeInsets = .init(top: 0, left: -29, bottom: 20, right: 0),
+             containerSize: CGSize = .init(width: 70, height: 20),
+             containerInsets: UIEdgeInsets = .init(top: 0, left: -4, bottom: 47, right: 0),
              confirmedLabelSize: CGSize = .init(width: 55, height: 0),
              confirmedLabelInsets: UIEdgeInsets = .init(top: 5, left: 2, bottom: 5, right: 2),
              makeMapBiggerButtonSize: CGSize = .init(width: 35, height: 10),
@@ -104,7 +104,6 @@ final class MapViewController: UIViewController {
     private var appearance: Appearance = Appearance()
     private let viewModel: MapViewModelProtocol!
     private let locationManager = CLLocationManager()
-    private var circle = MKCircle()
     private let makeMapBiggerButton = UIButton()
     private let makeMapSmallerButton = UIButton()
     private let delimiterImage = UIImageView()
@@ -130,6 +129,7 @@ final class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.setupLocationManager(locationManager: self.locationManager)
         self.segmentControl.selectedSegmentIndex = 0
     }
     
@@ -139,15 +139,15 @@ final class MapViewController: UIViewController {
         setupBinding()
         addAndSetupSubviews(layout: self.layout)
         apply(appearance: self.appearance)
-        setupLocationManager()
         viewModel.getCountries()
-        setupCameraZoomRange()
+        viewModel.setupCameraZoomRange(mapView: self.mapView)
     }
 }
 
 // MARK: - Private
 private extension MapViewController {
     func addAndSetupSubviews(layout: Layout) {
+        locationManager.delegate = self
         /// настройка форматтера чисел
         numberFormatter.groupingSeparator = " "
         numberFormatter.numberStyle = .decimal
@@ -169,10 +169,12 @@ private extension MapViewController {
         segmentControl.selectedSegmentIndex = 0
         self.segmentControl.translatesAutoresizingMaskIntoConstraints = false
         self.mapView.addSubview(self.segmentControl)
-        self.segmentControl.pinToSuperview(edges: [.top, .left, .right],
+        self.segmentControl.pin(size: layout.segmentControlSize)
+        self.segmentControl.pinToSuperview(edges: [.top],
                                            insets: layout.segmentControlInsets,
                                            safeArea: false,
                                            priority: .required)
+        self.segmentControl.pinCenterToSuperview(of: .horizontal)
         self.segmentControl.addTarget(self, action: #selector(openListScreenViewController), for: .valueChanged)
         
         /// настройка контейнера для кнопок
@@ -222,42 +224,19 @@ private extension MapViewController {
         self.segmentControl.apply(style: appearance.screenChangeControlStyle)
     }
     
-    /// настройка locationManager
-    func setupLocationManager() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-        
-    /// настройка  масштабирования карты
-    func setupCameraZoomRange() {
-        if #available(iOS 13.0, *) {
-            mapView.cameraZoomRange = MKMapView.CameraZoomRange(
-                minCenterCoordinateDistance: viewModel.minCamera,
-                maxCenterCoordinateDistance: viewModel.maxCamera)
-        }
-    }
-    
     /// раскидал точки по карте и нарисовал радиус по заданной дистанции
     func setupBinding() {
-        self.viewModel.result.observeNext { [weak self] result in
+       self.viewModel.result.observeNext { [weak self] result in
             guard let _self = self else { return }
-            
+
             let annotations = result.compactMap { data -> MKAnnotation in
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = CLLocationCoordinate2D(latitude: data?.lat ?? 0.0,
                                                                longitude: data?.lon ?? 0.0)
-                
-                
-                let numberResult = Int(data?.confirmed ?? 0)
-            
-                annotation.title = _self.numberFormatter.string(from: (numberResult as NSNumber ))
+
+                annotation.title = String(data?.confirmed ?? 0)
                 annotation.subtitle = String(data?.id ?? 0)
-                
-                _self.showCircle(coordinate: CLLocationCoordinate2D(latitude: data?.lat ?? _self.viewModel.defaultValue,
-                                                                    longitude: data?.lon ?? _self.viewModel.defaultValue),
-                                                                     radius: _self.viewModel.circleDistance)
+
                 return annotation
             }
             _self.mapView.addAnnotations(annotations)
@@ -266,67 +245,14 @@ private extension MapViewController {
         
         /// приблизить карту
         makeMapBiggerButton.reactive.tap.observeNext {
-            let currentCamera = self.mapView.camera
-            let newCamera: MKMapCamera
-            if #available(iOS 9.0, *) {
-                newCamera = MKMapCamera(lookingAtCenter: currentCamera.centerCoordinate,
-                                        fromDistance: currentCamera.altitude / self.viewModel.valueCameraMap,
-                                        pitch: currentCamera.pitch,
-                                        heading: currentCamera.heading)
-            }
-            else {
-                newCamera = MKMapCamera()
-                newCamera.centerCoordinate = currentCamera.centerCoordinate
-                newCamera.heading = currentCamera.heading
-                newCamera.altitude = currentCamera.altitude / self.viewModel.valueCameraMap
-                newCamera.pitch = currentCamera.pitch
-            }
-            
-            self.mapView.setCamera(newCamera, animated: true)
+            self.viewModel.makeMapBigger(mapView: self.mapView)
             
         }.store(in: reactive.bag)
         
         /// отдалить карту
         makeMapSmallerButton.reactive.tap.observeNext {
-            let currentCamera = self.mapView.camera
-            let newCamera: MKMapCamera
-            if #available(iOS 9.0, *) {
-                newCamera = MKMapCamera(lookingAtCenter: currentCamera.centerCoordinate
-                                        , fromDistance: currentCamera.altitude * self.viewModel.valueCameraMap,
-                                        pitch: currentCamera.pitch,
-                                        heading: currentCamera.heading)
-            } else {
-                newCamera = MKMapCamera()
-                newCamera.centerCoordinate = currentCamera.centerCoordinate
-                newCamera.heading = currentCamera.heading
-                newCamera.altitude = currentCamera.altitude * self.viewModel.valueCameraMap
-                newCamera.pitch = currentCamera.pitch
-            }
-            
-            self.mapView.setCamera(newCamera, animated: true)
-            
+            self.viewModel.makeMapSmaller(mapView: self.mapView)
         }.store(in: reactive.bag)
-    }
-
-    /// метод определния местоположения
-    func requestLocation(location: CLLocation) {
-        let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                                                longitude: location.coordinate.longitude)
-                
-        let span = MKCoordinateSpan(latitudeDelta: viewModel.latitudeDelta, longitudeDelta: viewModel.latitudeDelta)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
-        mapView.setRegion(region, animated: true)
-        let pin = MKPointAnnotation()
-        pin.coordinate = coordinate
-        mapView.addAnnotation(pin)
-    }
-    
-    /// метод отрисовки радиуса на карте
-    func showCircle(coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) {
-        let circle = MKCircle(center: coordinate,
-                              radius: radius)
-                
-        mapView.addOverlay(circle)
     }
 }
 
@@ -335,8 +261,7 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             manager.stopUpdatingLocation()
-            
-            requestLocation(location: location)
+            viewModel.requestLocation(location: location, mapView: self.mapView)
         }
     }
 }
@@ -344,59 +269,49 @@ extension MapViewController: CLLocationManagerDelegate {
  
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
-//        /// добавили кастомную картинку на точки в карте
-//        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//
-//            let reuseId = appearance.reuseId
-//
-//            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-//            if annotationView == nil {
-//                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-             //   annotationView?.canShowCallout = true
-//                let container = UIButton()
-//                container.backgroundColor = .white
-//                container.addTarget(self, action: #selector(action), for: .touchUpInside)
-//                annotationView?.addSubview(container)
-//                container.translatesAutoresizingMaskIntoConstraints = false
-//                container.pin(size: layout.containerSize)
-//                container.pinToSuperview(edges: [.left,.bottom],
-//                                         insets: layout.containerInsets)
-//                container.layer.masksToBounds = false
-//                container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
+        /// добавили кастомную картинку на точки в карте
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            let reuseId = appearance.reuseId
+            
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+            
+            if annotation is MKUserLocation {
+                return nil
+            }
+            
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+                annotationView?.canShowCallout = true
+                let container = UIView()
+                container.backgroundColor = .white
+                annotationView?.addSubview(container)
+                container.translatesAutoresizingMaskIntoConstraints = false
+                container.pin(size: layout.containerSize)
+                container.pinToSuperview(edges: [.left,.bottom],
+                                         insets: layout.containerInsets)
+                container.layer.masksToBounds = false
+                container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
 
-//                let taap = UITapGestureRecognizer(target: self, action: #selector(action))
-//                container.addGestureRecognizer(taap)
+                let confirmedLabel = UILabel()
+                confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
+                confirmedLabel.textAlignment = .center
+                container.addSubview(confirmedLabel)
+                confirmedLabel.pinCenterToSuperview(of: .vertical)
+                confirmedLabel.pinToSuperview(edges: [.all],
+                                              insets: layout.confirmedLabelInsets)
 
-//                let confirmedLabel = UILabel()
-//                confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
-//                confirmedLabel.textAlignment = .center
-//                annotationView?.addSubview(confirmedLabel)
-//                confirmedLabel.pinCenterToSuperview(of: .vertical)
-//                confirmedLabel.pinToSuperview(edges: [.all],
-//                                              insets: layout.confirmedLabelInsets)
-//
-//                let result = Int((annotationView?.annotation?.title ?? "") ?? "")
-//                confirmedLabel.text = numberFormatter.string(from: result as NSNumber? ?? 0)
-//                confirmedLabel.font = .boldSystemFont(ofSize: viewModel.confirmedLabelSize)
-//                confirmedLabel.textColor = .black
-//                annotationView?.image = UIImage(named: appearance.annotationImage)
-//            } else {
-//                annotationView?.annotation = annotation
-//            }
-//            let container = UIButton()
-//            container.backgroundColor = .white
-//            container.addTarget(self, action: #selector(action), for: .touchUpInside)
-//            annotationView?.addSubview(container)
-//            container.translatesAutoresizingMaskIntoConstraints = false
-//            container.pin(size: layout.containerSize)
-//            container.pinToSuperview(edges: [.left,.bottom],
-//                                     insets: layout.containerInsets)
-//            container.layer.masksToBounds = false
-//            container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
-//            return annotationView
-//        }
-//
+                let result = Int((annotationView?.annotation?.title ?? "") ?? "")
+                confirmedLabel.text = numberFormatter.string(from: result as NSNumber? ?? 0)
+                confirmedLabel.font = .boldSystemFont(ofSize: viewModel.confirmedLabelSize)
+                confirmedLabel.textColor = .black
+                annotationView?.image = UIImage(named: appearance.annotationImage)
+            } else {
+                annotationView?.annotation = annotation
+            }
+    
+            return annotationView
+        }
+
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         var circleRenderer = MKCircleRenderer()
