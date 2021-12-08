@@ -79,7 +79,7 @@ private extension MapViewController {
         
         init(annotationImage: String = "pin",
              reuseId: String = "pin",
-             smallerImage: String = "Smaller",
+             smallerImage: String = "smaller",
              biggerImage: String = "bigger",
              delimiterImage: String = "delimiter",
              mapImage: String = "map",
