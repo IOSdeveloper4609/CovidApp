@@ -79,7 +79,7 @@ private extension MapViewController {
         
         init(annotationImage: String = "pin",
              reuseId: String = "pin",
-             smallerImage: String = "smaller",
+             smallerImage: String = "Smaller",
              biggerImage: String = "bigger",
              delimiterImage: String = "delimiter",
              mapImage: String = "map",
@@ -129,18 +129,18 @@ final class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.setupLocationManager(locationManager: self.locationManager)
         self.segmentControl.selectedSegmentIndex = 0
     }
     
     override func loadView() {
         super.loadView()
-        
+    
         setupBinding()
         addAndSetupSubviews(layout: self.layout)
         apply(appearance: self.appearance)
         viewModel.getCountries()
         viewModel.setupCameraZoomRange(mapView: self.mapView)
+        viewModel.setupLocationManager(locationManager: self.locationManager)
     }
 }
 
