@@ -31,15 +31,15 @@ protocol MapViewModelProtocol {
     var minCamera: Double { get }
     var maxCamera: Double { get }
     /// отдалить карту
-    func makeMapSmaller(mapView: MKMapView)
+    func makeMapSmaller(_ mapView: MKMapView)
     /// приблизить карту
-    func makeMapBigger(mapView: MKMapView)
+    func makeMapBigger(_ mapView: MKMapView)
     /// настройка масштабирования карты
-    func setupCameraZoomRange(mapView: MKMapView)
+    func setupCameraZoomRange(_ mapView: MKMapView)
     /// запрос на местоположение
-    func requestLocation(location: CLLocation, mapView: MKMapView)
+    func requestLocation(_ location: CLLocation, _ mapView: MKMapView)
     /// метод определния местоположения
-    func setupLocationManager(locationManager: CLLocationManager)
+    func setupLocationManager(_ locationManager: CLLocationManager)
 }
 
 final class MapViewModel: MapViewModelProtocol {
@@ -83,7 +83,7 @@ final class MapViewModel: MapViewModelProtocol {
         self.countryState = tmpCountryState
     }
     
-    func makeMapBigger(mapView: MKMapView) {
+    func makeMapBigger(_ mapView: MKMapView) {
         let currentCamera = mapView.camera
         let newCamera: MKMapCamera
         if #available(iOS 9.0, *) {
@@ -102,7 +102,7 @@ final class MapViewModel: MapViewModelProtocol {
         mapView.setCamera(newCamera, animated: true)
     }
     
-    func makeMapSmaller(mapView: MKMapView) {
+    func makeMapSmaller(_ mapView: MKMapView) {
         let currentCamera = mapView.camera
         let newCamera: MKMapCamera
         if #available(iOS 9.0, *) {
@@ -120,7 +120,7 @@ final class MapViewModel: MapViewModelProtocol {
         mapView.setCamera(newCamera, animated: true)
     }
     
-    func setupCameraZoomRange(mapView: MKMapView) {
+    func setupCameraZoomRange(_ mapView: MKMapView) {
         if #available(iOS 13.0, *) {
             mapView.cameraZoomRange = MKMapView.CameraZoomRange(
                 minCenterCoordinateDistance: minCamera,
@@ -128,7 +128,7 @@ final class MapViewModel: MapViewModelProtocol {
         }
     }
     
-    func requestLocation(location: CLLocation, mapView: MKMapView) {
+    func requestLocation(_ location: CLLocation, _ mapView: MKMapView) {
         let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
                                                 longitude: location.coordinate.longitude)
         
@@ -137,12 +137,14 @@ final class MapViewModel: MapViewModelProtocol {
         mapView.setRegion(region, animated: true)
         let pin = MKPointAnnotation()
         pin.coordinate = coordinate
-        //mapView.addAnnotation(pin)
+       // mapView.addAnnotation(pin)
     }
     
-    func setupLocationManager(locationManager: CLLocationManager) {
+    func setupLocationManager(_ locationManager: CLLocationManager) {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
 }
+
+

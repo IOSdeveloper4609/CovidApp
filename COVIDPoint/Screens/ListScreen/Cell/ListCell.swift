@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol OpenDetailedInfoProtocol {
+protocol OpenDetailedInfoProtocol: AnyObject {
     func openDetailedInfo(indexPath: IndexPath)
 }
 
-protocol HiddenDetailedInfoProtocol {
+protocol HiddenDetailedInfoProtocol: AnyObject {
     func hiddenDetailedInfo(indexPath: IndexPath)
 }
 
@@ -90,8 +90,8 @@ final class ListCell: UICollectionViewCell {
     static var identifier = "ListCell"
     
     var cellIndexPath = IndexPath()
-    var openInfoDelegate: OpenDetailedInfoProtocol?
-    var hiddenInfoDelegate: HiddenDetailedInfoProtocol?
+    weak var openInfoDelegate: OpenDetailedInfoProtocol?
+    weak var hiddenInfoDelegate: HiddenDetailedInfoProtocol?
 
     private let appearances = Appearance()
     private var stackView = UIStackView()
@@ -106,7 +106,7 @@ final class ListCell: UICollectionViewCell {
     private let containerForUI = UIView()
     private let boxView = UIView()
     
-    var viewModel: ListCellViewModelProtocol? {
+   weak var viewModel: ListCellViewModelProtocol? {
         didSet {
             guard var _viewModel = viewModel else { return }
             _viewModel.countryNameView = countryName

@@ -37,14 +37,14 @@ extension ListScreenViewController {
     struct Appearance: AppearanceProtocol {
         let mapImage: String
         let listImage: String
-        let containerSegmentControlBackground: UIColor
+        let viewBackground: UIColor
         
         init(mapImage: String = "map",
              listImage: String = "list",
-             containerSegmentControlBackground: UIColor = UIColor(red: 236.0 / 255.0, green: 236.0 / 255.0, blue: 237.0 / 255.0, alpha: 1)) {
+             viewBackground: UIColor = UIColor(red: 236.0 / 255.0, green: 236.0 / 255.0, blue: 237.0 / 255.0, alpha: 1)) {
             self.mapImage = mapImage
             self.listImage = listImage
-            self.containerSegmentControlBackground = containerSegmentControlBackground
+            self.viewBackground = viewBackground
         }
     }
 }
@@ -100,14 +100,14 @@ class ListScreenViewController: UIViewController {
     
     /// Инициализация и настройка отступов UI элементов
     private func addAndSetupSubviews(layout: ListScreenViewController.Layout) {
-        view.backgroundColor = appearance.containerSegmentControlBackground
+        view.backgroundColor = appearance.viewBackground
         /// Настройка CollectionView
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
         self.mainCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         guard let mainCollectionView = mainCollectionView else { return }
         mainCollectionView.showsVerticalScrollIndicator = true
-        mainCollectionView.backgroundColor = appearance.containerSegmentControlBackground
+        mainCollectionView.backgroundColor = appearance.viewBackground
         mainCollectionView.isPagingEnabled = false
         mainCollectionView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right:0 )
         mainCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -123,7 +123,7 @@ class ListScreenViewController: UIViewController {
         /// Настройка SegmentControlContainer
         self.segmentControlContainer = UIView()
         self.segmentControlContainer.translatesAutoresizingMaskIntoConstraints = false
-        self.segmentControlContainer.backgroundColor = appearance.containerSegmentControlBackground
+        self.segmentControlContainer.backgroundColor = appearance.viewBackground
         self.view.addSubview(self.segmentControlContainer)
         self.segmentControlContainer.pinToSuperview(edges: [.left, .top, .right],
                                                     insets: layout.segmentControlContainerInsets,

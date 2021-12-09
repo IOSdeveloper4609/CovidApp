@@ -1,7 +1,7 @@
 
 import Foundation
 
-protocol LocalSessionManagerProtocol {
+protocol LocalSessionManagerProtocol: AnyObject {
     var covidData: Countries? { get set }
 }
 

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol ListCellViewModelProtocol {
+protocol ListCellViewModelProtocol: AnyObject {
     var countryNameView: CountryNameViewProtocol? { get set }
     var progressConfirmed: ProgressViewProtocol? { get set }
     var progressDeaths: ProgressViewProtocol? { get set }

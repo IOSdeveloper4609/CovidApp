@@ -35,7 +35,7 @@ private extension MapViewController {
              segmentControlSize: CGSize = .init(width: 200, height: 38),
              mapInsets: UIEdgeInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0),
              containerSize: CGSize = .init(width: 70, height: 20),
-             containerInsets: UIEdgeInsets = .init(top: 0, left: -4, bottom: 47, right: 0),
+             containerInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 47, right: 0),
              confirmedLabelSize: CGSize = .init(width: 55, height: 0),
              confirmedLabelInsets: UIEdgeInsets = .init(top: 5, left: 2, bottom: 5, right: 2),
              makeMapBiggerButtonSize: CGSize = .init(width: 35, height: 10),
@@ -43,10 +43,10 @@ private extension MapViewController {
              makeMapSmallerButtonSize: CGSize = .init(width: 35, height: 10),
              makeMapSmallerButtonInsets: UIEdgeInsets = .init(top: 55, left: 10, bottom: 10, right: 10),
              containerForButtonsSize: CGSize = .init(width: 41, height: 80),
-             containerForButtonsInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0 , right: 10),
+             containerForButtonsInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0 , right: 15),
              delimiterImageSize: CGSize = .init(width: 35, height: 1),
              delimiterImageInsets: UIEdgeInsets = .init(top: 42, left: 5, bottom: 35, right: 5),
-             userLocationButtonInsets: UIEdgeInsets = .init(top: 525, left: 0, bottom: 0, right: 15)) {
+             userLocationButtonInsets: UIEdgeInsets = .init(top: 0, left: 10, bottom: 27, right: 10)) {
             self.mapInsets = mapInsets
             self.containerSize = containerSize
             self.containerInsets = containerInsets
@@ -84,7 +84,7 @@ private extension MapViewController {
              delimiterImage: String = "delimiter",
              mapImage: String = "map",
              listImage: String = "list",
-             userLocationButtonIcon: String = "geolocation") {
+             userLocationButtonIcon: String = "userLocation") {
             self.reuseId = reuseId
             self.annotationImage = annotationImage
             self.smallerImage = smallerImage
@@ -109,6 +109,7 @@ final class MapViewController: UIViewController {
     private let delimiterImage = UIImageView()
     private let containerForButtons = UIView()
     private let numberFormatter = NumberFormatter()
+    private let userLocationButton = UIButton()
    
     /// Инициализатор
     /// - Parameter viewModel: MapViewModelProtocol
@@ -139,8 +140,8 @@ final class MapViewController: UIViewController {
         addAndSetupSubviews(layout: self.layout)
         apply(appearance: self.appearance)
         viewModel.getCountries()
-        viewModel.setupCameraZoomRange(mapView: self.mapView)
-        viewModel.setupLocationManager(locationManager: self.locationManager)
+        viewModel.setupCameraZoomRange(self.mapView)
+        viewModel.setupLocationManager(self.locationManager)
     }
 }
 
@@ -208,6 +209,22 @@ private extension MapViewController {
         self.containerForButtons.addSubview(delimiterImage)
         self.delimiterImage.pinToSuperview(edges: [.all],
                                             insets: layout.delimiterImageInsets)
+        
+        self.userLocationButton.translatesAutoresizingMaskIntoConstraints = false
+        self.userLocationButton.setImage(UIImage(named: appearance.userLocationButtonIcon), for: .normal)
+        self.mapView.addSubview(userLocationButton)
+        self.userLocationButton.pinToSuperview(edges: [.bottom, .right],
+                                               insets: layout.userLocationButtonInsets)
+        
+        self.userLocationButton.addTarget(self, action: #selector(showUserLocation) , for: .touchUpInside)
+    }
+    
+    @objc func showUserLocation() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        }
     }
     
     @objc func openListScreenViewController() {
@@ -245,13 +262,13 @@ private extension MapViewController {
         
         /// приблизить карту
         makeMapBiggerButton.reactive.tap.observeNext {
-            self.viewModel.makeMapBigger(mapView: self.mapView)
+            self.viewModel.makeMapBigger(self.mapView)
             
         }.store(in: reactive.bag)
         
         /// отдалить карту
         makeMapSmallerButton.reactive.tap.observeNext {
-            self.viewModel.makeMapSmaller(mapView: self.mapView)
+            self.viewModel.makeMapSmaller(self.mapView)
         }.store(in: reactive.bag)
     }
 }
@@ -261,7 +278,7 @@ extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             manager.stopUpdatingLocation()
-            viewModel.requestLocation(location: location, mapView: self.mapView)
+            viewModel.requestLocation(location, self.mapView)
         }
     }
 }
@@ -269,48 +286,43 @@ extension MapViewController: CLLocationManagerDelegate {
  
 // MARK: - MKMapViewDelegate
 extension MapViewController: MKMapViewDelegate {
-        /// добавили кастомную картинку на точки в карте
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            let reuseId = appearance.reuseId
+    /// добавили кастомную картинку на точки в карте
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseId = appearance.reuseId
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+            annotationView?.canShowCallout = true
+            let container = UIView()
+            container.backgroundColor = .white
+            annotationView?.addSubview(container)
+            container.translatesAutoresizingMaskIntoConstraints = false
+            container.pin(size: layout.containerSize)
+            container.pinToSuperview(edges: [.left,.bottom],
+                                     insets: layout.containerInsets)
+            container.layer.masksToBounds = false
+            container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
             
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
+            let confirmedLabel = UILabel()
+            confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
+            confirmedLabel.textAlignment = .center
+            container.addSubview(confirmedLabel)
+            confirmedLabel.pinCenterToSuperview(of: .vertical)
+            confirmedLabel.pinToSuperview(edges: [.all],
+                                          insets: layout.confirmedLabelInsets)
             
-            if annotation is MKUserLocation {
-                return nil
-            }
-            
-            if annotationView == nil {
-                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
-                annotationView?.canShowCallout = true
-                let container = UIView()
-                container.backgroundColor = .white
-                annotationView?.addSubview(container)
-                container.translatesAutoresizingMaskIntoConstraints = false
-                container.pin(size: layout.containerSize)
-                container.pinToSuperview(edges: [.left,.bottom],
-                                         insets: layout.containerInsets)
-                container.layer.masksToBounds = false
-                container.layer.cornerRadius = viewModel.containerForLabelPointCornerRadius
-
-                let confirmedLabel = UILabel()
-                confirmedLabel.translatesAutoresizingMaskIntoConstraints = false
-                confirmedLabel.textAlignment = .center
-                container.addSubview(confirmedLabel)
-                confirmedLabel.pinCenterToSuperview(of: .vertical)
-                confirmedLabel.pinToSuperview(edges: [.all],
-                                              insets: layout.confirmedLabelInsets)
-
-                let result = Int((annotationView?.annotation?.title ?? "") ?? "")
-                confirmedLabel.text = numberFormatter.string(from: result as NSNumber? ?? 0)
-                confirmedLabel.font = .boldSystemFont(ofSize: viewModel.confirmedLabelSize)
-                confirmedLabel.textColor = .black
-                annotationView?.image = UIImage(named: appearance.annotationImage)
-            } else {
-                annotationView?.annotation = annotation
-            }
-    
-            return annotationView
+            let result = Int((annotationView?.annotation?.title ?? "") ?? "")
+            confirmedLabel.text = numberFormatter.string(from: result as NSNumber? ?? 0)
+            confirmedLabel.font = .boldSystemFont(ofSize: viewModel.confirmedLabelSize)
+            confirmedLabel.textColor = .black
+            annotationView?.image = UIImage(named: appearance.annotationImage)
+        } else {
+            annotationView?.annotation = annotation
         }
+        return annotationView
+    }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let id = Int((view.annotation?.subtitle ?? "") ?? "") else { return }
