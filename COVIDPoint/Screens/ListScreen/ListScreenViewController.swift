@@ -186,6 +186,14 @@ extension ListScreenViewController: UICollectionViewDelegateFlowLayout,
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.selectItem(atIndex: indexPath.row)
+        
+        viewModel.performCellAnimate { [weak self] in
+            self?.mainCollectionView.reloadItems(at: [indexPath])
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
