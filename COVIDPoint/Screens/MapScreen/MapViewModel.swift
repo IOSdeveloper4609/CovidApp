@@ -22,13 +22,19 @@ protocol MapViewModelProtocol {
     func getCountries()
     func getCountryState()
     var latitudeDelta: CLLocationDegrees { get }
+    /// корнер радиус контейнера
     var containerForLabelPointCornerRadius: CGFloat { get }
+    /// шрифт лэйбла зараженных
     var confirmedLabelSize: CGFloat { get }
-    var circleRendererAlpha: CGFloat { get }
+    /// дефолтное значение при разворачивании опционала
     var defaultValue: Double { get }
+    /// контейнер для кнопок отдаления и приближения карты
     var containerForButtonsCornerRadius: CGFloat { get }
+    /// на сколько приближать и отдалять карту при нажатии
     var valueCameraMap: Double { get }
+    /// минимальная камера карты
     var minCamera: Double { get }
+    /// максимальная камера карты
     var maxCamera: Double { get }
     /// отдалить карту
     func makeMapSmaller(_ mapView: MKMapView)
@@ -48,7 +54,6 @@ final class MapViewModel: MapViewModelProtocol {
     let latitudeDelta: CLLocationDegrees = 0.1
     let containerForLabelPointCornerRadius: CGFloat = 6
     let confirmedLabelSize: CGFloat = 9
-    let circleRendererAlpha: CGFloat = 0.6
     let defaultValue: Double = 0.0
     let containerForButtonsCornerRadius: CGFloat = 10
     let valueCameraMap = 1.5
@@ -139,7 +144,7 @@ final class MapViewModel: MapViewModelProtocol {
         mapView.setRegion(region, animated: true)
         let pin = MKPointAnnotation()
         pin.coordinate = coordinate
-       // mapView.addAnnotation(pin)
+        // mapView.addAnnotation(pin)
     }
     
     func setupLocationManager(_ locationManager: CLLocationManager) {

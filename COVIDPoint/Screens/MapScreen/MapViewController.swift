@@ -46,7 +46,7 @@ private extension MapViewController {
              containerForButtonsInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 0 , right: 15),
              delimiterImageSize: CGSize = .init(width: 35, height: 1),
              delimiterImageInsets: UIEdgeInsets = .init(top: 42, left: 5, bottom: 35, right: 5),
-             userLocationButtonInsets: UIEdgeInsets = .init(top: 0, left: 10, bottom: 27, right: 10)) {
+             userLocationButtonInsets: UIEdgeInsets = .init(top: 0, left: 10, bottom: 50, right: 10)) {
             self.mapInsets = mapInsets
             self.containerSize = containerSize
             self.containerInsets = containerInsets

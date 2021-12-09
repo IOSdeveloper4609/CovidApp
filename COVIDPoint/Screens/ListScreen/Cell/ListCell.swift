@@ -108,7 +108,7 @@ final class ListCell: UICollectionViewCell {
     
    weak var viewModel: ListCellViewModelProtocol? {
         didSet {
-            guard var _viewModel = viewModel else { return }
+            guard let _viewModel = viewModel else { return }
             _viewModel.countryNameView = countryName
             _viewModel.progressConfirmed = progressConfirmed
             _viewModel.progressDeaths = progressDeaths
