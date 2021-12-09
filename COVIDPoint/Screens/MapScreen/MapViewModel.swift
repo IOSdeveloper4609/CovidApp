@@ -40,6 +40,8 @@ protocol MapViewModelProtocol {
     func requestLocation(_ location: CLLocation, _ mapView: MKMapView)
     /// метод определния местоположения
     func setupLocationManager(_ locationManager: CLLocationManager)
+    ///показать местоположение юзера по нажатию на кнопку
+    func showUserLocation(_ locationManager: CLLocationManager)
 }
 
 final class MapViewModel: MapViewModelProtocol {
@@ -144,6 +146,14 @@ final class MapViewModel: MapViewModelProtocol {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+    }
+    
+    func showUserLocation(_ locationManager: CLLocationManager) {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        }
     }
 }
 

@@ -136,8 +136,8 @@ final class MapViewController: UIViewController {
     override func loadView() {
         super.loadView()
     
-        setupBinding()
         addAndSetupSubviews(layout: self.layout)
+        setupBinding()
         apply(appearance: self.appearance)
         viewModel.getCountries()
         viewModel.setupCameraZoomRange(self.mapView)
@@ -176,7 +176,6 @@ private extension MapViewController {
                                            safeArea: false,
                                            priority: .required)
         self.segmentControl.pinCenterToSuperview(of: .horizontal)
-        self.segmentControl.addTarget(self, action: #selector(openListScreenViewController), for: .valueChanged)
         
         /// настройка контейнера для кнопок
         self.containerForButtons.translatesAutoresizingMaskIntoConstraints = false
@@ -215,29 +214,10 @@ private extension MapViewController {
         self.mapView.addSubview(userLocationButton)
         self.userLocationButton.pinToSuperview(edges: [.bottom, .right],
                                                insets: layout.userLocationButtonInsets)
-        
-        self.userLocationButton.addTarget(self, action: #selector(showUserLocation) , for: .touchUpInside)
-    }
-    
-    @objc func showUserLocation() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
-    @objc func openListScreenViewController() {
-        switch segmentControl.selectedSegmentIndex {
-        case 0:
-            print("selectedSegmentIndex")
-        default:
-            self.tabBarController?.selectedIndex = 1
-        }
     }
     
     /// Применение стилей
-    private func apply(appearance: MapViewController.Appearance) {
+    func apply(appearance: MapViewController.Appearance) {
         self.segmentControl.apply(style: appearance.screenChangeControlStyle)
     }
     
@@ -260,6 +240,16 @@ private extension MapViewController {
             
         }.store(in: reactive.bag)
         
+        /// переключение между экранами
+        segmentControl.reactive.selectedSegmentIndex.observeNext {_ in
+            switch self.segmentControl.selectedSegmentIndex {
+            case 0:
+                print("selectedSegmentIndex")
+            default:
+                self.tabBarController?.selectedIndex = 1
+            }
+        }.store(in: reactive.bag)
+        
         /// приблизить карту
         makeMapBiggerButton.reactive.tap.observeNext {
             self.viewModel.makeMapBigger(self.mapView)
@@ -269,6 +259,11 @@ private extension MapViewController {
         /// отдалить карту
         makeMapSmallerButton.reactive.tap.observeNext {
             self.viewModel.makeMapSmaller(self.mapView)
+        }.store(in: reactive.bag)
+        
+        /// показать местоположение пользователя
+        userLocationButton.reactive.tap.observeNext {
+            self.viewModel.showUserLocation(self.locationManager)
         }.store(in: reactive.bag)
     }
 }
